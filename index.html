@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IndemniPro — Soyez remboursé plus vite après un sinistre pro</title>
+<meta name="description" content="Générez en 2 minutes les courriers qui accélèrent le remboursement de votre assurance pro : relance, mise en demeure, saisine du médiateur.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   INDEMNIPRO — design tokens
+   Palette : encre navy / bleu poste / timbre rouge / papier
+   ============================================================ */
+:root{
+  --ink:        #131A2E;   /* encre navy, quasi-noir */
+  --navy:       #1E3A8A;   /* bleu poste */
+  --navy-2:     #16264F;   /* navy profond (surfaces sombres) */
+  --red:        #C8102E;   /* timbre rouge — urgence */
+  --red-ink:    #B00D29;   /* rouge encre (sur papier) */
+  --paper:      #F6F4EF;   /* papier */
+  --paper-2:    #EFECE4;   /* papier plus foncé (surfaces) */
+  --hairline:   #E2DED3;   /* filet / bordure papier */
+  --slate:      #5B6472;   /* texte secondaire */
+  --slate-2:    #8A93A6;   /* texte secondaire sur sombre */
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body:    "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 2px rgba(19,26,46,.06), 0 8px 28px rgba(19,26,46,.10);
+  --shadow-lg: 0 2px 6px rgba(19,26,46,.08), 0 24px 60px rgba(19,26,46,.18);
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  font-family:var(--font-body);
+  font-size:17px;
+  line-height:1.6;
+  color:var(--ink);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+/* léger grain papier */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main, header, footer{ position:relative; z-index:1; }
+
+h1,h2,h3,h4{ font-family:var(--font-display); font-weight:600; line-height:1.12; margin:0; }
+a{ color:var(--navy); }
+img{ max-width:100%; display:block; }
+:focus-visible{ outline:3px solid var(--red); outline-offset:2px; border-radius:2px; }
+::selection{ background:var(--red); color:#fff; }
+
+.wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
+
+/* ------------------------------------------------------------
+   En-tête
+   ------------------------------------------------------------ */
+.site-head{
+  position:sticky; top:0; z-index:50;
+  background:rgba(246,244,239,.86);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--hairline);
+}
+.site-head__inner{ display:flex; align-items:center; justify-content:space-between; height:66px; }
+.brand{ display:flex; align-items:baseline; gap:10px; text-decoration:none; color:var(--ink); }
+.brand__name{ font-family:var(--font-display); font-weight:700; font-size:24px; letter-spacing:-.02em; }
+.brand__name .accent{ color:var(--red); }
+.brand__tag{ font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate); }
+.site-nav{ display:flex; gap:22px; }
+.site-nav a{
+  font-size:14.5px; font-weight:500; text-decoration:none; color:var(--ink);
+  border-bottom:2px solid transparent; padding:4px 0;
+}
+.site-nav a:hover{ border-color:var(--red); }
+@media (max-width:760px){
+  .site-nav{ display:none; }
+  .brand__tag{ display:none; }
+}
+
+/* ------------------------------------------------------------
+   Boutons
+   ------------------------------------------------------------ */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-family:var(--font-body); font-weight:600; font-size:16px;
+  padding:14px 24px; border-radius:999px; cursor:pointer;
+  border:1px solid transparent; text-decoration:none;
+  transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.btn:active{ transform:translateY(1px); }
+.btn--red{ background:var(--red); color:#fff; box-shadow:0 8px 20px rgba(200,16,46,.28); }
+.btn--red:hover{ background:var(--red-ink); }
+.btn--ghost{ background:transparent; color:var(--ink); border-color:var(--hairline); }
+.btn--ghost:hover{ border-color:var(--slate); background:var(--paper-2); }
+.btn--navy{ background:var(--navy); color:#fff; }
+.btn--navy:hover{ background:var(--navy-2); }
+.btn--sm{ padding:10px 18px; font-size:14.5px; }
+
+/* ------------------------------------------------------------
+   Hero — la lettre est le produit
+   ------------------------------------------------------------ */
+.hero{
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(30,58,138,.35), transparent 60%),
+    var(--ink);
+  color:#fff;
+  padding:88px 0 110px;
+  overflow:hidden;
+}
+.hero__inner{ display:grid; grid-template-columns:1.05fr .95fr; gap:64px; align-items:center; }
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--font-mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--slate-2); margin-bottom:22px;
+}
+.eyebrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--red); }
+.hero h1{
+  font-size:clamp(38px, 5.4vw, 62px);
+  letter-spacing:-.02em; margin:0 0 22px; color:#fff;
+}
+.hero h1 em{ font-style:italic; color:var(--red); }
+.hero__sub{ font-size:19px; color:#C6CEE0; max-width:52ch; margin:0 0 34px; }
+.hero__cta{ display:flex; gap:14px; flex-wrap:wrap; }
+.hero__note{ font-size:13.5px; color:var(--slate-2); margin-top:20px; }
+.hero__note .lrar{ font-family:var(--font-mono); color:#fff; letter-spacing:.05em; }
+
+/* La lettre exemple */
+.hero__letter{ position:relative; }
+.sheet{
+  background:var(--paper);
+  color:var(--ink);
+  border-radius:6px;
+  box-shadow:var(--shadow-lg);
+  padding:34px 38px;
+  transform:rotate(1.2deg);
+  font-size:14px; line-height:1.55;
+}
+.sheet__lr{
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom:1px solid var(--hairline);
+  padding-bottom:10px; margin-bottom:18px;
+}
+.sheet__lr-label{ font-family:var(--font-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate); }
+.barcode{
+  height:22px; width:150px;
+  background:repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 5px, var(--ink) 5px 6px, transparent 6px 10px, var(--ink) 10px 13px, transparent 13px 16px);
+  opacity:.85;
+}
+.sheet__body{ display:flex; flex-direction:column; gap:12px; }
+.sheet__row{ display:flex; justify-content:space-between; gap:24px; }
+.sheet__addr{ font-size:12.5px; line-height:1.5; color:var(--ink); }
+.sheet__addr strong{ font-weight:600; }
+.sheet__objet{ font-weight:600; }
+.sheet__divider{ height:1px; background:var(--hairline); margin:4px 0; }
+.sheet__signature{ margin-top:22px; font-family:var(--font-display); font-style:italic; font-size:20px; color:var(--ink); }
+
+/* Le tampon rouge — signature du site */
+.stamp{
+  position:absolute; right:-16px; bottom:-30px;
+  width:130px; height:130px;
+  border:3px solid var(--red);
+  border-radius:50%;
+  color:var(--red);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; gap:1px;
+  transform:rotate(-9deg);
+  box-shadow:inset 0 0 0 2px var(--paper), inset 0 0 0 5px var(--red);
+  background:radial-gradient(circle at 40% 35%, rgba(200,16,46,.10), transparent 70%);
+  font-family:var(--font-mono);
+  z-index:2;
+}
+.stamp__top{ font-size:9.5px; letter-spacing:.22em; text-transform:uppercase; font-weight:500; }
+.stamp__mid{ font-size:20px; font-weight:700; letter-spacing:.06em; }
+.stamp__bot{ font-size:8px; letter-spacing:.12em; text-transform:uppercase; margin-top:2px; }
+
+@media (max-width:880px){
+  .hero{ padding:60px 0 84px; }
+  .hero__inner{ grid-template-columns:1fr; gap:56px; }
+  .hero__letter{ max-width:460px; }
+  .stamp{ right:4px; }
+}
+
+/* ------------------------------------------------------------
+   Sections génériques
+   ------------------------------------------------------------ */
+.section{ padding:96px 0; }
+.section--alt{ background:var(--paper-2); }
+.section--dark{ background:var(--ink); color:#fff; }
+.sec-head{ max-width:640px; margin-bottom:52px; }
+.sec-head .eyebrow{ color:var(--slate); }
+.sec-head h2{ font-size:clamp(30px, 4vw, 44px); letter-spacing:-.01em; margin-bottom:14px; }
+.sec-head p{ color:var(--slate); font-size:17.5px; margin:0; }
+.section--dark .sec-head p{ color:var(--slate-2); }
+.section--dark .sec-head .eyebrow{ color:var(--slate-2); }
+
+/* ------------------------------------------------------------
+   1. Étapes (processus réel → numérotation justifiée)
+   ------------------------------------------------------------ */
+.steps{ display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; }
+.step{
+  background:#fff; border:1px solid var(--hairline); border-radius:var(--radius);
+  padding:26px 26px 24px; position:relative; overflow:hidden;
+}
+.step__num{
+  font-family:var(--font-mono); font-size:13px; font-weight:500; color:var(--red);
+  letter-spacing:.08em; display:block; margin-bottom:14px;
+}
+.step__num::before{ content:"— "; }
+.step h3{ font-size:21px; margin-bottom:8px; }
+.step p{ color:var(--slate); font-size:15.5px; margin:0; }
+.step__bar{ position:absolute; left:0; top:0; height:4px; width:100%; background:var(--red); opacity:.85; }
+@media (max-width:900px){ .steps{ grid-template-columns:1fr 1fr; } }
+@media (max-width:600px){ .steps{ grid-template-columns:1fr; } }
+
+/* ------------------------------------------------------------
+   2. Checklist de documents
+   ------------------------------------------------------------ */
+.check-grid{ display:grid; grid-template-columns:280px 1fr; gap:36px; align-items:start; }
+.check-types{ display:flex; flex-direction:column; gap:8px; }
+.type-chip{
+  text-align:left; font-family:var(--font-body); font-size:15px; font-weight:500;
+  padding:13px 16px; border-radius:var(--radius-sm);
+  border:1px solid var(--hairline); background:#fff; color:var(--ink); cursor:pointer;
+  transition:border-color .12s ease, background .12s ease, color .12s ease;
+}
+.type-chip:hover{ border-color:var(--slate); }
+.type-chip[aria-selected="true"]{
+  background:var(--navy); border-color:var(--navy); color:#fff;
+}
+.check-panel{ background:#fff; border:1px solid var(--hairline); border-radius:var(--radius); padding:30px 32px; }
+.check-panel h3{ font-size:22px; margin-bottom:4px; }
+.check-panel__hint{ color:var(--slate); font-size:14.5px; margin:0 0 22px; }
+.doc{ display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--hairline); }
+.doc:last-child{ border-bottom:0; }
+.doc input{ margin-top:3px; width:18px; height:18px; accent-color:var(--red); cursor:pointer; flex:none; }
+.doc label{ cursor:pointer; font-size:16px; }
+.doc input:checked + label{ color:var(--slate); text-decoration:line-through; text-decoration-color:var(--red); }
+.check-progress{ margin-top:24px; font-family:var(--font-mono); font-size:13px; color:var(--slate); }
+.check-progress b{ color:var(--red); }
+@media (max-width:760px){ .check-grid{ grid-template-columns:1fr; } }
+
+/* ------------------------------------------------------------
+   3. Calculateur de délais
+   ------------------------------------------------------------ */
+.calc{ display:grid; grid-template-columns:320px 1fr; gap:36px; align-items:start; }
+.calc-form{ background:#fff; border:1px solid var(--hairline); border-radius:var(--radius); padding:26px; }
+.field{ margin-bottom:18px; }
+.field:last-child{ margin-bottom:0; }
+.field label{ display:block; font-weight:600; font-size:14.5px; margin-bottom:6px; }
+.field .hint{ font-weight:400; color:var(--slate); font-size:13px; }
+.field input[type="date"]{
+  width:100%; padding:12px 14px; font-family:var(--font-body); font-size:16px;
+  border:1px solid var(--hairline); border-radius:var(--radius-sm); background:var(--paper);
+  color:var(--ink);
+}
+.field input[type="date"]:focus{ outline:none; border-color:var(--navy); }
+.field .seg{ display:flex; gap:8px; }
+.field .seg button{
+  flex:1; padding:11px 12px; font-family:var(--font-body); font-size:14.5px; font-weight:500;
+  border:1px solid var(--hairline); background:#fff; border-radius:var(--radius-sm); cursor:pointer; color:var(--ink);
+}
+.field .seg button[aria-selected="true"]{ background:var(--ink); color:#fff; border-color:var(--ink); }
+.timeline{ display:flex; flex-direction:column; gap:0; }
+.milestone{
+  display:grid; grid-template-columns:150px 1fr; gap:22px; align-items:center;
+  padding:20px 0; border-bottom:1px solid var(--hairline); position:relative;
+}
+.milestone:last-child{ border-bottom:0; }
+.milestone__date{
+  font-family:var(--font-mono); font-size:13.5px; font-weight:500;
+  background:var(--paper-2); border:1px solid var(--hairline); border-radius:6px;
+  padding:10px 12px; text-align:center; line-height:1.35; color:var(--ink);
+}
+.milestone__date small{ display:block; font-size:11px; color:var(--slate); font-weight:400; letter-spacing:.02em; }
+.milestone--urgent .milestone__date{ background:var(--red); border-color:var(--red); color:#fff; }
+.milestone--urgent .milestone__date small{ color:rgba(255,255,255,.8); }
+.milestone__label{ font-weight:600; font-size:16px; }
+.milestone__desc{ font-size:14px; color:var(--slate); margin-top:2px; }
+.calc-empty{ color:var(--slate); font-size:16px; padding:40px; text-align:center; border:1px dashed var(--hairline); border-radius:var(--radius); }
+@media (max-width:760px){ .calc{ grid-template-columns:1fr; } .milestone{ grid-template-columns:120px 1fr; gap:14px; } }
+
+/* ------------------------------------------------------------
+   4. Générateur de courrier
+   ------------------------------------------------------------ */
+.gen{ display:grid; grid-template-columns:1fr 1.05fr; gap:40px; align-items:start; }
+.gen-form{ background:#fff; border:1px solid var(--hairline); border-radius:var(--radius); padding:30px; }
+.gen-form h3{ font-size:20px; margin-bottom:20px; }
+.letter-switch{ display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap; }
+.letter-switch button{
+  padding:10px 16px; font-family:var(--font-body); font-size:14px; font-weight:600;
+  border:1px solid var(--hairline); background:var(--paper); border-radius:999px; cursor:pointer; color:var(--ink);
+}
+.letter-switch button[aria-selected="true"]{ background:var(--red); color:#fff; border-color:var(--red); }
+.gen-form input, .gen-form select, .gen-form textarea{
+  width:100%; padding:11px 13px; font-family:var(--font-body); font-size:15.5px;
+  border:1px solid var(--hairline); border-radius:var(--radius-sm); background:var(--paper); color:var(--ink);
+}
+.gen-form input:focus, .gen-form select:focus, .gen-form textarea:focus{ outline:none; border-color:var(--navy); }
+.gen-form textarea{ resize:vertical; min-height:64px; }
+.grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+@media (max-width:600px){ .grid-2{ grid-template-columns:1fr; } }
+
+/* Aperçu */
+.gen-preview{ position:sticky; top:86px; }
+.letter-sheet{
+  background:var(--paper); border-radius:6px; box-shadow:var(--shadow-lg);
+  padding:40px 44px; position:relative; font-size:15px; line-height:1.65; color:var(--ink);
+}
+.letter-sheet__lr{ display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--hairline); padding-bottom:12px; margin-bottom:22px; }
+.letter-sheet__lr-label{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate); }
+.letter-sheet .barcode{ height:20px; width:140px; }
+.letter-addr{ display:flex; justify-content:space-between; gap:28px; margin-bottom:24px; font-size:13.5px; line-height:1.55; }
+.letter-addr__box{ flex:1; }
+.letter-meta{ font-family:var(--font-mono); font-size:12.5px; color:var(--slate); text-align:right; margin-bottom:20px; }
+.letter-body p{ margin:0 0 14px; }
+.letter-subject{ font-weight:600; margin-bottom:16px; }
+.letter-close{ margin-top:8px; }
+.letter-sign{ margin-top:34px; font-family:var(--font-display); font-style:italic; font-size:22px; }
+.gen-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:22px; }
+.gen-affiliate{
+  margin-top:22px; padding:16px 18px; border:1px dashed var(--hairline); border-radius:var(--radius-sm);
+  background:var(--paper-2); font-size:13.5px; color:var(--slate); display:none;
+}
+.gen-affiliate.is-visible{ display:block; }
+.gen-affiliate b{ color:var(--ink); }
+.gen-affiliate a{ color:var(--navy); }
+@media (max-width:900px){ .gen{ grid-template-columns:1fr; } .gen-preview{ position:static; } }
+
+/* ------------------------------------------------------------
+   Votre contrat (les clauses)
+   ------------------------------------------------------------ */
+.contract{ display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
+.contract-form{ background:#fff; border:1px solid var(--hairline); border-radius:var(--radius); padding:30px; }
+.contract-form h3{ font-size:20px; margin-bottom:8px; }
+.contract-form .lead{ color:var(--slate); font-size:14.5px; margin:0 0 22px; }
+.contract-form .lead em{ font-style:italic; color:var(--ink); }
+.contract-form input, .contract-form select, .contract-form textarea{
+  width:100%; padding:11px 13px; font-family:var(--font-body); font-size:15.5px;
+  border:1px solid var(--hairline); border-radius:var(--radius-sm); background:var(--paper); color:var(--ink);
+}
+.contract-form input:focus, .contract-form select:focus, .contract-form textarea:focus{ outline:none; border-color:var(--navy); }
+.contract-form textarea{ resize:vertical; min-height:56px; }
+
+.contract-recap{ position:sticky; top:86px; background:var(--ink); color:#fff; border-radius:var(--radius); padding:28px 28px 24px; }
+.contract-recap__head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+.contract-recap__title{ font-family:var(--font-display); font-size:20px; font-weight:600; }
+.contract-recap__status{ font-family:var(--font-mono); font-size:12px; color:var(--slate-2); }
+.contract-recap__status b{ color:var(--red); }
+.contract-recap__list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; }
+.contract-recap__row{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08); font-size:14px; }
+.contract-recap__row:last-child{ border-bottom:0; }
+.contract-recap__row .k{ color:var(--slate-2); }
+.contract-recap__row .v{ font-weight:600; color:#fff; text-align:right; }
+.contract-recap__row .v.is-empty{ color:var(--slate-2); font-weight:400; }
+.contract-recap__note{ margin:18px 0 0; font-size:12.5px; color:var(--slate-2); line-height:1.55; }
+.contract-recap__note a{ color:var(--red); }
+@media (max-width:760px){ .contract{ grid-template-columns:1fr; } .contract-recap{ position:static; } }
+
+/* ------------------------------------------------------------
+   Partenaires (affiliation discrète)
+   ------------------------------------------------------------ */
+.partners{ padding:64px 0; background:var(--paper-2); border-top:1px solid var(--hairline); }
+.partners__inner{ max-width:760px; margin:0 auto; text-align:center; padding:0 24px; }
+.partners__label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--slate); margin-bottom:18px; }
+.partners__links{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.partner-link{
+  font-size:14px; color:var(--slate); text-decoration:none; border-bottom:1px dotted var(--slate-2);
+  padding:2px 0;
+}
+.partner-link:hover{ color:var(--navy); border-color:var(--navy); }
+
+/* ------------------------------------------------------------
+   Pied de page
+   ------------------------------------------------------------ */
+.site-foot{ background:var(--ink); color:var(--slate-2); padding:64px 0 40px; font-size:14px; }
+.site-foot .wrap{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+.site-foot h4{ color:#fff; font-size:17px; margin-bottom:12px; }
+.site-foot p{ margin:0 0 10px; line-height:1.6; }
+.site-foot a{ color:#C6CEE0; }
+.site-foot__legal{ grid-column:1 / -1; border-top:1px solid rgba(255,255,255,.1); padding-top:24px; margin-top:8px; font-size:12.5px; line-height:1.7; color:var(--slate-2); }
+.site-foot__legal b{ color:#C6CEE0; }
+@media (max-width:700px){ .site-foot .wrap{ grid-template-columns:1fr; } }
+
+/* ------------------------------------------------------------
+   Impression — n'imprimer que la lettre
+   ------------------------------------------------------------ */
+@media print{
+  body *{ visibility:hidden; }
+  #letterSheet, #letterSheet *{ visibility:visible; }
+  #letterSheet{ position:absolute; left:0; top:0; width:100%; box-shadow:none; border-radius:0; }
+  .letter-sheet__lr, .gen-actions, .gen-affiliate{ display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================ EN-TÊTE ============================ -->
+<header class="site-head">
+  <div class="wrap site-head__inner">
+    <a class="brand" href="#top" aria-label="IndemniPro — accueil">
+      <span class="brand__name">Indemni<span class="accent">Pro</span></span>
+      <span class="brand__tag">sinistre · assurance pro</span>
+    </a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="#etapes">Étapes</a>
+      <a href="#documents">Documents</a>
+      <a href="#delais">Délais</a>
+      <a href="#contrat">Mon contrat</a>
+      <a href="#rediger">Rédiger mon courrier</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero">
+    <div class="wrap hero__inner">
+      <div>
+        <span class="eyebrow"><span class="dot"></span>TPE · PME · artisans · commerçants</span>
+        <h1>Votre sinistre pro traîne. <em>Accélérez le remboursement.</em></h1>
+        <p class="hero__sub">
+          Un sinistre non indemnisé, c'est de la trésorerie qui dort. Générez en deux minutes
+          le courrier recommandé qui fait avancer votre dossier — relance, mise en demeure,
+          saisine du médiateur.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--red" href="#rediger">Rédiger mon courrier</a>
+          <a class="btn btn--ghost" href="#delais" style="color:#fff;border-color:rgba(255,255,255,.25)">Calculer mes délais</a>
+        </div>
+        <p class="hero__note">Envoyé en <span class="lrar">LRAR</span> — la preuve qui protège vos droits.</p>
+      </div>
+
+      <div class="hero__letter" aria-hidden="true">
+        <div class="sheet">
+          <div class="sheet__lr">
+            <span class="sheet__lr-label">Lettre recommandée avec accusé de réception</span>
+            <span class="barcode"></span>
+          </div>
+          <div class="sheet__body">
+            <div class="sheet__row">
+              <div class="sheet__addr">
+                <strong>Boulangerie Martin</strong><br>
+                12 rue des Artisans<br>
+                69003 Lyon
+              </div>
+              <div class="sheet__addr" style="text-align:right">
+                <strong>Assurances Berthier</strong><br>
+                Service sinistres pro<br>
+                75009 Paris
+              </div>
+            </div>
+            <div class="sheet__divider"></div>
+            <div class="sheet__objet">Objet : Mise en demeure — sinistre n° 2026-0417</div>
+            <p style="margin:0;font-size:13px">
+              Madame, Monsieur,<br><br>
+              Malgré ma déclaration de sinistre du 2 septembre 2026 et mes relances,
+              aucune indemnisation ne m'a été versée à ce jour. Conformément à l'article
+              L. 113-5 du Code des assurances…
+            </p>
+            <div class="sheet__signature">Je vous prie d'agréer…</div>
+          </div>
+        </div>
+        <div class="stamp">
+          <span class="stamp__top">Courrier</span>
+          <span class="stamp__mid">PRIORITAIRE</span>
+          <span class="stamp__bot">à traiter sans délai</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 1. ÉTAPES ============================ -->
+  <section class="section" id="etapes">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">La méthode</span>
+        <h2>Les six gestes qui font avancer un dossier</h2>
+        <p>Dans l'ordre. Chaque étape manquée, c'est un retard d'indemnisation de plus.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="step__bar"></span><span class="step__num">1</span><h3>Déclarez le sinistre</h3><p>Par écrit, dans les 5 jours ouvrés (2 jours pour un vol). Gardez la preuve d'envoi : c'est elle qui fait foi.</p></div>
+        <div class="step"><span class="step__bar"></span><span class="step__num">2</span><h3>Préservez les preuves</h3><p>Photos datées, factures, et laissez les biens endommagés à disposition de l'expert.</p></div>
+        <div class="step"><span class="step__bar"></span><span class="step__num">3</span><h3>Limitez l'aggravation</h3><p>Coupez l'eau, sécurisez les lieux, protégez ce qui peut l'être. L'assureur vous le demande.</p></div>
+        <div class="step"><span class="step__bar"></span><span class="step__num">4</span><h3>Constituez le dossier</h3><p>Rassemblez les justificatifs du préjudice (checklist ci-dessous, adaptée à votre sinistre).</p></div>
+        <div class="step"><span class="step__bar"></span><span class="step__num">5</span><h3>Chiffrez votre demande</h3><p>Appuyez-vous sur des devis et factures pour estimer un montant précis et défendable.</p></div>
+        <div class="step"><span class="step__bar"></span><span class="step__num">6</span><h3>Relancez, puis montez en puissance</h3><p>Relance → mise en demeure → médiateur → tribunal. Le générateur ci-dessous rédige les trois premiers.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 2. CHECKLIST ============================ -->
+  <section class="section section--alt" id="documents">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Votre dossier</span>
+        <h2>Les documents à réunir, sinistre par sinistre</h2>
+        <p>Choisissez votre sinistre : la liste des justificatifs attendus s'affiche. Cochez au fur et à mesure.</p>
+      </div>
+      <div class="check-grid">
+        <div class="check-types" role="tablist" aria-label="Type de sinistre"></div>
+        <div class="check-panel">
+          <h3 id="checkTitle">—</h3>
+          <p class="check-panel__hint" id="checkHint">—</p>
+          <div id="checkList"></div>
+          <p class="check-progress" id="checkProgress"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 3. DÉLAIS ============================ -->
+  <section class="section" id="delais">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Le calendrier</span>
+        <h2>Vos dates limites, calculées automatiquement</h2>
+        <p>Indiquez la date du sinistre. Les délais légaux s'affichent (jours ouvrés, hors jours fériés).</p>
+      </div>
+      <div class="calc">
+        <div class="calc-form">
+          <div class="field">
+            <label for="sinistreDate">Date du sinistre</label>
+            <input type="date" id="sinistreDate">
+          </div>
+          <div class="field">
+            <label>Nature du sinistre</label>
+            <div class="seg" role="group" aria-label="Nature du sinistre">
+              <button type="button" data-deadline="standard" aria-selected="true">Standard</button>
+              <button type="button" data-deadline="vol" aria-selected="false">Vol</button>
+            </div>
+          </div>
+        </div>
+        <div id="timeline" class="timeline">
+          <div class="calc-empty">Choisissez une date pour afficher vos échéances.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 3bis. VOTRE CONTRAT ============================ -->
+  <section class="section section--alt" id="contrat">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Votre contrat</span>
+        <h2>Les clauses qui changent votre indemnisation</h2>
+        <p>Sortez votre police et notez ces informations — y compris les clauses particulières propres à votre contrat. Elles alimentent ensuite votre calendrier et vos courriers.</p>
+      </div>
+      <div class="contract">
+        <form class="contract-form" id="contractForm" autocomplete="off">
+          <h3>Je lis mon contrat, je note</h3>
+          <p class="lead">Dans vos conditions générales, cherchez cinq mots : <em>délai de déclaration</em>, <em>franchise</em>, <em>plafond</em> (ou <em>limite de garantie</em>), <em>vétusté</em> (ou <em>valeur à neuf</em>) et <em>exclusions</em>. Ajoutez en texte libre toute autre clause particulière que vous repérez.</p>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="cDelai">Délai de déclaration <span class="hint">(jours ouvrés)</span></label>
+              <input id="cDelai" inputmode="numeric" placeholder="5">
+            </div>
+            <div class="field">
+              <label for="cFranchise">Franchise <span class="hint">(€, à votre charge)</span></label>
+              <input id="cFranchise" inputmode="numeric" placeholder="250">
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="cPlafond">Plafond de garantie <span class="hint">(€, montant max.)</span></label>
+              <input id="cPlafond" inputmode="numeric" placeholder="50000">
+            </div>
+            <div class="field">
+              <label for="cValeur">Règle de valeur</label>
+              <select id="cValeur">
+                <option value="">Je ne sais pas encore</option>
+                <option value="neuf">Valeur à neuf (vétusté non déduite)</option>
+                <option value="vetuste">Vétusté déduite</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="cExclusions">Exclusions <span class="hint">(facultatif)</span></label>
+            <textarea id="cExclusions" placeholder="Ex. : vol sans effraction, remontée d'égout…"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="cAutres">Autres clauses particulières <span class="hint">(facultatif — texte libre)</span></label>
+            <textarea id="cAutres" placeholder="Ex. : règle proportionnelle, déchéance de garantie, plafond par poste, franchise vol majorée…"></textarea>
+          </div>
+        </form>
+
+        <aside class="contract-recap">
+          <div class="contract-recap__head">
+            <span class="contract-recap__title">Votre contrat en bref</span>
+            <span class="contract-recap__status" id="contractStatus"></span>
+          </div>
+          <ul class="contract-recap__list" id="contractRecapList"></ul>
+          <p class="contract-recap__note">Ces informations alimentent votre <a href="#delais">calendrier</a> et votre <a href="#rediger">mise en demeure</a>. Rien n'est envoyé ni enregistré&nbsp;: tout reste dans votre navigateur.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 4. GÉNÉRATEUR ============================ -->
+  <section class="section" id="rediger">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Le générateur</span>
+        <h2>Votre courrier, prêt à envoyer</h2>
+        <p>Remplissez vos informations, choisissez le courrier, puis copiez, téléchargez ou imprimez.</p>
+      </div>
+
+      <div class="gen">
+        <!-- Formulaire -->
+        <form class="gen-form" id="genForm" autocomplete="off">
+          <div class="letter-switch" role="group" aria-label="Type de courrier">
+            <button type="button" data-letter="relance" aria-selected="true">Relance</button>
+            <button type="button" data-letter="demeure" aria-selected="false">Mise en demeure</button>
+            <button type="button" data-letter="mediateur" aria-selected="false">Médiateur</button>
+          </div>
+
+          <div class="field"><label for="fRaison">Raison sociale</label><input id="fRaison" placeholder="Boulangerie Martin"></div>
+          <div class="grid-2">
+            <div class="field"><label for="fForme">Forme juridique <span class="hint">(facultatif)</span></label><input id="fForme" placeholder="SARL"></div>
+            <div class="field"><label for="fGerant">Représentant·e légal·e <span class="hint">(facultatif)</span></label><input id="fGerant" placeholder="Claire Martin"></div>
+          </div>
+          <div class="field"><label for="fAdresse">Adresse de l'entreprise</label><input id="fAdresse" placeholder="12 rue des Artisans"></div>
+          <div class="grid-2">
+            <div class="field"><label for="fCp">Code postal</label><input id="fCp" placeholder="69003"></div>
+            <div class="field"><label for="fVille">Ville</label><input id="fVille" placeholder="Lyon"></div>
+          </div>
+          <div class="field"><label for="fAssureur">Assureur</label><input id="fAssureur" placeholder="Assurances Berthier"></div>
+          <div class="field"><label for="fAssAdresse">Adresse de l'assureur <span class="hint">(facultatif)</span></label><input id="fAssAdresse" placeholder="Service sinistres pro"></div>
+          <div class="grid-2">
+            <div class="field"><label for="fPolice">N° de contrat</label><input id="fPolice" placeholder="PRO-2026-8842"></div>
+            <div class="field"><label for="fRef">N° de sinistre / dossier</label><input id="fRef" placeholder="2026-0417"></div>
+          </div>
+          <div class="field">
+            <label for="fType">Type de sinistre</label>
+            <select id="fType">
+              <option>Dégâts des eaux</option>
+              <option>Incendie / explosion</option>
+              <option>Vol / vandalisme</option>
+              <option>Bris de machine</option>
+              <option>Responsabilité civile pro</option>
+              <option>Perte d'exploitation</option>
+              <option>Bris de glace</option>
+              <option>Catastrophe naturelle / tempête</option>
+            </select>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label for="fDateSinistre">Date du sinistre</label><input type="date" id="fDateSinistre"></div>
+            <div class="field"><label for="fDateDecla">Date de déclaration <span class="hint">(facultatif)</span></label><input type="date" id="fDateDecla"></div>
+          </div>
+          <div class="field"><label for="fMontant">Montant réclamé (€) <span class="hint">(facultatif)</span></label><input id="fMontant" inputmode="numeric" placeholder="8500"></div>
+          <div class="field"><label for="fDesc">Décrivez brièvement le sinistre <span class="hint">(facultatif)</span></label><textarea id="fDesc" placeholder="Dégât des eaux suite à une rupture de canalisation dans l'atelier le…"></textarea></div>
+        </form>
+
+        <!-- Aperçu -->
+        <div class="gen-preview">
+          <div class="letter-sheet" id="letterSheet">
+            <div class="letter-sheet__lr">
+              <span class="letter-sheet__lr-label">Lettre recommandée avec accusé de réception</span>
+              <span class="barcode"></span>
+            </div>
+            <div class="letter-addr" id="letterAddr"></div>
+            <div class="letter-meta" id="letterMeta"></div>
+            <div class="letter-subject" id="letterSubject"></div>
+            <div class="letter-body" id="letterBody"></div>
+            <div class="letter-sign" id="letterSign"></div>
+          </div>
+
+          <div class="gen-actions">
+            <button class="btn btn--navy" id="btnCopy" type="button">Copier</button>
+            <button class="btn btn--navy" id="btnDownload" type="button">Télécharger .doc</button>
+            <button class="btn btn--ghost" id="btnPrint" type="button">Imprimer / PDF</button>
+          </div>
+
+          <div class="gen-affiliate" id="affiliateNote"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ PARTENAIRES ============================ -->
+  <section class="partners">
+    <div class="partners__inner">
+      <p class="partners__label">Partenaires</p>
+      <div class="partners__links" id="partnerLinks"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================ PIED DE PAGE ============================ -->
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <h4>IndemniPro</h4>
+      <p>Un outil d'aide à la rédaction de vos courriers de sinistre, pensé pour les TPE et PME françaises.</p>
+    </div>
+    <div>
+      <h4>Sources officielles</h4>
+      <p><a href="https://www.legifrance.gouv.fr" rel="noopener" target="_blank">Code des assurances — Légifrance</a></p>
+      <p><a href="https://www.mediation-assurance.org/" rel="noopener" target="_blank">La Médiation de l'assurance</a></p>
+      <p><a href="https://www.service-public.gouv.fr" rel="noopener" target="_blank">Service-Public.fr</a></p>
+    </div>
+    <div class="site-foot__legal">
+      <b>Mentions légales</b> — IndemniPro est un service d'information et d'aide à la rédaction.
+      Il <b>n'est pas un intermédiaire en assurance</b> au sens de l'article L. 511-1 du Code des assurances et
+      n'est pas immatriculé à l'ORIAS. Il ne fournit <b>ni conseil juridique ni conseil en assurance</b>.
+      Les délais indiqués sont ceux prévus par le Code des assurances et la réglementation en vigueur ;
+      <b>votre contrat d'assurance peut prévoir des délais différents</b> — vérifiez votre police avant toute démarche.
+      Les courriers générés sont des modèles : adaptez-les à votre situation. Les liens « Partenaires » peuvent
+      être des liens d'affiliation rémunérés. Les délais sont calculés hors jours fériés et ne constituent qu'une aide indicative.
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   INDEMNIPRO — logique applicative
+   ============================================================ */
+
+/* -------------------------------------------
+   ⚠️ LIENS D'AFFILIATION
+   Remplacez les URL "#" ci-dessous par vos liens
+   réels d'affiliation. Ils s'affichent de façon
+   discrète, en fin de parcours (après obtention
+   du courrier) et dans la bande « Partenaires ».
+   ------------------------------------------- */
+const AFFILIATE_LINKS = [
+  { label: "Assistance juridique spécialisée",   url: "#" },
+  { label: "Comparateur d'assurance pro",        url: "#" },
+  { label: "Expert indépendant en sinistres",    url: "#" }
+];
+
+/* -------------------------------------------
+   Données : checklist de documents par sinistre
+   ------------------------------------------- */
+const CHECKLISTS = {
+  "dégâts-des-eaux": {
+    title: "Dégâts des eaux",
+    hint: "Le sinistre le plus fréquent. Photos et devis font l'essentiel du dossier.",
+    docs: [
+      "Formulaire de déclaration de sinistre (ou courrier)",
+      "N° de police / attestation d'assurance",
+      "Photos et vidéos datées des dommages",
+      "Rapport de recherche de fuite (si applicable)",
+      "Factures ou devis de réparation",
+      "Factures d'achat des biens endommagés"
+    ]
+  },
+  "incendie": {
+    title: "Incendie / explosion",
+    hint: "Sinistre lourd : le rapport des pompiers et l'inventaire sont déterminants.",
+    docs: [
+      "Formulaire de déclaration de sinistre",
+      "N° de police / attestation d'assurance",
+      "Rapport d'intervention des pompiers",
+      "Photos et vidéos des dégâts",
+      "Inventaire des biens détruits avec factures",
+      "Devis de reconstruction ou de réparation",
+      "Justificatifs de relogement ou d'hébergement (si besoin)"
+    ]
+  },
+  "vol-vandalisme": {
+    title: "Vol / vandalisme",
+    hint: "Le dépôt de plainte (ou la main courante) est quasiment toujours exigé.",
+    docs: [
+      "Formulaire de déclaration de sinistre",
+      "N° de police / attestation d'assurance",
+      "Dépôt de plainte ou main courante (commissariat / gendarmerie)",
+      "Photos des effractions et dégâts",
+      "Inventaire des biens volés avec factures",
+      "Devis de remplacement des biens",
+      "Témoignages éventuels"
+    ]
+  },
+  "bris-machine": {
+    title: "Bris de machine",
+    hint: "Le rapport du technicien est la pièce centrale du dossier.",
+    docs: [
+      "Formulaire de déclaration de sinistre",
+      "N° de police / attestation d'assurance",
+      "Rapport du technicien ou du fabricant",
+      "Facture d'achat de la machine",
+      "Devis de réparation ou de remplacement",
+      "Photos de la panne / des dégâts"
+    ]
+  },
+  "rc-pro": {
+    title: "Responsabilité civile pro",
+    hint: "Un tiers vous réclame réparation : documentez le dommage et votre lien avec celui-ci.",
+    docs: [
+      "Formulaire de déclaration de sinistre",
+      "N° de police / attestation d'assurance",
+      "Réclamation reçue du tiers (courrier, constat)",
+      "Description détaillée du dommage causé au tiers",
+      "Photos et éléments de preuve",
+      "Contrat, devis ou facture concernés",
+      "Coordonnées du tiers lésé"
+    ]
+  },
+  "perte-exploitation": {
+    title: "Perte d'exploitation",
+    hint: "Sinistre comptable : l'expert-comptable est votre meilleur allié.",
+    docs: [
+      "Formulaire de déclaration de sinistre",
+      "N° de police / attestation d'assurance",
+      "Bilans et comptes de résultat (3 dernières années)",
+      "Attestation de l'expert-comptable",
+      "Chiffre d'affaires de la période touchée",
+      "Justificatifs des charges fixes (loyers, salaires…)",
+      "Rapport d'expert (si missionné)"
+    ]
+  },
+  "bris-glace": {
+    title: "Bris de glace",
+    hint: "Vitrines et vitrages : le devis du vitrier suffit souvent.",
+    docs: [
+      "Formulaire de déclaration de sinistre",
+      "N° de police / attestation d'assurance",
+      "Photos du vitrage endommagé",
+      "Devis de remplacement du vitrage",
+      "Facture du vitrier (après réparation)"
+    ]
+  },
+  "catnat-tempete": {
+    title: "Catastrophe naturelle / tempête",
+    hint: "Pour une catnat, l'arrêté interministériel est la clé du dossier.",
+    docs: [
+      "Formulaire de déclaration de sinistre",
+      "N° de police / attestation d'assurance",
+      "Arrêté de catastrophe naturelle (si catnat)",
+      "Photos des dommages",
+      "Factures et devis de réparation",
+      "Rapport d'expert (si missionné)"
+    ]
+  }
+};
+
+/* -------------------------------------------
+   Données : délais légaux (jours ouvrés / calendaires)
+   ------------------------------------------- */
+function parseDate(s){
+  const [y, m, d] = s.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+function isWeekend(d){ const day = d.getDay(); return day === 0 || day === 6; }
+function addWorkingDays(date, n){
+  const d = new Date(date);
+  let added = 0;
+  while(added < n){
+    d.setDate(d.getDate() + 1);
+    if(!isWeekend(d)) added++;
+  }
+  return d;
+}
+function addDays(date, n){ const d = new Date(date); d.setDate(d.getDate() + n); return d; }
+function fmtFull(d){ return new Intl.DateTimeFormat("fr-FR", { day:"2-digit", month:"long", year:"numeric" }).format(d); }
+function fmtShort(d){ return new Intl.DateTimeFormat("fr-FR", { day:"2-digit", month:"2-digit", year:"numeric" }).format(d); }
+
+/* -------------------------------------------
+   Générateur de courrier
+   ------------------------------------------- */
+const state = { letterType: "relance" };
+const contract = { delai: "", franchise: "", plafond: "", valeur: "", exclusions: "", autres: "" };
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+}
+function val(id){ return document.getElementById(id).value.trim(); }
+
+/* -------------------------------------------
+   Votre contrat — les clauses
+   ------------------------------------------- */
+function readContract(){
+  contract.delai      = val("cDelai");
+  contract.franchise  = val("cFranchise");
+  contract.plafond    = val("cPlafond");
+  contract.valeur     = document.getElementById("cValeur").value;
+  contract.exclusions = val("cExclusions");
+  contract.autres     = val("cAutres");
+}
+function frList(items){
+  if(items.length === 0) return "";
+  if(items.length === 1) return items[0];
+  return items.slice(0, -1).join(", ") + " et " + items[items.length - 1];
+}
+function contractMentionsHTML(){
+  const parts = [];
+  if(contract.franchise) parts.push(`une franchise contractuelle de <strong>${escapeHtml(contract.franchise)} €</strong>`);
+  if(contract.plafond)   parts.push(`un plafond de garantie de <strong>${escapeHtml(contract.plafond)} €</strong>`);
+  if(contract.valeur === "neuf")      parts.push("une indemnisation en <strong>valeur à neuf</strong>");
+  else if(contract.valeur === "vetuste") parts.push("une indemnisation en <strong>valeur vétusté déduite</strong>");
+  return frList(parts);
+}
+function renderContractRecap(){
+  const rows = [
+    { k: "Délai de déclaration", v: contract.delai ? contract.delai + " jours ouvrés" : "—", filled: !!contract.delai },
+    { k: "Franchise",            v: contract.franchise ? contract.franchise + " €" : "—", filled: !!contract.franchise },
+    { k: "Plafond de garantie",  v: contract.plafond ? contract.plafond + " €" : "—", filled: !!contract.plafond },
+    { k: "Règle de valeur",      v: contract.valeur === "neuf" ? "Valeur à neuf" : contract.valeur === "vetuste" ? "Vétusté déduite" : "—", filled: !!contract.valeur },
+    { k: "Exclusions notées",    v: contract.exclusions ? "Oui" : "—", filled: !!contract.exclusions },
+    { k: "Clauses particulières", v: contract.autres ? "Oui" : "—", filled: !!contract.autres }
+  ];
+  document.getElementById("contractRecapList").innerHTML = rows.map(r =>
+    `<li class="contract-recap__row"><span class="k">${r.k}</span><span class="v${r.filled ? "" : " is-empty"}">${escapeHtml(r.v)}</span></li>`
+  ).join("");
+  const n = rows.filter(r => r.filled).length;
+  document.getElementById("contractStatus").innerHTML = `<b>${n}</b> / 6`;
+}
+function onContractChange(){
+  readContract();
+  renderContractRecap();
+  renderDeadlines();
+  renderLetter();
+}
+
+function todayFR(){
+  return fmtFull(new Date());
+}
+
+function buildLetter(){
+  const raison   = val("fRaison")   || "Votre entreprise";
+  const forme    = val("fForme");
+  const gerant   = val("fGerant");
+  const adresse  = val("fAdresse")  || "Votre adresse";
+  const cp       = val("fCp");
+  const ville    = val("fVille")    || "Votre ville";
+  const assureur = val("fAssureur") || "Votre assureur";
+  const assAdr   = val("fAssAdresse") || "Service sinistres";
+  const police   = val("fPolice")   || "—";
+  const ref      = val("fRef")      || "—";
+  const type     = val("fType");
+  const dSinistre= val("fDateSinistre");
+  const dDecla   = val("fDateDecla") || dSinistre;
+  const montant  = val("fMontant");
+  const desc     = val("fDesc");
+
+  const sinistreFR = dSinistre ? fmtFull(parseDate(dSinistre)) : "[date du sinistre]";
+  const declaFR    = dDecla    ? fmtFull(parseDate(dDecla))    : "[date de déclaration]";
+
+  const raisonComplete = forme ? `${raison} — ${forme}` : raison;
+
+  // bloc adresses
+  const sender = [
+    `<strong>${escapeHtml(raisonComplete)}</strong>`,
+    gerant ? escapeHtml(gerant) : "",
+    escapeHtml(adresse),
+    (cp || ville) ? escapeHtml([cp, ville].filter(Boolean).join(" ")) : ""
+  ].filter(Boolean).join("<br>");
+
+  const recipient = [
+    `<strong>${escapeHtml(assureur)}</strong>`,
+    escapeHtml(assAdr)
+  ].filter(Boolean).join("<br>");
+
+  const lieu = ville;
+  const meta = lieu ? `Fait à ${escapeHtml(lieu)}, le ${todayFR()}` : `Le ${todayFR()}`;
+
+  const description = desc
+    ? desc
+    : `un sinistre de type « ${type} »`;
+
+  let subject = "", pj = "", body = "", sign = "";
+
+  if(state.letterType === "relance"){
+    subject = `Objet : Relance — indemnisation du sinistre n° ${ref}`;
+    pj = "PJ : copie des justificatifs déjà transmis";
+    body = `
+      <p>Madame, Monsieur,</p>
+      <p>Par lettre recommandée du ${declaFR}, je vous ai déclaré le sinistre suivant,
+      survenu le ${sinistreFR} : ${escapeHtml(description)}.</p>
+      <p>Mon dossier porte la référence n° ${ref} (contrat n° ${police}).</p>
+      <p>À ce jour, et malgré l'envoi des justificatifs demandés, je n'ai reçu
+      ni offre d'indemnisation ni proposition de règlement.</p>
+      <p>Je vous remercie de bien vouloir m'indiquer, sous huit jours, l'état d'avancement
+      de mon dossier ainsi que le délai dans lequel l'indemnisation interviendra.</p>`;
+    sign = "Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.";
+  }
+  else if(state.letterType === "demeure"){
+    subject = `Objet : Mise en demeure de régler l'indemnité — sinistre n° ${ref}`;
+    pj = "PJ : déclaration de sinistre, justificatifs, devis et factures";
+    const montantFR = montant ? `la somme de <strong>${escapeHtml(montant)} €</strong>` : "l'indemnité correspondant au préjudice subi";
+    const mentions = contractMentionsHTML();
+    body = `
+      <p>Madame, Monsieur,</p>
+      <p>Par lettre recommandée du ${declaFR}, je vous ai déclaré le sinistre suivant,
+      survenu le ${sinistreFR} : ${escapeHtml(description)} (dossier n° ${ref}, contrat n° ${police}).</p>
+      <p>Malgré mes relances, aucune indemnisation ne m'a été versée à ce jour.</p>
+      <p>Conformément à l'article <strong>L. 113-5 du Code des assurances</strong>, l'assureur doit verser
+      l'indemnité dans les 30 jours suivant l'accord des parties. À défaut, l'indemnité produit de plein droit
+      intérêts au double du taux de l'intérêt légal.</p>
+      ${mentions ? `<p>Mon contrat prévoit ${mentions}. J'entends que ces conditions contractuelles soient appliquées au calcul de l'indemnité.</p>` : ""}
+      ${contract.autres ? `<p>Mon contrat comporte en outre les conditions particulières suivantes : ${escapeHtml(contract.autres)}. J'entends qu'elles soient appliquées loyalement.</p>` : ""}
+      <p>En conséquence, je vous mets en demeure de me régler ${montantFR} au titre de ce sinistre,
+      dans un délai de quinze jours à compter de la réception de la présente.</p>
+      <p>À défaut de règlement dans ce délai, je me réserve le droit de saisir le Médiateur de l'assurance
+      puis, le cas échéant, les tribunaux compétents, sans autre préavis.</p>`;
+    sign = "Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.";
+  }
+  else { // médiateur
+    subject = `Objet : Saisine du Médiateur de l'assurance — sinistre n° ${ref}`;
+    pj = "PJ : copie de la réclamation préalable et justificatifs";
+    body = `
+      <p>Madame, Monsieur le Médiateur,</p>
+      <p>Assuré auprès de ${escapeHtml(assureur)} (contrat n° ${police}), je n'ai pu obtenir
+      satisfaction de mon assureur à la suite du sinistre suivant, survenu le ${sinistreFR} :
+      ${escapeHtml(description)} (dossier n° ${ref}).</p>
+      <p>J'ai adressé à mon assureur une réclamation écrite du ${declaFR}, restée sans réponse
+      satisfaisante depuis plus de deux mois.</p>
+      <p>Je sollicite votre intervention afin de trouver une solution amiable à ce litige.</p>
+      <p>Vous trouverez ci-joint l'ensemble des pièces du dossier, notamment la copie de ma
+      réclamation préalable.</p>`;
+    sign = "Je vous prie d'agréer, Madame, Monsieur le Médiateur, l'expression de ma haute considération.";
+  }
+
+  return { subject, pj, meta, sender, recipient, body, sign, raisonComplete, ref, assureur };
+}
+
+function renderLetter(){
+  const L = buildLetter();
+  document.getElementById("letterAddr").innerHTML =
+    `<div class="letter-addr__box">${L.sender}</div>
+     <div class="letter-addr__box" style="text-align:right">${L.recipient}</div>`;
+  document.getElementById("letterMeta").innerHTML = `${L.meta}<br>${L.pj}`;
+  document.getElementById("letterSubject").textContent = L.subject;
+  document.getElementById("letterBody").innerHTML = L.body;
+  document.getElementById("letterSign").textContent = L.sign;
+}
+
+function decodeEntities(s){
+  const el = document.createElement("textarea");
+  el.innerHTML = s;
+  return el.value;
+}
+// Convertit le HTML en texte : <br> → saut de ligne, </p> → double saut,
+// puis retire les balises restantes.
+function stripTags(s){
+  return s
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/p>/gi, "\n\n")
+    .replace(/<[^>]+>/g, "");
+}
+function letterPlainText(){
+  const L = buildLetter();
+  const sender = stripTags(L.sender).trim();
+  const recipient = stripTags(L.recipient).trim();
+  const body = stripTags(L.body).trim();
+  return decodeEntities([
+    "LETTRE RECOMMANDÉE AVEC ACCUSÉ DE RÉCEPTION",
+    "",
+    sender,
+    "",
+    recipient,
+    "",
+    L.meta,
+    "",
+    L.subject,
+    "",
+    body,
+    "",
+    L.sign,
+    ""
+  ].join("\n")).replace(/\n{3,}/g, "\n\n").trim();
+}
+
+function letterDocHtml(){
+  const L = buildLetter();
+  const sender = L.sender.replace(/<br>/g, "<br/>");
+  const recipient = L.recipient.replace(/<br>/g, "<br/>");
+  const body = L.body;
+  return `<!DOCTYPE html>
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word">
+<head><meta charset="utf-8"><title>${escapeHtml(L.subject)}</title></head>
+<body style="font-family:'Times New Roman',serif;font-size:12pt;color:#000;">
+  <p style="font-family:Arial,sans-serif;font-size:9pt;color:#666;letter-spacing:.1em;">LETTRE RECOMMANDÉE AVEC ACCUSÉ DE RÉCEPTION</p>
+  <table width="100%"><tr>
+    <td style="vertical-align:top;">${sender}</td>
+    <td style="vertical-align:top;text-align:right;">${recipient}</td>
+  </tr></table>
+  <br/>
+  <p style="text-align:right;">${L.meta}</p>
+  <p><b>${escapeHtml(L.subject)}</b></p>
+  <p style="color:#444;">${L.pj}</p>
+  <br/>
+  ${body.replace(/<p>/g, '<p style="text-align:justify;">')}
+  <p style="text-align:justify;">${L.sign}</p>
+</body></html>`;
+}
+
+/* -------------------------------------------
+   Checklist de documents
+   ------------------------------------------- */
+const typeKeys = Object.keys(CHECKLISTS);
+const typeListEl = document.querySelector(".check-types");
+let activeType = typeKeys[0];
+
+function renderTypes(){
+  typeListEl.innerHTML = "";
+  typeKeys.forEach(key => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "type-chip";
+    b.setAttribute("role", "tab");
+    b.setAttribute("aria-selected", key === activeType ? "true" : "false");
+    b.textContent = CHECKLISTS[key].title;
+    b.addEventListener("click", () => selectType(key));
+    typeListEl.appendChild(b);
+  });
+}
+function selectType(key){
+  activeType = key;
+  renderTypes();
+  renderDocs();
+}
+function renderDocs(){
+  const data = CHECKLISTS[activeType];
+  document.getElementById("checkTitle").textContent = data.title;
+  document.getElementById("checkHint").textContent = data.hint;
+  const list = document.getElementById("checkList");
+  list.innerHTML = "";
+  data.docs.forEach(doc => {
+    const row = document.createElement("div");
+    row.className = "doc";
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.id = "doc-" + data.docs.indexOf(doc) + "-" + activeType;
+    const label = document.createElement("label");
+    label.htmlFor = cb.id;
+    label.textContent = doc;
+    cb.addEventListener("change", updateProgress);
+    row.appendChild(cb);
+    row.appendChild(label);
+    list.appendChild(row);
+  });
+  updateProgress();
+}
+function updateProgress(){
+  const boxes = document.querySelectorAll("#checkList input[type=checkbox]");
+  const done = Array.from(boxes).filter(b => b.checked).length;
+  document.getElementById("checkProgress").innerHTML =
+    `<b>${done}</b> / ${boxes.length} document${boxes.length > 1 ? "s" : ""} réuni${boxes.length > 1 ? "s" : ""}`;
+}
+
+/* -------------------------------------------
+   Calculateur de délais
+   ------------------------------------------- */
+let deadlineType = "standard";
+function renderDeadlines(){
+  const input = document.getElementById("sinistreDate").value;
+  const box = document.getElementById("timeline");
+  if(!input){
+    box.innerHTML = `<div class="calc-empty">Choisissez une date pour afficher vos échéances.</div>`;
+    return;
+  }
+  const base = parseDate(input);
+  const isVol = deadlineType === "vol";
+  const declDelai = parseInt(contract.delai, 10) || (isVol ? 2 : 5);
+  const decl = addWorkingDays(base, declDelai);
+  const relance = addDays(base, 30);
+  const demeure = addDays(base, 45);
+  const mediateur = addDays(base, 60);
+  const prescription = addDays(base, 730);
+
+  const items = [
+    { date: decl, small: contract.delai ? declDelai + " j ouvrés (contrat)" : (isVol ? "2 jours ouvrés" : "5 jours ouvrés"), label: "Dernier délai pour déclarer", desc: "Déclaration du sinistre à l'assureur (art. L. 113-2 du Code des assurances).", urgent: true },
+    { date: relance, small: "30 jours", label: "Première relance", desc: "Sans nouvelle de l'assureur, adressez une relance écrite.", urgent: false },
+    { date: demeure, small: "45 jours", label: "Mise en demeure", desc: "Exigez le règlement en visant l'article L. 113-5 (intérêts de retard).", urgent: false },
+    { date: mediateur, small: "≈ 2 mois", label: "Saisie du Médiateur", desc: "Possible après une réclamation écrite restée plus de 2 mois sans issue.", urgent: false },
+    { date: prescription, small: "2 ans", label: "Prescription", desc: "Dernier délai pour agir en justice (art. L. 114-1 du Code des assurances).", urgent: false }
+  ];
+
+  box.innerHTML = items.map(it => `
+    <div class="milestone ${it.urgent ? "milestone--urgent" : ""}">
+      <div class="milestone__date">${fmtShort(it.date)}<small>${it.small}</small></div>
+      <div>
+        <div class="milestone__label">${it.label}</div>
+        <div class="milestone__desc">${it.desc}</div>
+      </div>
+    </div>`).join("");
+}
+
+/* -------------------------------------------
+   Liens d'affiliation (discrets)
+   ------------------------------------------- */
+function renderPartnerLinks(){
+  document.getElementById("partnerLinks").innerHTML = AFFILIATE_LINKS.map(l =>
+    `<a class="partner-link" href="${l.url}" rel="sponsored noopener">${l.label}</a>`
+  ).join("");
+}
+function showAffiliateNote(){
+  const el = document.getElementById("affiliateNote");
+  el.classList.add("is-visible");
+  el.innerHTML = `<b>Votre courrier est prêt ✅</b> Pour la suite de vos démarches, ces services peuvent vous aider :
+    ${AFFILIATE_LINKS.map(l => `<a href="${l.url}" rel="sponsored noopener">${l.label}</a>`).join(" · ")}`;
+}
+
+/* -------------------------------------------
+   Actions (copier / télécharger / imprimer)
+   ------------------------------------------- */
+function setupActions(){
+  document.getElementById("btnCopy").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(letterPlainText());
+      document.getElementById("btnCopy").textContent = "Copié ✓";
+      setTimeout(() => document.getElementById("btnCopy").textContent = "Copier", 1800);
+      showAffiliateNote();
+    } catch(e){
+      // fallback
+      const ta = document.createElement("textarea");
+      ta.value = letterPlainText();
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      showAffiliateNote();
+    }
+  });
+
+  document.getElementById("btnDownload").addEventListener("click", () => {
+    const blob = new Blob([letterDocHtml()], { type: "application/msword" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "courrier-sinistre.doc";
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showAffiliateNote();
+  });
+
+  document.getElementById("btnPrint").addEventListener("click", () => {
+    window.print();
+    showAffiliateNote();
+  });
+}
+
+/* -------------------------------------------
+   Initialisation
+   ------------------------------------------- */
+function init(){
+  // checklist
+  renderTypes();
+  renderDocs();
+
+  // délais
+  document.getElementById("sinistreDate").addEventListener("change", renderDeadlines);
+  document.querySelectorAll(".seg button").forEach(b => {
+    b.addEventListener("click", () => {
+      deadlineType = b.dataset.deadline;
+      document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-selected", x === b ? "true" : "false"));
+      renderDeadlines();
+    });
+  });
+  renderDeadlines();
+
+  // générateur : type de courrier
+  document.querySelectorAll(".letter-switch button").forEach(b => {
+    b.addEventListener("click", () => {
+      state.letterType = b.dataset.letter;
+      document.querySelectorAll(".letter-switch button").forEach(x => x.setAttribute("aria-selected", x === b ? "true" : "false"));
+      renderLetter();
+    });
+  });
+
+  // générateur : mise à jour en direct + pas de rechargement de page
+  document.getElementById("genForm").addEventListener("submit", e => e.preventDefault());
+  document.getElementById("genForm").addEventListener("input", renderLetter);
+  document.getElementById("genForm").addEventListener("change", renderLetter);
+
+  // contrat : les 5 clauses
+  readContract();
+  renderContractRecap();
+  document.getElementById("contractForm").addEventListener("submit", e => e.preventDefault());
+  document.getElementById("contractForm").addEventListener("input", onContractChange);
+  document.getElementById("contractForm").addEventListener("change", onContractChange);
+
+  // affiliation
+  renderPartnerLinks();
+  setupActions();
+
+  renderLetter();
+}
+
+document.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>
