@@ -271,9 +271,23 @@ img{ max-width:100%; display:block; }
 .doc:last-child{ border-bottom:0; }
 .doc input{ margin-top:3px; width:18px; height:18px; accent-color:var(--red); cursor:pointer; flex:none; }
 .doc label{ cursor:pointer; font-size:16px; }
-.doc input:checked + label{ color:var(--slate); text-decoration:line-through; text-decoration-color:var(--red); }
+.doc__main{ flex:1; min-width:0; }
+.doc__where{ display:block; font-size:12.5px; color:var(--slate); line-height:1.4; margin-top:3px; }
+.doc input:checked ~ .doc__main label{ color:var(--slate); text-decoration:line-through; text-decoration-color:var(--red); }
 .check-progress{ margin-top:24px; font-family:var(--font-mono); font-size:13px; color:var(--slate); }
 .check-progress b{ color:var(--red); }
+.attach{ margin-top:20px; padding-top:18px; border-top:1px dashed var(--hairline); }
+.attach__head{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.attach__title{ font-weight:600; font-size:15px; }
+.attach__note{ color:var(--slate); font-size:12.5px; margin:8px 0 10px; line-height:1.4; }
+.attach__list{ list-style:none; margin:0; padding:0; }
+.attach-item{ display:flex; align-items:center; gap:10px; padding:8px 10px; border:1px solid var(--hairline); border-radius:var(--radius-sm); margin-bottom:6px; font-size:14px; background:var(--paper-2); }
+.attach-item__name{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.attach-item__size{ font-size:12px; color:var(--slate); font-family:var(--font-mono); white-space:nowrap; }
+.attach-item__del{ border:0; background:none; color:var(--slate); cursor:pointer; font-size:16px; padding:2px 6px; }
+.attach-item__del:hover{ color:var(--red); }
+.attach__empty{ color:var(--slate); font-size:13.5px; font-style:italic; margin:0; }
+.check-actions{ margin-top:20px; }
 @media (max-width:760px){ .check-grid{ grid-template-columns:1fr; } }
 
 /* ------------------------------------------------------------
@@ -544,7 +558,19 @@ img{ max-width:100%; display:block; }
           <h3 id="checkTitle">—</h3>
           <p class="check-panel__hint" id="checkHint">—</p>
           <div id="checkList"></div>
+          <div class="attach">
+            <div class="attach__head">
+              <span class="attach__title">📎 Vos pièces jointes</span>
+              <button type="button" class="btn btn--ghost btn--sm" id="btnAttach">+ Ajouter des fichiers</button>
+              <input type="file" id="fileInput" multiple hidden>
+            </div>
+            <p class="attach__note">Photos, factures, devis, rapports… choisissez-les depuis votre disque. Seuls leurs noms sont conservés, sur votre appareil — rien n'est envoyé.</p>
+            <ul id="attachList" class="attach__list"></ul>
+          </div>
           <p class="check-progress" id="checkProgress"></p>
+          <div class="check-actions">
+            <button type="button" class="btn btn--navy btn--sm" id="btnDossier">🖨️ Imprimer le dossier complet (PDF)</button>
+          </div>
         </div>
       </div>
     </div>
@@ -787,99 +813,99 @@ const CHECKLISTS = {
     title: "Dégâts des eaux",
     hint: "Le sinistre le plus fréquent. Photos et devis font l'essentiel du dossier.",
     docs: [
-      "Formulaire de déclaration de sinistre (ou courrier)",
-      "N° de police / attestation d'assurance",
-      "Photos et vidéos datées des dommages",
-      "Rapport de recherche de fuite (si applicable)",
-      "Factures ou devis de réparation",
-      "Factures d'achat des biens endommagés"
+      { label: "Formulaire de déclaration de sinistre (ou courrier)", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
+      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
+      { label: "Photos et vidéos datées des dommages", where: "Prenez-les au plus tôt, de loin puis de près, date et heure activées." },
+      { label: "Rapport de recherche de fuite (si applicable)", where: "Demandé au plombier après localisation de la fuite." },
+      { label: "Factures ou devis de réparation", where: "Devis de l'artisan, en mentionnant la cause du sinistre." },
+      { label: "Factures d'achat des biens endommagés", where: "Boîte mail ou dossier comptable (factures fournisseurs)." }
     ]
   },
   "incendie": {
     title: "Incendie / explosion",
     hint: "Sinistre lourd : le rapport des pompiers et l'inventaire sont déterminants.",
     docs: [
-      "Formulaire de déclaration de sinistre",
-      "N° de police / attestation d'assurance",
-      "Rapport d'intervention des pompiers",
-      "Photos et vidéos des dégâts",
-      "Inventaire des biens détruits avec factures",
-      "Devis de reconstruction ou de réparation",
-      "Justificatifs de relogement ou d'hébergement (si besoin)"
+      { label: "Formulaire de déclaration de sinistre", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
+      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
+      { label: "Rapport d'intervention des pompiers", where: "Remis par les secours sur place, ou demandé au SDIS." },
+      { label: "Photos et vidéos des dégâts", where: "Prenez-les au plus tôt, sous plusieurs angles, datées." },
+      { label: "Inventaire des biens détruits avec factures", where: "Liste détaillée + factures d'achat (comptabilité)." },
+      { label: "Devis de reconstruction ou de réparation", where: "Devis d'un professionnel du bâtiment." },
+      { label: "Justificatifs de relogement ou d'hébergement (si besoin)", where: "Factures d'hôtel ou bail temporaire." }
     ]
   },
   "vol-vandalisme": {
     title: "Vol / vandalisme",
     hint: "Le dépôt de plainte (ou la main courante) est quasiment toujours exigé.",
     docs: [
-      "Formulaire de déclaration de sinistre",
-      "N° de police / attestation d'assurance",
-      "Dépôt de plainte ou main courante (commissariat / gendarmerie)",
-      "Photos des effractions et dégâts",
-      "Inventaire des biens volés avec factures",
-      "Devis de remplacement des biens",
-      "Témoignages éventuels"
+      { label: "Formulaire de déclaration de sinistre", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
+      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
+      { label: "Dépôt de plainte ou main courante", where: "Commissariat ou gendarmerie (pré-plainte en ligne possible)." },
+      { label: "Photos des effractions et dégâts", where: "Photographiez avant de ranger ou de réparer." },
+      { label: "Inventaire des biens volés avec factures", where: "Liste détaillée + factures d'achat." },
+      { label: "Devis de remplacement des biens", where: "Devis des biens équivalents à remplacer." },
+      { label: "Témoignages éventuels", where: "Attestations écrites de témoins, avec leurs coordonnées." }
     ]
   },
   "bris-machine": {
     title: "Bris de machine",
     hint: "Le rapport du technicien est la pièce centrale du dossier.",
     docs: [
-      "Formulaire de déclaration de sinistre",
-      "N° de police / attestation d'assurance",
-      "Rapport du technicien ou du fabricant",
-      "Facture d'achat de la machine",
-      "Devis de réparation ou de remplacement",
-      "Photos de la panne / des dégâts"
+      { label: "Formulaire de déclaration de sinistre", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
+      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
+      { label: "Rapport du technicien ou du fabricant", where: "Demandé au réparateur ou au SAV du fabricant." },
+      { label: "Facture d'achat de la machine", where: "Facture d'origine (fournisseur, comptabilité)." },
+      { label: "Devis de réparation ou de remplacement", where: "Devis du technicien agréé." },
+      { label: "Photos de la panne / des dégâts", where: "Photos de la machine, numéro de série visible." }
     ]
   },
   "rc-pro": {
     title: "Responsabilité civile pro",
     hint: "Un tiers vous réclame réparation : documentez le dommage et votre lien avec celui-ci.",
     docs: [
-      "Formulaire de déclaration de sinistre",
-      "N° de police / attestation d'assurance",
-      "Réclamation reçue du tiers (courrier, constat)",
-      "Description détaillée du dommage causé au tiers",
-      "Photos et éléments de preuve",
-      "Contrat, devis ou facture concernés",
-      "Coordonnées du tiers lésé"
+      { label: "Formulaire de déclaration de sinistre", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
+      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
+      { label: "Réclamation reçue du tiers (courrier, constat)", where: "Courrier ou constat reçu du tiers lésé." },
+      { label: "Description détaillée du dommage causé au tiers", where: "Rédigez le déroulé précis des faits, daté." },
+      { label: "Photos et éléments de preuve", where: "Photos du dommage et de son contexte." },
+      { label: "Contrat, devis ou facture concernés", where: "Pièce liée à la prestation en cause." },
+      { label: "Coordonnées du tiers lésé", where: "Nom, adresse et qualité du tiers." }
     ]
   },
   "perte-exploitation": {
     title: "Perte d'exploitation",
     hint: "Sinistre comptable : l'expert-comptable est votre meilleur allié.",
     docs: [
-      "Formulaire de déclaration de sinistre",
-      "N° de police / attestation d'assurance",
-      "Bilans et comptes de résultat (3 dernières années)",
-      "Attestation de l'expert-comptable",
-      "Chiffre d'affaires de la période touchée",
-      "Justificatifs des charges fixes (loyers, salaires…)",
-      "Rapport d'expert (si missionné)"
+      { label: "Formulaire de déclaration de sinistre", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
+      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
+      { label: "Bilans et comptes de résultat (3 dernières années)", where: "Auprès de votre expert-comptable." },
+      { label: "Attestation de l'expert-comptable", where: "À demander à votre expert-comptable." },
+      { label: "Chiffre d'affaires de la période touchée", where: "Extraction comptable de la période concernée." },
+      { label: "Justificatifs des charges fixes (loyers, salaires…)", where: "Loyers, salaires, abonnements (relevés et factures)." },
+      { label: "Rapport d'expert (si missionné)", where: "Remis par l'expert mandaté." }
     ]
   },
   "bris-glace": {
     title: "Bris de glace",
     hint: "Vitrines et vitrages : le devis du vitrier suffit souvent.",
     docs: [
-      "Formulaire de déclaration de sinistre",
-      "N° de police / attestation d'assurance",
-      "Photos du vitrage endommagé",
-      "Devis de remplacement du vitrage",
-      "Facture du vitrier (après réparation)"
+      { label: "Formulaire de déclaration de sinistre", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
+      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
+      { label: "Photos du vitrage endommagé", where: "Photographiez avant toute réparation." },
+      { label: "Devis de remplacement du vitrage", where: "Devis du vitrier." },
+      { label: "Facture du vitrier (après réparation)", where: "Facture une fois la réparation faite." }
     ]
   },
   "catnat-tempete": {
     title: "Catastrophe naturelle / tempête",
     hint: "Pour une catnat, l'arrêté interministériel est la clé du dossier.",
     docs: [
-      "Formulaire de déclaration de sinistre",
-      "N° de police / attestation d'assurance",
-      "Arrêté de catastrophe naturelle (si catnat)",
-      "Photos des dommages",
-      "Factures et devis de réparation",
-      "Rapport d'expert (si missionné)"
+      { label: "Formulaire de déclaration de sinistre", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
+      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
+      { label: "Arrêté de catastrophe naturelle (si catnat)", where: "Publié au Journal officiel (Légifrance) ou en mairie." },
+      { label: "Photos des dommages", where: "Prenez-les au plus tôt, sous plusieurs angles." },
+      { label: "Factures et devis de réparation", where: "Devis et factures des artisans." },
+      { label: "Rapport d'expert (si missionné)", where: "Remis par l'expert mandaté." }
     ]
   }
 };
@@ -1142,6 +1168,7 @@ const typeKeys = Object.keys(CHECKLISTS);
 const typeListEl = document.querySelector(".check-types");
 let activeType = typeKeys[0];
 let checkedDocs = {}; // cases cochées, par type de sinistre
+let attachedFiles = []; // { name, size, type, dataUrl? } — dataUrl (image, en mémoire seulement) non persisté
 
 function renderTypes(){
   typeListEl.innerHTML = "";
@@ -1176,25 +1203,214 @@ function renderDocs(){
     cb.type = "checkbox";
     cb.id = "doc-" + i + "-" + activeType;
     cb.checked = saved.includes(i);
+    const main = document.createElement("div");
+    main.className = "doc__main";
     const label = document.createElement("label");
     label.htmlFor = cb.id;
-    label.textContent = doc;
+    label.textContent = doc.label;
+    main.appendChild(label);
+    if(doc.where){
+      const where = document.createElement("span");
+      where.className = "doc__where";
+      where.textContent = doc.where;
+      main.appendChild(where);
+    }
     cb.addEventListener("change", () => {
       checkedDocs[activeType] = Array.from(list.querySelectorAll("input[type=checkbox]"))
         .map((b, idx) => b.checked ? idx : -1).filter(idx => idx >= 0);
       updateProgress();
     });
     row.appendChild(cb);
-    row.appendChild(label);
+    row.appendChild(main);
     list.appendChild(row);
   });
   updateProgress();
+  renderAttach();
 }
 function updateProgress(){
   const boxes = document.querySelectorAll("#checkList input[type=checkbox]");
   const done = Array.from(boxes).filter(b => b.checked).length;
   document.getElementById("checkProgress").innerHTML =
     `<b>${done}</b> / ${boxes.length} document${boxes.length > 1 ? "s" : ""} réuni${boxes.length > 1 ? "s" : ""}`;
+}
+
+/* -------------------------------------------
+   Pièces jointes (annexer des fichiers depuis le disque)
+   ------------------------------------------- */
+function formatSize(bytes){
+  if(bytes == null) return "";
+  if(bytes < 1024) return bytes + " o";
+  if(bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " Ko";
+  return (bytes / (1024 * 1024)).toFixed(1) + " Mo";
+}
+function renderAttach(){
+  const ul = document.getElementById("attachList");
+  ul.innerHTML = "";
+  if(attachedFiles.length === 0){
+    ul.innerHTML = `<li class="attach__empty">Aucun fichier ajouté pour l'instant.</li>`;
+    return;
+  }
+  attachedFiles.forEach((f, i) => {
+    const li = document.createElement("li");
+    li.className = "attach-item";
+    const name = document.createElement("span");
+    name.className = "attach-item__name";
+    name.textContent = (f.type && f.type.startsWith("image/") ? "🖼️ " : "") + f.name;
+    name.title = f.name;
+    const size = document.createElement("span");
+    size.className = "attach-item__size";
+    size.textContent = formatSize(f.size);
+    const del = document.createElement("button");
+    del.type = "button";
+    del.className = "attach-item__del";
+    del.textContent = "✕";
+    del.title = "Retirer";
+    del.setAttribute("aria-label", "Retirer " + f.name);
+    del.addEventListener("click", () => {
+      attachedFiles.splice(i, 1);
+      renderAttach();
+      saveState();
+    });
+    li.appendChild(name);
+    li.appendChild(size);
+    li.appendChild(del);
+    ul.appendChild(li);
+  });
+}
+
+function setupChecklist(){
+  document.getElementById("btnAttach").addEventListener("click", () => {
+    document.getElementById("fileInput").click();
+  });
+  document.getElementById("fileInput").addEventListener("change", (e) => {
+    const files = Array.from(e.target.files || []);
+    files.forEach(f => {
+      const entry = { name: f.name, size: f.size, type: f.type || "" };
+      attachedFiles.push(entry);
+      if(f.type && f.type.startsWith("image/")){
+        const reader = new FileReader();
+        reader.onload = () => { entry.dataUrl = reader.result; };
+        reader.readAsDataURL(f);
+      }
+    });
+    e.target.value = ""; // permet de resélectionner le même fichier
+    renderAttach();
+    saveState();
+  });
+  document.getElementById("btnDossier").addEventListener("click", printDossier);
+}
+
+function printDossier(){
+  const data = CHECKLISTS[activeType];
+  const checked = checkedDocs[activeType] || [];
+  const total = data.docs.length;
+  const done = checked.length;
+  const L = buildLetter();
+  const sender = L.sender.replace(/<br>/g, "<br/>");
+  const recipient = L.recipient.replace(/<br>/g, "<br/>");
+  const today = fmtFull(new Date());
+
+  const docRows = data.docs.map((d, i) => {
+    const ok = checked.includes(i);
+    return `<tr${ok ? ' class="ok"' : ""}>
+      <td>${ok ? "✅" : "⬜"}</td>
+      <td>${escapeHtml(d.label)}</td>
+      <td class="muted">${escapeHtml(d.where || "")}</td>
+    </tr>`;
+  }).join("");
+
+  const filesRows = attachedFiles.length
+    ? attachedFiles.map(f => `<tr><td>📎</td><td>${escapeHtml(f.name)}</td><td class="muted">${formatSize(f.size)}</td></tr>`).join("")
+    : `<tr><td colspan="3" class="muted">Aucune pièce jointe ajoutée.</td></tr>`;
+
+  // Seules les images ajoutées durant cette session (contenu lu en mémoire) sont intégrées au PDF.
+  const photos = attachedFiles.filter(f => f.dataUrl);
+  const photosHtml = photos.length
+    ? photos.map(f => `<div class="photo"><img src="${f.dataUrl}" alt="${escapeHtml(f.name)}"><p class="photo__cap">${escapeHtml(f.name)}</p></div>`).join("")
+    : `<p class="muted">Aucune photo à intégrer. Les images ajoutées lors de cette session apparaîtront ici ; les documents déjà au format PDF restent listés dans le bordereau ci-dessus (à joindre séparément).</p>`;
+
+  const html = `<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>Dossier de sinistre — ${escapeHtml(data.title)}</title>
+<style>
+  body{ font-family: Georgia, 'Times New Roman', serif; color:#111; margin:40px; font-size:12pt; }
+  h1{ font-size:20pt; margin:0 0 4px; }
+  .sub{ color:#555; margin:0 0 20px; font-size:11pt; }
+  .bar{ height:3px; background:#1E3A8A; width:120px; margin-bottom:24px; }
+  h2{ font-size:15pt; margin:0 0 12px; }
+  table{ width:100%; border-collapse:collapse; margin:10px 0 18px; }
+  th,td{ border:1px solid #ccc; padding:8px 10px; text-align:left; vertical-align:top; font-size:11pt; }
+  th{ background:#f0f0f0; }
+  .muted{ color:#666; font-size:9.5pt; }
+  tr.ok td{ background:#f4faf4; }
+  .page-break{ page-break-before:always; }
+  /* lettre */
+  .lr{ font-family:Arial,sans-serif; font-size:9pt; color:#666; letter-spacing:.1em; margin:0 0 16px; }
+  .addr td{ border:0; padding:0; font-size:12pt; }
+  .meta{ text-align:right; margin:18px 0 0; font-size:11pt; color:#333; }
+  .pj{ color:#444; margin:2px 0 0; font-size:11pt; }
+  .subject{ font-size:12.5pt; margin:20px 0 0; }
+  .body p{ text-align:justify; margin:0 0 12px; }
+  .sign{ margin-top:24px; }
+  .signline{ margin-top:40px; line-height:1.6; }
+  /* photos */
+  .photo{ page-break-inside:avoid; margin:0 0 22px; }
+  .photo img{ width:100%; max-width:100%; border:1px solid #ddd; }
+  .photo__cap{ font-size:9.5pt; color:#666; margin:6px 0 0; }
+  @media print{ body{ margin:20px; } }
+</style></head>
+<body>
+  <h1>Dossier de sinistre</h1>
+  <p class="sub">${escapeHtml(data.title)} — généré le ${today} — IndemniPro</p>
+  <div class="bar"></div>
+
+  <section>
+    <h2>1. Courrier</h2>
+    <p class="lr">LETTRE RECOMMANDÉE AVEC ACCUSÉ DE RÉCEPTION</p>
+    <table class="addr" width="100%"><tr>
+      <td>${sender}</td>
+      <td style="text-align:right;">${recipient}</td>
+    </tr></table>
+    <p class="meta">${L.meta}</p>
+    <p class="pj">${L.pj}</p>
+    <p class="subject"><b>${escapeHtml(L.subject)}</b></p>
+    <div class="body">${L.body}</div>
+    <p class="sign">${escapeHtml(L.sign)}</p>
+  </section>
+
+  <section class="page-break">
+    <h2>2. Bordereau de pièces jointes (${done}/${total} documents réunis)</h2>
+    <table>
+      <tr><th style="width:40px"></th><th>Document</th><th>Où le trouver</th></tr>
+      ${docRows}
+    </table>
+    <p style="font-size:11pt;"><b>Fichiers annexés (${attachedFiles.length})</b></p>
+    <table>
+      <tr><th style="width:40px"></th><th>Fichier</th><th>Taille</th></tr>
+      ${filesRows}
+    </table>
+  </section>
+
+  <section class="page-break">
+    <h2>3. Photos (${photos.length})</h2>
+    ${photosHtml}
+  </section>
+
+  <div class="signline page-break">
+    <p>Fait le ____________, à ____________</p>
+    <p>Signature :</p>
+  </div>
+  <script>window.onload = function(){ window.print(); };<\/script>
+</body></html>`;
+
+  const w = window.open("", "_blank");
+  if(!w){
+    alert("Votre navigateur a bloqué l'ouverture de la fenêtre d'impression. Autorisez les fenêtres pop-up pour ce site.");
+    return;
+  }
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
 }
 
 /* -------------------------------------------
@@ -1303,7 +1519,8 @@ function saveState(){
     letterType: state.letterType,
     deadlineType: deadlineType,
     activeType: activeType,
-    checkedDocs: checkedDocs
+    checkedDocs: checkedDocs,
+    attachedFiles: attachedFiles.map(f => ({ name: f.name, size: f.size, type: f.type }))
   };
   GEN_FIELDS.forEach(id => { const el = document.getElementById(id); if(el) data.gen[id] = el.value; });
   CONTRACT_FIELDS.forEach(id => { const el = document.getElementById(id); if(el) data.contract[id] = el.value; });
@@ -1328,6 +1545,7 @@ function loadState(){
   if(["standard","vol"].includes(data.deadlineType)) deadlineType = data.deadlineType;
   if(typeKeys.includes(data.activeType)) activeType = data.activeType;
   if(data.checkedDocs && typeof data.checkedDocs === "object") checkedDocs = data.checkedDocs;
+  if(Array.isArray(data.attachedFiles)) attachedFiles = data.attachedFiles;
 }
 
 function syncSegButtons(){
@@ -1351,6 +1569,7 @@ function init(){
   // checklist
   renderTypes();
   renderDocs();
+  setupChecklist();
 
   // sauvegarde automatique : toute saisie est conservée
   document.addEventListener("input", saveState);
