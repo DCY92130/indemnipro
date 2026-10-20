@@ -1255,7 +1255,7 @@ function renderAttach(){
     li.className = "attach-item";
     const name = document.createElement("span");
     name.className = "attach-item__name";
-    name.textContent = (f.type && f.type.startsWith("image/") ? "🖼️ " : "") + f.name;
+    name.textContent = (f.type && f.type.startsWith("image/") ? "🖼️ " : (f.type === "application/pdf" ? "📄 " : "")) + f.name;
     name.title = f.name;
     const size = document.createElement("span");
     size.className = "attach-item__size";
@@ -1287,7 +1287,7 @@ function setupChecklist(){
     files.forEach(f => {
       const entry = { name: f.name, size: f.size, type: f.type || "" };
       attachedFiles.push(entry);
-      if(f.type && f.type.startsWith("image/")){
+      if(f.type && (f.type.startsWith("image/") || f.type === "application/pdf")){
         const reader = new FileReader();
         reader.onload = () => { entry.dataUrl = reader.result; };
         reader.readAsDataURL(f);
@@ -1323,11 +1323,15 @@ function printDossier(){
     ? attachedFiles.map(f => `<tr><td>📎</td><td>${escapeHtml(f.name)}</td><td class="muted">${formatSize(f.size)}</td></tr>`).join("")
     : `<tr><td colspan="3" class="muted">Aucune pièce jointe ajoutée.</td></tr>`;
 
-  // Seules les images ajoutées durant cette session (contenu lu en mémoire) sont intégrées au PDF.
-  const photos = attachedFiles.filter(f => f.dataUrl);
-  const photosHtml = photos.length
-    ? photos.map(f => `<div class="photo"><img src="${f.dataUrl}" alt="${escapeHtml(f.name)}"><p class="photo__cap">${escapeHtml(f.name)}</p></div>`).join("")
-    : `<p class="muted">Aucune photo à intégrer. Les images ajoutées lors de cette session apparaîtront ici ; les documents déjà au format PDF restent listés dans le bordereau ci-dessus (à joindre séparément).</p>`;
+  // Images et PDF ajoutés durant cette session (contenu lu en mémoire) sont intégrés au dossier.
+  const images = attachedFiles.filter(f => f.dataUrl && f.type && f.type.startsWith("image/"));
+  const pdfs = attachedFiles.filter(f => f.dataUrl && f.type === "application/pdf");
+  const photosHtml = images.length
+    ? images.map(f => `<div class="photo"><img src="${f.dataUrl}" alt="${escapeHtml(f.name)}"><p class="photo__cap">${escapeHtml(f.name)}</p></div>`).join("")
+    : `<p class="muted">Aucune photo à intégrer. Les images ajoutées lors de cette session apparaîtront ici.</p>`;
+  const pdfsHtml = pdfs.length
+    ? pdfs.map(f => `<div class="pdf"><embed src="${f.dataUrl}" type="application/pdf"><p class="pdf__cap">${escapeHtml(f.name)}</p></div>`).join("")
+    : `<p class="muted">Aucun PDF à intégrer. Les PDF ajoutés lors de cette session apparaîtront ici.</p>`;
 
   const html = `<!DOCTYPE html>
 <html lang="fr">
@@ -1357,6 +1361,10 @@ function printDossier(){
   .photo{ page-break-inside:avoid; margin:0 0 22px; }
   .photo img{ width:100%; max-width:100%; border:1px solid #ddd; }
   .photo__cap{ font-size:9.5pt; color:#666; margin:6px 0 0; }
+  /* pdf */
+  .pdf{ page-break-inside:avoid; margin:0 0 22px; }
+  .pdf embed{ width:100%; height:880px; border:1px solid #ddd; background:#fff; }
+  .pdf__cap{ font-size:9.5pt; color:#666; margin:6px 0 0; }
   @media print{ body{ margin:20px; } }
 </style></head>
 <body>
@@ -1392,8 +1400,13 @@ function printDossier(){
   </section>
 
   <section class="page-break">
-    <h2>3. Photos (${photos.length})</h2>
+    <h2>3. Photos (${images.length})</h2>
     ${photosHtml}
+  </section>
+
+  <section class="page-break">
+    <h2>4. Pièces jointes PDF (${pdfs.length})</h2>
+    ${pdfsHtml}
   </section>
 
   <div class="signline page-break">
