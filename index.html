@@ -5,6 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>IndemniPro — Soyez remboursé plus vite après un sinistre pro</title>
 <meta name="description" content="Générez en 2 minutes les courriers qui accélèrent le remboursement de votre assurance pro : relance, mise en demeure, saisine du médiateur.">
+<meta name="theme-color" content="#1E3A8A">
+
+<link rel="icon" type="image/png" sizes="512x512" href="icon.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231E3A8A'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' font-weight='700' fill='%23F6F4EF' text-anchor='middle'%3EIP%3C/text%3E%3Ccircle cx='49' cy='15' r='7' fill='%23C8102E'/%3E%3C/svg%3E">
+
+<!-- Open Graph / partage réseaux sociaux -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="IndemniPro">
+<meta property="og:title" content="IndemniPro — Soyez remboursé plus vite après un sinistre pro">
+<meta property="og:description" content="Générez en 2 minutes les courriers qui accélèrent le remboursement de votre assurance pro : relance, mise en demeure, saisine du médiateur.">
+<meta property="og:url" content="https://dcgy92130.github.io/indemnipro/">
+<meta property="og:image" content="https://dcgy92130.github.io/indemnipro/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="IndemniPro — générateur de courriers de sinistre pour les pros">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IndemniPro — Soyez remboursé plus vite après un sinistre pro">
+<meta name="twitter:description" content="Générez en 2 minutes les courriers qui accélèrent le remboursement de votre assurance pro.">
+<meta name="twitter:image" content="https://dcgy92130.github.io/indemnipro/og-image.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -340,6 +361,10 @@ img{ max-width:100%; display:block; }
 .gen-affiliate.is-visible{ display:block; }
 .gen-affiliate b{ color:var(--ink); }
 .gen-affiliate a{ color:var(--navy); }
+.privacy-note{ margin:0 0 26px; padding:12px 16px; border:1px solid var(--hairline); border-left:4px solid var(--navy); border-radius:var(--radius-sm); background:#fff; font-size:13.5px; color:var(--slate); line-height:1.5; }
+.privacy-note b{ color:var(--ink); }
+.legal-warning{ margin:18px 0 0; padding:12px 16px; border:1px solid var(--hairline); border-left:4px solid var(--red); border-radius:var(--radius-sm); background:var(--paper-2); font-size:13px; color:var(--slate); line-height:1.55; }
+.legal-warning b{ color:var(--red-ink); }
 @media (max-width:900px){ .gen{ grid-template-columns:1fr; } .gen-preview{ position:static; } }
 
 /* ------------------------------------------------------------
@@ -625,6 +650,8 @@ img{ max-width:100%; display:block; }
         <p>Remplissez vos informations, choisissez le courrier, puis copiez, téléchargez ou imprimez.</p>
       </div>
 
+      <p class="privacy-note">🔒 <b>Vos données restent sur votre appareil.</b> Rien n'est envoyé ni stocké sur un serveur&nbsp;: tout est conservé localement dans votre navigateur.</p>
+
       <div class="gen">
         <!-- Formulaire -->
         <form class="gen-form" id="genForm" autocomplete="off">
@@ -690,6 +717,8 @@ img{ max-width:100%; display:block; }
             <button class="btn btn--navy" id="btnDownload" type="button">Télécharger .doc</button>
             <button class="btn btn--ghost" id="btnPrint" type="button">Imprimer / PDF</button>
           </div>
+
+          <p class="legal-warning">⚠️ <b>Modèle indicatif, pas un conseil juridique.</b> Vérifiez les délais et clauses de <b>votre</b> contrat (franchise, plafond, exclusions) avant d'envoyer ce courrier.</p>
 
           <div class="gen-affiliate" id="affiliateNote"></div>
         </div>
@@ -1112,6 +1141,7 @@ function letterDocHtml(){
 const typeKeys = Object.keys(CHECKLISTS);
 const typeListEl = document.querySelector(".check-types");
 let activeType = typeKeys[0];
+let checkedDocs = {}; // cases cochées, par type de sinistre
 
 function renderTypes(){
   typeListEl.innerHTML = "";
@@ -1130,23 +1160,30 @@ function selectType(key){
   activeType = key;
   renderTypes();
   renderDocs();
+  saveState();
 }
 function renderDocs(){
   const data = CHECKLISTS[activeType];
+  const saved = checkedDocs[activeType] || [];
   document.getElementById("checkTitle").textContent = data.title;
   document.getElementById("checkHint").textContent = data.hint;
   const list = document.getElementById("checkList");
   list.innerHTML = "";
-  data.docs.forEach(doc => {
+  data.docs.forEach((doc, i) => {
     const row = document.createElement("div");
     row.className = "doc";
     const cb = document.createElement("input");
     cb.type = "checkbox";
-    cb.id = "doc-" + data.docs.indexOf(doc) + "-" + activeType;
+    cb.id = "doc-" + i + "-" + activeType;
+    cb.checked = saved.includes(i);
     const label = document.createElement("label");
     label.htmlFor = cb.id;
     label.textContent = doc;
-    cb.addEventListener("change", updateProgress);
+    cb.addEventListener("change", () => {
+      checkedDocs[activeType] = Array.from(list.querySelectorAll("input[type=checkbox]"))
+        .map((b, idx) => b.checked ? idx : -1).filter(idx => idx >= 0);
+      updateProgress();
+    });
     row.appendChild(cb);
     row.appendChild(label);
     list.appendChild(row);
@@ -1252,32 +1289,96 @@ function setupActions(){
 }
 
 /* -------------------------------------------
+   Sauvegarde automatique (localStorage)
+   ------------------------------------------- */
+const STORAGE_KEY = "indemnipro-state-v1";
+const GEN_FIELDS = ["fRaison","fForme","fGerant","fAdresse","fCp","fVille","fAssureur","fAssAdresse","fPolice","fRef","fType","fDateSinistre","fDateDecla","fMontant","fDesc"];
+const CONTRACT_FIELDS = ["cDelai","cFranchise","cPlafond","cValeur","cExclusions","cAutres"];
+
+function saveState(){
+  const data = {
+    gen: {},
+    contract: {},
+    sinistreDate: document.getElementById("sinistreDate").value,
+    letterType: state.letterType,
+    deadlineType: deadlineType,
+    activeType: activeType,
+    checkedDocs: checkedDocs
+  };
+  GEN_FIELDS.forEach(id => { const el = document.getElementById(id); if(el) data.gen[id] = el.value; });
+  CONTRACT_FIELDS.forEach(id => { const el = document.getElementById(id); if(el) data.contract[id] = el.value; });
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+  catch(e){ /* stockage indisponible (navigation privée…) : on ignore */ }
+}
+
+function loadState(){
+  let data;
+  try { data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); }
+  catch(e){ return; }
+  if(!data || typeof data !== "object") return;
+
+  if(data.gen) GEN_FIELDS.forEach(id => {
+    if(data.gen[id] != null){ const el = document.getElementById(id); if(el) el.value = data.gen[id]; }
+  });
+  if(data.contract) CONTRACT_FIELDS.forEach(id => {
+    if(data.contract[id] != null){ const el = document.getElementById(id); if(el) el.value = data.contract[id]; }
+  });
+  if(data.sinistreDate){ const el = document.getElementById("sinistreDate"); if(el) el.value = data.sinistreDate; }
+  if(["relance","demeure","mediateur"].includes(data.letterType)) state.letterType = data.letterType;
+  if(["standard","vol"].includes(data.deadlineType)) deadlineType = data.deadlineType;
+  if(typeKeys.includes(data.activeType)) activeType = data.activeType;
+  if(data.checkedDocs && typeof data.checkedDocs === "object") checkedDocs = data.checkedDocs;
+}
+
+function syncSegButtons(){
+  document.querySelectorAll(".seg button").forEach(x => {
+    x.setAttribute("aria-selected", x.dataset.deadline === deadlineType ? "true" : "false");
+  });
+}
+function syncLetterButtons(){
+  document.querySelectorAll(".letter-switch button").forEach(x => {
+    x.setAttribute("aria-selected", x.dataset.letter === state.letterType ? "true" : "false");
+  });
+}
+
+/* -------------------------------------------
    Initialisation
    ------------------------------------------- */
 function init(){
+  // restaure la saisie précédente (localStorage)
+  loadState();
+
   // checklist
   renderTypes();
   renderDocs();
+
+  // sauvegarde automatique : toute saisie est conservée
+  document.addEventListener("input", saveState);
+  document.addEventListener("change", saveState);
 
   // délais
   document.getElementById("sinistreDate").addEventListener("change", renderDeadlines);
   document.querySelectorAll(".seg button").forEach(b => {
     b.addEventListener("click", () => {
       deadlineType = b.dataset.deadline;
-      document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-selected", x === b ? "true" : "false"));
+      syncSegButtons();
       renderDeadlines();
+      saveState();
     });
   });
+  syncSegButtons();
   renderDeadlines();
 
   // générateur : type de courrier
   document.querySelectorAll(".letter-switch button").forEach(b => {
     b.addEventListener("click", () => {
       state.letterType = b.dataset.letter;
-      document.querySelectorAll(".letter-switch button").forEach(x => x.setAttribute("aria-selected", x === b ? "true" : "false"));
+      syncLetterButtons();
       renderLetter();
+      saveState();
     });
   });
+  syncLetterButtons();
 
   // générateur : mise à jour en direct + pas de rechargement de page
   document.getElementById("genForm").addEventListener("submit", e => e.preventDefault());
