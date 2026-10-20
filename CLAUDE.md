@@ -79,6 +79,8 @@ d'intermédiaire en assurance, non immatriculé ORIAS).
 ## Déploiement
 
 GitHub Pages — repo `DCY92130/indemnipro`, servi à `https://dcgy92130.github.io/indemnipro/`.
-`index.html`, `icon.png` et `og-image.png` sont à la racine ; le push sur `main` suffit
-(site déployé depuis la racine de `main`). Les URLs de partage (Open Graph) pointent vers
+`index.html`, `icon.png` et `og-image.png` sont à la racine. **Configuration requise une fois**
+(à faire à la main dans l'UI GitHub) : Settings → Pages → Source « Deploy from a branch »,
+branch `main`, dossier `/ (root)`. Sans cette source, aucun déploiement n'a lieu et l'URL
+renvoie 404 malgré un `has_pages: true`. Les URLs de partage (Open Graph) pointent vers
 ce domaine — à mettre à jour si le déploiement change.
