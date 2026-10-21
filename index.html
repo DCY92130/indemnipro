@@ -3,27 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>IndemniPro — Soyez remboursé plus vite après un sinistre pro</title>
-<meta name="description" content="Générez en 2 minutes les courriers qui accélèrent le remboursement de votre assurance pro : relance, mise en demeure, saisine du médiateur.">
+<title>ProIndemni — Soyez remboursé plus vite après un sinistre pro</title>
+<meta name="description" content="Générez en 2 minutes les courriers qui accélèrent le remboursement de votre assurance pro : déclaration, relance, mise en demeure, saisine du médiateur.">
 <meta name="theme-color" content="#1E3A8A">
 
 <link rel="icon" type="image/png" sizes="512x512" href="icon.png">
 <link rel="apple-touch-icon" sizes="512x512" href="icon.png">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231E3A8A'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' font-weight='700' fill='%23F6F4EF' text-anchor='middle'%3EIP%3C/text%3E%3Ccircle cx='49' cy='15' r='7' fill='%23C8102E'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231E3A8A'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' font-weight='700' fill='%23F6F4EF' text-anchor='middle'%3EPI%3C/text%3E%3Ccircle cx='49' cy='15' r='7' fill='%23C8102E'/%3E%3C/svg%3E">
 
 <!-- Open Graph / partage réseaux sociaux -->
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="IndemniPro">
-<meta property="og:title" content="IndemniPro — Soyez remboursé plus vite après un sinistre pro">
-<meta property="og:description" content="Générez en 2 minutes les courriers qui accélèrent le remboursement de votre assurance pro : relance, mise en demeure, saisine du médiateur.">
+<meta property="og:site_name" content="ProIndemni">
+<meta property="og:title" content="ProIndemni — Soyez remboursé plus vite après un sinistre pro">
+<meta property="og:description" content="Générez en 2 minutes les courriers qui accélèrent le remboursement de votre assurance pro : déclaration, relance, mise en demeure, saisine du médiateur.">
 <meta property="og:url" content="https://dcgy92130.github.io/indemnipro/">
 <meta property="og:image" content="https://dcgy92130.github.io/indemnipro/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="IndemniPro — générateur de courriers de sinistre pour les pros">
+<meta property="og:image:alt" content="ProIndemni — générateur de courriers de sinistre pour les pros">
 <meta property="og:locale" content="fr_FR">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="IndemniPro — Soyez remboursé plus vite après un sinistre pro">
+<meta name="twitter:title" content="ProIndemni — Soyez remboursé plus vite après un sinistre pro">
 <meta name="twitter:description" content="Générez en 2 minutes les courriers qui accélèrent le remboursement de votre assurance pro.">
 <meta name="twitter:image" content="https://dcgy92130.github.io/indemnipro/og-image.png">
 
@@ -33,7 +33,7 @@
 
 <style>
 /* ============================================================
-   INDEMNIPRO — design tokens
+   PROINDEMNI — design tokens
    Palette : encre navy / bleu poste / timbre rouge / papier
    ============================================================ */
 :root{
@@ -131,6 +131,8 @@ img{ max-width:100%; display:block; }
 .btn--ghost:hover{ border-color:var(--slate); background:var(--paper-2); }
 .btn--navy{ background:var(--navy); color:#fff; }
 .btn--navy:hover{ background:var(--navy-2); }
+.btn--white{ background:#fff; color:var(--navy); }
+.btn--white:hover{ background:var(--paper); }
 .btn--sm{ padding:10px 18px; font-size:14.5px; }
 
 /* ------------------------------------------------------------
@@ -230,6 +232,26 @@ img{ max-width:100%; display:block; }
 .section--dark .sec-head p{ color:var(--slate-2); }
 .section--dark .sec-head .eyebrow{ color:var(--slate-2); }
 
+/* Sous-sections du dossier (1. justificatifs / 2. contrat / 3. échéances) */
+.dossier-sub{ padding:44px 0 60px; border-top:1px solid var(--hairline); }
+.dossier-sub:first-of-type{ padding-top:0; border-top:0; }
+.dossier-sub .sec-head{ margin-bottom:34px; }
+.dossier-sub .sec-head h2{ font-size:clamp(24px, 3vw, 32px); }
+.dossier-sub .eyebrow .dot{
+  display:inline-block; width:9px; height:9px; border-radius:50%;
+  background:var(--red); margin-right:9px; vertical-align:1px;
+}
+
+/* Sauvegarde / restauration */
+.data-io{
+  margin-top:56px; padding:20px 24px; background:#fff; border:1px solid var(--hairline);
+  border-radius:var(--radius); display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+}
+.data-io__title{ font-weight:600; font-size:15px; display:block; margin-bottom:4px; }
+.data-io p{ margin:0; color:var(--slate); font-size:13.5px; max-width:540px; line-height:1.5; }
+.data-io__actions{ display:flex; gap:8px; flex-wrap:wrap; }
+@media (max-width:760px){ .data-io{ flex-direction:column; align-items:flex-start; } }
+
 /* ------------------------------------------------------------
    1. Étapes (processus réel → numérotation justifiée)
    ------------------------------------------------------------ */
@@ -267,13 +289,33 @@ img{ max-width:100%; display:block; }
 .check-panel{ background:#fff; border:1px solid var(--hairline); border-radius:var(--radius); padding:30px 32px; }
 .check-panel h3{ font-size:22px; margin-bottom:4px; }
 .check-panel__hint{ color:var(--slate); font-size:14.5px; margin:0 0 22px; }
-.doc{ display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--hairline); }
-.doc:last-child{ border-bottom:0; }
+.doc-cat{
+  display:flex; align-items:center; gap:9px;
+  padding:10px 12px; margin:18px 0 8px;
+  background:var(--paper-2); border:1px solid var(--hairline); border-radius:var(--radius-sm);
+}
+.doc-cat:first-of-type{ margin-top:0; }
+.doc-cat__icon{ font-size:16px; }
+.doc-cat__label{ font-family:var(--font-mono); font-size:12.5px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:var(--navy); }
+.doc-wrap{ border-bottom:1px solid var(--hairline); }
+.doc-wrap:last-child{ border-bottom:0; }
+.doc{ display:flex; align-items:flex-start; gap:12px; padding:12px 0; }
 .doc input{ margin-top:3px; width:18px; height:18px; accent-color:var(--red); cursor:pointer; flex:none; }
 .doc label{ cursor:pointer; font-size:16px; }
 .doc__main{ flex:1; min-width:0; }
-.doc__where{ display:block; font-size:12.5px; color:var(--slate); line-height:1.4; margin-top:3px; }
+.doc__where{ display:block; font-size:12.5px; color:#6B4E00; background:#FFF3BF; border:1px solid #EFDF9E; border-radius:6px; padding:4px 10px; line-height:1.45; margin-top:5px; }
 .doc input:checked ~ .doc__main label{ color:var(--slate); text-decoration:line-through; text-decoration-color:var(--red); }
+.doc__panel{ display:none; padding:0 0 16px 30px; }
+.doc-wrap.open .doc__panel{ display:block; }
+.doc__panel textarea{ width:100%; min-height:74px; padding:10px 12px; border:1px solid var(--hairline); border-radius:var(--radius-sm); font:inherit; font-size:14px; color:var(--ink); background:var(--paper-2); resize:vertical; line-height:1.5; }
+.doc__panel textarea:focus{ outline:none; border-color:var(--navy); background:#fff; }
+.doc__letter-link{ display:inline-flex; align-items:center; gap:6px; padding:10px 14px; border:1px solid var(--navy); border-radius:var(--radius-sm); color:var(--navy); font-weight:600; font-size:14px; text-decoration:none; background:#fff; }
+.doc__letter-link:hover{ background:var(--navy); color:#fff; }
+.doc__files-wrap{ margin-top:10px; }
+.doc-file-btn{ font-size:13px; }
+.doc__files{ list-style:none; margin:10px 0 0; padding:0; }
+.doc__files .attach-item{ background:#fff; }
+.doc__files-empty{ color:var(--slate); font-size:12.5px; font-style:italic; margin:6px 0 0; }
 .check-progress{ margin-top:24px; font-family:var(--font-mono); font-size:13px; color:var(--slate); }
 .check-progress b{ color:var(--red); }
 .attach{ margin-top:20px; padding-top:18px; border-top:1px dashed var(--hairline); }
@@ -288,6 +330,12 @@ img{ max-width:100%; display:block; }
 .attach-item__del:hover{ color:var(--red); }
 .attach__empty{ color:var(--slate); font-size:13.5px; font-style:italic; margin:0; }
 .check-actions{ margin-top:20px; }
+.dossier-include{ display:inline-flex; align-items:center; gap:7px; margin-left:14px; font-size:13.5px; color:var(--slate); cursor:pointer; }
+.dossier-include input{ width:16px; height:16px; accent-color:var(--red); cursor:pointer; margin:0; }
+.check-actions__hint{ display:block; margin-top:14px; font-size:13px; color:var(--slate); }
+.rubriques{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+.rubriques .btn{ font-size:13px; }
+.rubriques .btn--ghost{ color:var(--navy); border-color:var(--navy); }
 @media (max-width:760px){ .check-grid{ grid-template-columns:1fr; } }
 
 /* ------------------------------------------------------------
@@ -328,6 +376,11 @@ img{ max-width:100%; display:block; }
 .milestone__label{ font-weight:600; font-size:16px; }
 .milestone__desc{ font-size:14px; color:var(--slate); margin-top:2px; }
 .calc-empty{ color:var(--slate); font-size:16px; padding:40px; text-align:center; border:1px dashed var(--hairline); border-radius:var(--radius); }
+.calc-summary{
+  margin-top:18px; padding:14px 16px; background:#fff; border:1px solid var(--hairline);
+  border-radius:var(--radius-sm); font-size:13.5px; color:var(--slate); line-height:1.5;
+}
+.calc-summary b{ color:var(--navy); }
 @media (max-width:760px){ .calc{ grid-template-columns:1fr; } .milestone{ grid-template-columns:120px 1fr; gap:14px; } }
 
 /* ------------------------------------------------------------
@@ -350,6 +403,27 @@ img{ max-width:100%; display:block; }
 .gen-form textarea{ resize:vertical; min-height:64px; }
 .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
 @media (max-width:600px){ .grid-2{ grid-template-columns:1fr; } }
+
+/* Chiffrage du préjudice (postes) */
+.postes{ margin:0 0 20px; padding:16px 16px 14px; border:1px solid var(--hairline); border-radius:var(--radius-sm); background:var(--paper-2); }
+.postes__label{ display:block; font-weight:600; font-size:14.5px; margin-bottom:12px; }
+.postes__label .hint{ font-weight:400; color:var(--slate); font-size:13px; }
+.poste-row{ display:grid; grid-template-columns:1fr 110px 30px; gap:8px; align-items:center; margin-bottom:8px; }
+.poste-row input{
+  width:100%; padding:9px 11px; font-family:var(--font-body); font-size:14px;
+  border:1px solid var(--hairline); border-radius:var(--radius-sm); background:#fff; color:var(--ink);
+}
+.poste-row input:focus{ outline:none; border-color:var(--navy); }
+.poste-row__del{ border:0; background:none; color:var(--slate); cursor:pointer; font-size:17px; padding:2px 4px; line-height:1; }
+.poste-row__del:hover{ color:var(--red); }
+.postes__empty{ color:var(--slate); font-size:13px; font-style:italic; margin:0 0 10px; }
+.postes__total{
+  display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+  padding-top:10px; margin-top:2px; border-top:1px solid var(--hairline);
+  font-family:var(--font-mono); font-size:13.5px; color:var(--slate);
+}
+.postes__total b{ color:var(--navy); font-size:16px; }
+.postes .btn--sm{ margin-top:2px; }
 
 /* Aperçu */
 .gen-preview{ position:sticky; top:86px; }
@@ -452,16 +526,14 @@ img{ max-width:100%; display:block; }
 <!-- ============================ EN-TÊTE ============================ -->
 <header class="site-head">
   <div class="wrap site-head__inner">
-    <a class="brand" href="#top" aria-label="IndemniPro — accueil">
-      <span class="brand__name">Indemni<span class="accent">Pro</span></span>
+    <a class="brand" href="#top" aria-label="ProIndemni — accueil">
+      <span class="brand__name"><span class="accent">Pro</span>Indemni</span>
       <span class="brand__tag">sinistre · assurance pro</span>
     </a>
     <nav class="site-nav" aria-label="Navigation principale">
       <a href="#etapes">Étapes</a>
-      <a href="#documents">Documents</a>
-      <a href="#delais">Délais</a>
-      <a href="#contrat">Mon contrat</a>
-      <a href="#rediger">Rédiger mon courrier</a>
+      <a href="#dossier">Mon dossier</a>
+      <a href="#rediger">Votre courrier</a>
     </nav>
   </div>
 </header>
@@ -476,11 +548,12 @@ img{ max-width:100%; display:block; }
         <h1>Votre sinistre pro traîne. <em>Accélérez le remboursement.</em></h1>
         <p class="hero__sub">
           Un sinistre non indemnisé, c'est de la trésorerie qui dort. Générez en deux minutes
-          le courrier recommandé qui fait avancer votre dossier — relance, mise en demeure,
-          saisine du médiateur.
+          le courrier recommandé qui fait avancer votre dossier — déclaration, relance,
+          mise en demeure, saisine du médiateur.
         </p>
         <div class="hero__cta">
           <a class="btn btn--red" href="#rediger">Rédiger mon courrier</a>
+          <a class="btn btn--white" href="#dossier">Créer mon dossier</a>
           <a class="btn btn--ghost" href="#delais" style="color:#fff;border-color:rgba(255,255,255,.25)">Calculer mes délais</a>
         </div>
         <p class="hero__note">Envoyé en <span class="lrar">LRAR</span> — la preuve qui protège vos droits.</p>
@@ -539,130 +612,145 @@ img{ max-width:100%; display:block; }
         <div class="step"><span class="step__bar"></span><span class="step__num">3</span><h3>Limitez l'aggravation</h3><p>Coupez l'eau, sécurisez les lieux, protégez ce qui peut l'être. L'assureur vous le demande.</p></div>
         <div class="step"><span class="step__bar"></span><span class="step__num">4</span><h3>Constituez le dossier</h3><p>Rassemblez les justificatifs du préjudice (checklist ci-dessous, adaptée à votre sinistre).</p></div>
         <div class="step"><span class="step__bar"></span><span class="step__num">5</span><h3>Chiffrez votre demande</h3><p>Appuyez-vous sur des devis et factures pour estimer un montant précis et défendable.</p></div>
-        <div class="step"><span class="step__bar"></span><span class="step__num">6</span><h3>Relancez, puis montez en puissance</h3><p>Relance → mise en demeure → médiateur → tribunal. Le générateur ci-dessous rédige les trois premiers.</p></div>
+        <div class="step"><span class="step__bar"></span><span class="step__num">6</span><h3>Relancez, puis montez en puissance</h3><p>Déclaration → relance → mise en demeure → médiateur → tribunal. Le générateur ci-dessous rédige les quatre premiers.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- ============================ 2. CHECKLIST ============================ -->
-  <section class="section section--alt" id="documents">
+  <!-- ============================ 2. VOTRE DOSSIER ============================ -->
+  <section class="section section--alt" id="dossier">
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">Votre dossier</span>
-        <h2>Les documents à réunir, sinistre par sinistre</h2>
-        <p>Choisissez votre sinistre : la liste des justificatifs attendus s'affiche. Cochez au fur et à mesure.</p>
+        <h2>Tout votre dossier, en un seul endroit</h2>
+        <p>Trois étapes dans l'ordre : réunir vos justificatifs, noter les clauses de votre contrat, puis calculer vos échéances. Votre courrier s'appuie ensuite sur ces informations.</p>
       </div>
-      <div class="check-grid">
-        <div class="check-types" role="tablist" aria-label="Type de sinistre"></div>
-        <div class="check-panel">
-          <h3 id="checkTitle">—</h3>
-          <p class="check-panel__hint" id="checkHint">—</p>
-          <div id="checkList"></div>
-          <div class="attach">
-            <div class="attach__head">
-              <span class="attach__title">📎 Vos pièces jointes</span>
-              <button type="button" class="btn btn--ghost btn--sm" id="btnAttach">+ Ajouter des fichiers</button>
-              <input type="file" id="fileInput" multiple hidden>
+
+      <!-- 2.1 Les justificatifs -->
+      <div class="dossier-sub" id="documents">
+        <div class="sec-head">
+          <span class="eyebrow"><span class="dot"></span>Étape 1 · Les justificatifs</span>
+          <h2>Les documents à réunir, sinistre par sinistre</h2>
+          <p>Choisissez votre sinistre : la liste des justificatifs attendus s'affiche, groupés par emplacement de dépôt sur l'espace client de votre assureur. Cochez au fur et à mesure.</p>
+        </div>
+        <div class="check-grid">
+          <div class="check-types" role="tablist" aria-label="Type de sinistre"></div>
+          <div class="check-panel">
+            <h3 id="checkTitle">—</h3>
+            <p class="check-panel__hint" id="checkHint">—</p>
+            <div id="checkList"></div>
+            <p class="check-progress" id="checkProgress"></p>
+            <div class="check-actions">
+              <button type="button" class="btn btn--navy btn--sm" id="btnDossier">📦 Dossier complet (PDF)</button>
+              <label class="dossier-include">
+                <input type="checkbox" id="chkIncludeLetter" checked>
+                Inclure le courrier dans le dossier complet
+              </label>
+              <span class="check-actions__hint">ou un PDF par rubrique, prêt à déposer dans l'emplacement correspondant de votre espace assureur&nbsp;:</span>
+              <div class="rubriques" id="rubriquesGrid"></div>
             </div>
-            <p class="attach__note">Photos, factures, devis, rapports… choisissez-les depuis votre disque. Seuls leurs noms sont conservés, sur votre appareil — rien n'est envoyé.</p>
-            <ul id="attachList" class="attach__list"></ul>
-          </div>
-          <p class="check-progress" id="checkProgress"></p>
-          <div class="check-actions">
-            <button type="button" class="btn btn--navy btn--sm" id="btnDossier">🖨️ Imprimer le dossier complet (PDF)</button>
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ============================ 3. DÉLAIS ============================ -->
-  <section class="section" id="delais">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow">Le calendrier</span>
-        <h2>Vos dates limites, calculées automatiquement</h2>
-        <p>Indiquez la date du sinistre. Les délais légaux s'affichent (jours ouvrés, hors jours fériés).</p>
-      </div>
-      <div class="calc">
-        <div class="calc-form">
-          <div class="field">
-            <label for="sinistreDate">Date du sinistre</label>
-            <input type="date" id="sinistreDate">
-          </div>
-          <div class="field">
-            <label>Nature du sinistre</label>
-            <div class="seg" role="group" aria-label="Nature du sinistre">
-              <button type="button" data-deadline="standard" aria-selected="true">Standard</button>
-              <button type="button" data-deadline="vol" aria-selected="false">Vol</button>
+      <!-- 2.2 Le contrat -->
+      <div class="dossier-sub" id="contrat">
+        <div class="sec-head">
+          <span class="eyebrow"><span class="dot"></span>Étape 2 · Votre contrat</span>
+          <h2>Les clauses qui changent votre indemnisation</h2>
+          <p>Sortez votre police et notez ces informations — y compris les clauses particulières propres à votre contrat. Elles alimentent ensuite votre calendrier et vos courriers.</p>
+        </div>
+        <div class="contract">
+          <form class="contract-form" id="contractForm" autocomplete="off">
+            <h3>Je lis mon contrat, je note</h3>
+            <p class="lead">Dans vos conditions générales, cherchez cinq mots : <em>délai de déclaration</em>, <em>franchise</em>, <em>plafond</em> (ou <em>limite de garantie</em>), <em>vétusté</em> (ou <em>valeur à neuf</em>) et <em>exclusions</em>. Ajoutez en texte libre toute autre clause particulière que vous repérez.</p>
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="cDelai">Délai de déclaration <span class="hint">(jours ouvrés)</span></label>
+                <input id="cDelai" inputmode="numeric" placeholder="5">
+              </div>
+              <div class="field">
+                <label for="cFranchise">Franchise <span class="hint">(€, à votre charge)</span></label>
+                <input id="cFranchise" inputmode="numeric" placeholder="250">
+              </div>
             </div>
+
+            <div class="grid-2">
+              <div class="field">
+                <label for="cPlafond">Plafond de garantie <span class="hint">(€, montant max.)</span></label>
+                <input id="cPlafond" inputmode="numeric" placeholder="50000">
+              </div>
+              <div class="field">
+                <label for="cValeur">Règle de valeur</label>
+                <select id="cValeur">
+                  <option value="">Je ne sais pas encore</option>
+                  <option value="neuf">Valeur à neuf (vétusté non déduite)</option>
+                  <option value="vetuste">Vétusté déduite</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="cExclusions">Exclusions <span class="hint">(facultatif)</span></label>
+              <textarea id="cExclusions" placeholder="Ex. : vol sans effraction, remontée d'égout…"></textarea>
+            </div>
+
+            <div class="field">
+              <label for="cAutres">Autres clauses particulières <span class="hint">(facultatif — texte libre)</span></label>
+              <textarea id="cAutres" placeholder="Ex. : règle proportionnelle, déchéance de garantie, plafond par poste, franchise vol majorée…"></textarea>
+            </div>
+          </form>
+
+          <aside class="contract-recap">
+            <div class="contract-recap__head">
+              <span class="contract-recap__title">Votre contrat en bref</span>
+              <span class="contract-recap__status" id="contractStatus"></span>
+            </div>
+            <ul class="contract-recap__list" id="contractRecapList"></ul>
+            <p class="contract-recap__note">Ces informations alimentent votre <a href="#delais">calendrier</a> et votre <a href="#rediger">mise en demeure</a>. Rien n'est envoyé ni enregistré&nbsp;: tout reste dans votre navigateur.</p>
+          </aside>
+        </div>
+      </div>
+
+      <!-- 2.3 Les échéances -->
+      <div class="dossier-sub" id="delais">
+        <div class="sec-head">
+          <span class="eyebrow"><span class="dot"></span>Étape 3 · Vos échéances</span>
+          <h2>Vos dates limites, calculées automatiquement</h2>
+          <p>Indiquez la date du sinistre. Les délais légaux s'affichent (jours ouvrés, hors jours fériés).</p>
+        </div>
+        <div class="calc">
+          <div class="calc-form">
+            <div class="field">
+              <label for="sinistreDate">Date du sinistre</label>
+              <input type="date" id="sinistreDate">
+            </div>
+            <div class="field">
+              <label>Nature du sinistre</label>
+              <div class="seg" role="group" aria-label="Nature du sinistre">
+                <button type="button" data-deadline="standard" aria-selected="true">Standard</button>
+                <button type="button" data-deadline="vol" aria-selected="false">Vol</button>
+              </div>
+            </div>
+          </div>
+          <div id="timeline" class="timeline">
+            <div class="calc-empty">Choisissez une date pour afficher vos échéances.</div>
           </div>
         </div>
-        <div id="timeline" class="timeline">
-          <div class="calc-empty">Choisissez une date pour afficher vos échéances.</div>
+      </div>
+
+      <!-- Sauvegarde / restauration -->
+      <div class="data-io">
+        <div>
+          <span class="data-io__title">Sauvegarder mes données</span>
+          <p>Exportez l'ensemble de votre dossier (contrat, justificatifs cochés, notes, courriers) dans un fichier JSON, puis réimportez-le ici ou sur un autre appareil. Rien ne transite par un serveur.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ 3bis. VOTRE CONTRAT ============================ -->
-  <section class="section section--alt" id="contrat">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow">Votre contrat</span>
-        <h2>Les clauses qui changent votre indemnisation</h2>
-        <p>Sortez votre police et notez ces informations — y compris les clauses particulières propres à votre contrat. Elles alimentent ensuite votre calendrier et vos courriers.</p>
-      </div>
-      <div class="contract">
-        <form class="contract-form" id="contractForm" autocomplete="off">
-          <h3>Je lis mon contrat, je note</h3>
-          <p class="lead">Dans vos conditions générales, cherchez cinq mots : <em>délai de déclaration</em>, <em>franchise</em>, <em>plafond</em> (ou <em>limite de garantie</em>), <em>vétusté</em> (ou <em>valeur à neuf</em>) et <em>exclusions</em>. Ajoutez en texte libre toute autre clause particulière que vous repérez.</p>
-
-          <div class="grid-2">
-            <div class="field">
-              <label for="cDelai">Délai de déclaration <span class="hint">(jours ouvrés)</span></label>
-              <input id="cDelai" inputmode="numeric" placeholder="5">
-            </div>
-            <div class="field">
-              <label for="cFranchise">Franchise <span class="hint">(€, à votre charge)</span></label>
-              <input id="cFranchise" inputmode="numeric" placeholder="250">
-            </div>
-          </div>
-
-          <div class="grid-2">
-            <div class="field">
-              <label for="cPlafond">Plafond de garantie <span class="hint">(€, montant max.)</span></label>
-              <input id="cPlafond" inputmode="numeric" placeholder="50000">
-            </div>
-            <div class="field">
-              <label for="cValeur">Règle de valeur</label>
-              <select id="cValeur">
-                <option value="">Je ne sais pas encore</option>
-                <option value="neuf">Valeur à neuf (vétusté non déduite)</option>
-                <option value="vetuste">Vétusté déduite</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="cExclusions">Exclusions <span class="hint">(facultatif)</span></label>
-            <textarea id="cExclusions" placeholder="Ex. : vol sans effraction, remontée d'égout…"></textarea>
-          </div>
-
-          <div class="field">
-            <label for="cAutres">Autres clauses particulières <span class="hint">(facultatif — texte libre)</span></label>
-            <textarea id="cAutres" placeholder="Ex. : règle proportionnelle, déchéance de garantie, plafond par poste, franchise vol majorée…"></textarea>
-          </div>
-        </form>
-
-        <aside class="contract-recap">
-          <div class="contract-recap__head">
-            <span class="contract-recap__title">Votre contrat en bref</span>
-            <span class="contract-recap__status" id="contractStatus"></span>
-          </div>
-          <ul class="contract-recap__list" id="contractRecapList"></ul>
-          <p class="contract-recap__note">Ces informations alimentent votre <a href="#delais">calendrier</a> et votre <a href="#rediger">mise en demeure</a>. Rien n'est envoyé ni enregistré&nbsp;: tout reste dans votre navigateur.</p>
-        </aside>
+        <div class="data-io__actions">
+          <button type="button" class="btn btn--ghost btn--sm" id="btnExport">⬇ Exporter mes données</button>
+          <button type="button" class="btn btn--ghost btn--sm" id="btnImport">⬆ Importer</button>
+          <input type="file" id="importFile" accept="application/json,.json" hidden>
+        </div>
       </div>
     </div>
   </section>
@@ -682,7 +770,8 @@ img{ max-width:100%; display:block; }
         <!-- Formulaire -->
         <form class="gen-form" id="genForm" autocomplete="off">
           <div class="letter-switch" role="group" aria-label="Type de courrier">
-            <button type="button" data-letter="relance" aria-selected="true">Relance</button>
+            <button type="button" data-letter="declaration" aria-selected="true">Déclaration</button>
+            <button type="button" data-letter="relance" aria-selected="false">Relance</button>
             <button type="button" data-letter="demeure" aria-selected="false">Mise en demeure</button>
             <button type="button" data-letter="mediateur" aria-selected="false">Médiateur</button>
           </div>
@@ -720,7 +809,12 @@ img{ max-width:100%; display:block; }
             <div class="field"><label for="fDateSinistre">Date du sinistre</label><input type="date" id="fDateSinistre"></div>
             <div class="field"><label for="fDateDecla">Date de déclaration <span class="hint">(facultatif)</span></label><input type="date" id="fDateDecla"></div>
           </div>
-          <div class="field"><label for="fMontant">Montant réclamé (€) <span class="hint">(facultatif)</span></label><input id="fMontant" inputmode="numeric" placeholder="8500"></div>
+          <div class="postes">
+            <span class="postes__label">Chiffrage du préjudice <span class="hint">(facultatif)</span></span>
+            <div id="postesRows"></div>
+            <button type="button" class="btn btn--ghost btn--sm" id="btnAddPoste">+ Ajouter un poste</button>
+            <div class="postes__total" id="postesTotal"></div>
+          </div>
           <div class="field"><label for="fDesc">Décrivez brièvement le sinistre <span class="hint">(facultatif)</span></label><textarea id="fDesc" placeholder="Dégât des eaux suite à une rupture de canalisation dans l'atelier le…"></textarea></div>
         </form>
 
@@ -740,8 +834,8 @@ img{ max-width:100%; display:block; }
 
           <div class="gen-actions">
             <button class="btn btn--navy" id="btnCopy" type="button">Copier</button>
-            <button class="btn btn--navy" id="btnDownload" type="button">Télécharger .doc</button>
-            <button class="btn btn--ghost" id="btnPrint" type="button">Imprimer / PDF</button>
+            <button class="btn btn--navy" id="btnPdf" type="button">Télécharger PDF</button>
+            <button class="btn btn--ghost" id="btnDownload" type="button">Télécharger .doc</button>
           </div>
 
           <p class="legal-warning">⚠️ <b>Modèle indicatif, pas un conseil juridique.</b> Vérifiez les délais et clauses de <b>votre</b> contrat (franchise, plafond, exclusions) avant d'envoyer ce courrier.</p>
@@ -766,7 +860,7 @@ img{ max-width:100%; display:block; }
 <footer class="site-foot">
   <div class="wrap">
     <div>
-      <h4>IndemniPro</h4>
+      <h4>ProIndemni</h4>
       <p>Un outil d'aide à la rédaction de vos courriers de sinistre, pensé pour les TPE et PME françaises.</p>
     </div>
     <div>
@@ -776,7 +870,7 @@ img{ max-width:100%; display:block; }
       <p><a href="https://www.service-public.gouv.fr" rel="noopener" target="_blank">Service-Public.fr</a></p>
     </div>
     <div class="site-foot__legal">
-      <b>Mentions légales</b> — IndemniPro est un service d'information et d'aide à la rédaction.
+      <b>Mentions légales</b> — ProIndemni est un service d'information et d'aide à la rédaction.
       Il <b>n'est pas un intermédiaire en assurance</b> au sens de l'article L. 511-1 du Code des assurances et
       n'est pas immatriculé à l'ORIAS. Il ne fournit <b>ni conseil juridique ni conseil en assurance</b>.
       Les délais indiqués sont ceux prévus par le Code des assurances et la réglementation en vigueur ;
@@ -787,9 +881,10 @@ img{ max-width:100%; display:block; }
   </div>
 </footer>
 
+<script src="pdf-lib.min.js"></script>
 <script>
 /* ============================================================
-   INDEMNIPRO — logique applicative
+   PROINDEMNI — logique applicative
    ============================================================ */
 
 /* -------------------------------------------
@@ -808,104 +903,115 @@ const AFFILIATE_LINKS = [
 /* -------------------------------------------
    Données : checklist de documents par sinistre
    ------------------------------------------- */
+const CATEGORIES = {
+  declaration:    { label: "Déclaration",    icon: "📄" },
+  contrat:        { label: "Contrat",        icon: "📑" },
+  photos:         { label: "Photos",         icon: "📸" },
+  factures:       { label: "Factures",       icon: "🧾" },
+  devis:          { label: "Devis",          icon: "📐" },
+  comptabilite:   { label: "Comptabilité",   icon: "📊" },
+  rapports:       { label: "Rapports & PV",  icon: "🚒" },
+  correspondance: { label: "Correspondance", icon: "👤" },
+};
+
 const CHECKLISTS = {
   "dégâts-des-eaux": {
     title: "Dégâts des eaux",
     hint: "Le sinistre le plus fréquent. Photos et devis font l'essentiel du dossier.",
     docs: [
-      { label: "Formulaire de déclaration de sinistre (ou courrier)", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
-      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
-      { label: "Photos et vidéos datées des dommages", where: "Prenez-les au plus tôt, de loin puis de près, date et heure activées." },
-      { label: "Rapport de recherche de fuite (si applicable)", where: "Demandé au plombier après localisation de la fuite." },
-      { label: "Factures ou devis de réparation", where: "Devis de l'artisan, en mentionnant la cause du sinistre." },
-      { label: "Factures d'achat des biens endommagés", where: "Boîte mail ou dossier comptable (factures fournisseurs)." }
+      { category: "declaration", label: "Formulaire de déclaration de sinistre (ou courrier)", where: "Généré dans la section « Votre courrier » — type « Déclaration ».", template: "Date d'envoi, mode (recommandé AR / espace client), n° de dossier attribué par l'assureur…" },
+      { category: "contrat", label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier.", template: "N° de contrat, assureur, période de garantie et garanties souscrites…" },
+      { category: "photos", label: "Photos et vidéos datées des dommages", where: "Prenez-les au plus tôt, de loin puis de près, date et heure activées.", template: "Lieux et dates des prises de vue, pièces concernées, description des dégâts visibles…" },
+      { category: "rapports", label: "Rapport de recherche de fuite (si applicable)", where: "Demandé au plombier après localisation de la fuite.", template: "Nom du plombier, date d'intervention, localisation et cause de la fuite…" },
+      { category: "devis", label: "Factures ou devis de réparation", where: "Devis de l'artisan, en mentionnant la cause du sinistre.", template: "Artisan, montant HT/TTC, date, cause mentionnée sur le devis…" },
+      { category: "factures", label: "Factures d'achat des biens endommagés", where: "Boîte mail ou dossier comptable (factures fournisseurs).", template: "Désignation du bien, fournisseur, date d'achat, montant, n° de facture…" }
     ]
   },
   "incendie": {
     title: "Incendie / explosion",
     hint: "Sinistre lourd : le rapport des pompiers et l'inventaire sont déterminants.",
     docs: [
-      { label: "Formulaire de déclaration de sinistre", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
-      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
-      { label: "Rapport d'intervention des pompiers", where: "Remis par les secours sur place, ou demandé au SDIS." },
-      { label: "Photos et vidéos des dégâts", where: "Prenez-les au plus tôt, sous plusieurs angles, datées." },
-      { label: "Inventaire des biens détruits avec factures", where: "Liste détaillée + factures d'achat (comptabilité)." },
-      { label: "Devis de reconstruction ou de réparation", where: "Devis d'un professionnel du bâtiment." },
-      { label: "Justificatifs de relogement ou d'hébergement (si besoin)", where: "Factures d'hôtel ou bail temporaire." }
+      { category: "declaration", label: "Formulaire de déclaration de sinistre", where: "Généré dans la section « Votre courrier » — type « Déclaration ».", template: "Date d'envoi, mode (recommandé AR / espace client), n° de dossier attribué par l'assureur…" },
+      { category: "contrat", label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier.", template: "N° de contrat, assureur, période de garantie et garanties souscrites…" },
+      { category: "rapports", label: "Rapport d'intervention des pompiers", where: "Remis par les secours sur place, ou demandé au SDIS.", template: "N° du rapport, SDIS, date et heure d'intervention, noms des intervenants…" },
+      { category: "photos", label: "Photos et vidéos des dégâts", where: "Prenez-les au plus tôt, sous plusieurs angles, datées.", template: "Lieux et dates des prises de vue, description des dégâts…" },
+      { category: "factures", label: "Inventaire des biens détruits avec factures", where: "Liste détaillée + factures d'achat (comptabilité).", template: "Liste des biens, quantités, valeurs et factures correspondantes…" },
+      { category: "devis", label: "Devis de reconstruction ou de réparation", where: "Devis d'un professionnel du bâtiment.", template: "Entreprise, nature des travaux, montant HT/TTC, délai…" },
+      { category: "factures", label: "Justificatifs de relogement ou d'hébergement (si besoin)", where: "Factures d'hôtel ou bail temporaire.", template: "Hôtel ou bail, période, montant, lien avec le sinistre…" }
     ]
   },
   "vol-vandalisme": {
     title: "Vol / vandalisme",
     hint: "Le dépôt de plainte (ou la main courante) est quasiment toujours exigé.",
     docs: [
-      { label: "Formulaire de déclaration de sinistre", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
-      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
-      { label: "Dépôt de plainte ou main courante", where: "Commissariat ou gendarmerie (pré-plainte en ligne possible)." },
-      { label: "Photos des effractions et dégâts", where: "Photographiez avant de ranger ou de réparer." },
-      { label: "Inventaire des biens volés avec factures", where: "Liste détaillée + factures d'achat." },
-      { label: "Devis de remplacement des biens", where: "Devis des biens équivalents à remplacer." },
-      { label: "Témoignages éventuels", where: "Attestations écrites de témoins, avec leurs coordonnées." }
+      { category: "declaration", label: "Formulaire de déclaration de sinistre", where: "Généré dans la section « Votre courrier » — type « Déclaration ».", template: "Date d'envoi, mode (recommandé AR / espace client), n° de dossier attribué par l'assureur…" },
+      { category: "contrat", label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier.", template: "N° de contrat, assureur, période de garantie et garanties souscrites…" },
+      { category: "rapports", label: "Dépôt de plainte ou main courante", where: "Commissariat ou gendarmerie (pré-plainte en ligne possible).", template: "N° de PV ou de récépissé, service (commissariat/gendarmerie), date du dépôt…" },
+      { category: "photos", label: "Photos des effractions et dégâts", where: "Photographiez avant de ranger ou de réparer.", template: "Lieux et dates des prises de vue, points d'effraction, dégâts constatés…" },
+      { category: "factures", label: "Inventaire des biens volés avec factures", where: "Liste détaillée + factures d'achat.", template: "Liste des biens volés, marques/n° de série, valeurs et factures…" },
+      { category: "devis", label: "Devis de remplacement des biens", where: "Devis des biens équivalents à remplacer.", template: "Biens à remplacer, référence, montant, fournisseur…" },
+      { category: "correspondance", label: "Témoignages éventuels", where: "Attestations écrites de témoins, avec leurs coordonnées.", template: "Nom, coordonnées et témoignage de chaque témoin…" }
     ]
   },
   "bris-machine": {
     title: "Bris de machine",
     hint: "Le rapport du technicien est la pièce centrale du dossier.",
     docs: [
-      { label: "Formulaire de déclaration de sinistre", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
-      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
-      { label: "Rapport du technicien ou du fabricant", where: "Demandé au réparateur ou au SAV du fabricant." },
-      { label: "Facture d'achat de la machine", where: "Facture d'origine (fournisseur, comptabilité)." },
-      { label: "Devis de réparation ou de remplacement", where: "Devis du technicien agréé." },
-      { label: "Photos de la panne / des dégâts", where: "Photos de la machine, numéro de série visible." }
+      { category: "declaration", label: "Formulaire de déclaration de sinistre", where: "Généré dans la section « Votre courrier » — type « Déclaration ».", template: "Date d'envoi, mode (recommandé AR / espace client), n° de dossier attribué par l'assureur…" },
+      { category: "contrat", label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier.", template: "N° de contrat, assureur, période de garantie et garanties souscrites…" },
+      { category: "rapports", label: "Rapport du technicien ou du fabricant", where: "Demandé au réparateur ou au SAV du fabricant.", template: "Nom du technicien, date, diagnostic de la panne et cause identifiée…" },
+      { category: "factures", label: "Facture d'achat de la machine", where: "Facture d'origine (fournisseur, comptabilité).", template: "Marque, modèle, n° de série, fournisseur, date et montant d'achat…" },
+      { category: "devis", label: "Devis de réparation ou de remplacement", where: "Devis du technicien agréé.", template: "Nature de la réparation ou machine de remplacement, montant HT/TTC…" },
+      { category: "photos", label: "Photos de la panne / des dégâts", where: "Photos de la machine, numéro de série visible.", template: "Photos de la machine, n° de série visible, description de la panne…" }
     ]
   },
   "rc-pro": {
     title: "Responsabilité civile pro",
     hint: "Un tiers vous réclame réparation : documentez le dommage et votre lien avec celui-ci.",
     docs: [
-      { label: "Formulaire de déclaration de sinistre", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
-      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
-      { label: "Réclamation reçue du tiers (courrier, constat)", where: "Courrier ou constat reçu du tiers lésé." },
-      { label: "Description détaillée du dommage causé au tiers", where: "Rédigez le déroulé précis des faits, daté." },
-      { label: "Photos et éléments de preuve", where: "Photos du dommage et de son contexte." },
-      { label: "Contrat, devis ou facture concernés", where: "Pièce liée à la prestation en cause." },
-      { label: "Coordonnées du tiers lésé", where: "Nom, adresse et qualité du tiers." }
+      { category: "declaration", label: "Formulaire de déclaration de sinistre", where: "Généré dans la section « Votre courrier » — type « Déclaration ».", template: "Date d'envoi, mode (recommandé AR / espace client), n° de dossier attribué par l'assureur…" },
+      { category: "contrat", label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier.", template: "N° de contrat, assureur, période de garantie et garanties souscrites…" },
+      { category: "correspondance", label: "Réclamation reçue du tiers (courrier, constat)", where: "Courrier ou constat reçu du tiers lésé.", template: "Nature de la réclamation, montant demandé, date de réception…" },
+      { category: "correspondance", label: "Description détaillée du dommage causé au tiers", where: "Rédigez le déroulé précis des faits, daté.", template: "Déroulé précis des faits, dates, personnes impliquées…" },
+      { category: "photos", label: "Photos et éléments de preuve", where: "Photos du dommage et de son contexte.", template: "Photos du dommage et de son contexte, dates…" },
+      { category: "factures", label: "Contrat, devis ou facture concernés", where: "Pièce liée à la prestation en cause.", template: "Référence du contrat, devis ou facture lié à la prestation en cause…" },
+      { category: "correspondance", label: "Coordonnées du tiers lésé", where: "Nom, adresse et qualité du tiers.", template: "Nom, adresse, qualité et coordonnées du tiers lésé…" }
     ]
   },
   "perte-exploitation": {
     title: "Perte d'exploitation",
     hint: "Sinistre comptable : l'expert-comptable est votre meilleur allié.",
     docs: [
-      { label: "Formulaire de déclaration de sinistre", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
-      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
-      { label: "Bilans et comptes de résultat (3 dernières années)", where: "Auprès de votre expert-comptable." },
-      { label: "Attestation de l'expert-comptable", where: "À demander à votre expert-comptable." },
-      { label: "Chiffre d'affaires de la période touchée", where: "Extraction comptable de la période concernée." },
-      { label: "Justificatifs des charges fixes (loyers, salaires…)", where: "Loyers, salaires, abonnements (relevés et factures)." },
-      { label: "Rapport d'expert (si missionné)", where: "Remis par l'expert mandaté." }
+      { category: "declaration", label: "Formulaire de déclaration de sinistre", where: "Généré dans la section « Votre courrier » — type « Déclaration ».", template: "Date d'envoi, mode (recommandé AR / espace client), n° de dossier attribué par l'assureur…" },
+      { category: "contrat", label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier.", template: "N° de contrat, assureur, période de garantie et garanties souscrites…" },
+      { category: "comptabilite", label: "Bilans et comptes de résultat (3 dernières années)", where: "Auprès de votre expert-comptable.", template: "Exercices concernés, montants, contact de l'expert-comptable…" },
+      { category: "comptabilite", label: "Attestation de l'expert-comptable", where: "À demander à votre expert-comptable.", template: "Contenu de l'attestation, date, nom de l'expert-comptable…" },
+      { category: "comptabilite", label: "Chiffre d'affaires de la période touchée", where: "Extraction comptable de la période concernée.", template: "Période touchée, CA réalisé vs prévisionnel, écart…" },
+      { category: "factures", label: "Justificatifs des charges fixes (loyers, salaires…)", where: "Loyers, salaires, abonnements (relevés et factures).", template: "Nature et montant des charges (loyers, salaires, abonnements)…" },
+      { category: "rapports", label: "Rapport d'expert (si missionné)", where: "Remis par l'expert mandaté.", template: "Nom de l'expert, date, conclusions…" }
     ]
   },
   "bris-glace": {
     title: "Bris de glace",
     hint: "Vitrines et vitrages : le devis du vitrier suffit souvent.",
     docs: [
-      { label: "Formulaire de déclaration de sinistre", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
-      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
-      { label: "Photos du vitrage endommagé", where: "Photographiez avant toute réparation." },
-      { label: "Devis de remplacement du vitrage", where: "Devis du vitrier." },
-      { label: "Facture du vitrier (après réparation)", where: "Facture une fois la réparation faite." }
+      { category: "declaration", label: "Formulaire de déclaration de sinistre", where: "Généré dans la section « Votre courrier » — type « Déclaration ».", template: "Date d'envoi, mode (recommandé AR / espace client), n° de dossier attribué par l'assureur…" },
+      { category: "contrat", label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier.", template: "N° de contrat, assureur, période de garantie et garanties souscrites…" },
+      { category: "photos", label: "Photos du vitrage endommagé", where: "Photographiez avant toute réparation.", template: "Photos du vitrage, dates, emplacement…" },
+      { category: "devis", label: "Devis de remplacement du vitrage", where: "Devis du vitrier.", template: "Type de vitrage, dimensions, montant HT/TTC, vitrier…" },
+      { category: "factures", label: "Facture du vitrier (après réparation)", where: "Facture une fois la réparation faite.", template: "Date, montant, référence de la facture…" }
     ]
   },
   "catnat-tempete": {
     title: "Catastrophe naturelle / tempête",
     hint: "Pour une catnat, l'arrêté interministériel est la clé du dossier.",
     docs: [
-      { label: "Formulaire de déclaration de sinistre", where: "Généré en 2 min dans la section « Rédiger mon courrier »." },
-      { label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier." },
-      { label: "Arrêté de catastrophe naturelle (si catnat)", where: "Publié au Journal officiel (Légifrance) ou en mairie." },
-      { label: "Photos des dommages", where: "Prenez-les au plus tôt, sous plusieurs angles." },
-      { label: "Factures et devis de réparation", where: "Devis et factures des artisans." },
-      { label: "Rapport d'expert (si missionné)", where: "Remis par l'expert mandaté." }
+      { category: "declaration", label: "Formulaire de déclaration de sinistre", where: "Généré dans la section « Votre courrier » — type « Déclaration ».", template: "Date d'envoi, mode (recommandé AR / espace client), n° de dossier attribué par l'assureur…" },
+      { category: "contrat", label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier.", template: "N° de contrat, assureur, période de garantie et garanties souscrites…" },
+      { category: "rapports", label: "Arrêté de catastrophe naturelle (si catnat)", where: "Publié au Journal officiel (Légifrance) ou en mairie.", template: "Référence de l'arrêté, date de publication au JO, commune…" },
+      { category: "photos", label: "Photos des dommages", where: "Prenez-les au plus tôt, sous plusieurs angles.", template: "Lieux et dates des prises de vue, description des dommages…" },
+      { category: "devis", label: "Factures et devis de réparation", where: "Devis et factures des artisans.", template: "Artisan, montant HT/TTC, date…" },
+      { category: "rapports", label: "Rapport d'expert (si missionné)", where: "Remis par l'expert mandaté.", template: "Nom de l'expert, date, conclusions…" }
     ]
   }
 };
@@ -934,8 +1040,12 @@ function fmtShort(d){ return new Intl.DateTimeFormat("fr-FR", { day:"2-digit", m
 /* -------------------------------------------
    Générateur de courrier
    ------------------------------------------- */
-const state = { letterType: "relance" };
+const state = { letterType: "declaration" };
 const contract = { delai: "", franchise: "", plafond: "", valeur: "", exclusions: "", autres: "" };
+
+/* Chiffrage du préjudice — postes ligne par ligne */
+let postes = [];       // [{ id, label, montant }]
+let posteSeq = 0;
 
 function escapeHtml(s){
   return String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
@@ -957,6 +1067,73 @@ function frList(items){
   if(items.length === 0) return "";
   if(items.length === 1) return items[0];
   return items.slice(0, -1).join(", ") + " et " + items[items.length - 1];
+}
+
+/* Ligne « Pièces jointes » dynamique, alimentée par les documents cochés
+   et les fichiers attachés dans la checklist. */
+function pjLine(fallback){
+  const data = CHECKLISTS[activeType];
+  const checked = checkedDocs[activeType] || [];
+  const items = [];
+  checked.forEach(i => { if(data && data.docs[i]) items.push(data.docs[i].label); });
+  checked.forEach(i => getDocFiles(activeType, i).forEach(f => items.push(f.name)));
+  return items.length ? ("PJ : " + frList(items)) : fallback;
+}
+
+/* Chiffrage du préjudice — rendu des postes */
+function prejudiceTotal(){
+  return postes.reduce((sum, p) => sum + (parseFloat(p.montant) || 0), 0);
+}
+function renderPostes(){
+  const el = document.getElementById("postesRows");
+  if(!el) return;
+  if(postes.length === 0){
+    el.innerHTML = `<p class="postes__empty">Aucun poste pour l'instant. Ajoutez une ligne pour chiffrer votre préjudice (remplacement du matériel, perte d'exploitation…).</p>`;
+    return;
+  }
+  el.innerHTML = postes.map(p => `
+    <div class="poste-row" data-id="${p.id}">
+      <input type="text" class="poste-label" value="${escapeHtml(p.label)}" placeholder="Poste de préjudice (ex. : remplacement machine)" aria-label="Libellé du poste">
+      <input type="text" class="poste-montant" inputmode="decimal" value="${escapeHtml(p.montant)}" placeholder="0" aria-label="Montant en euros">
+      <button type="button" class="poste-row__del" aria-label="Supprimer ce poste" title="Supprimer">✕</button>
+    </div>
+  `).join("");
+  el.querySelectorAll(".poste-row").forEach(row => {
+    const id = row.dataset.id;
+    const labelEl = row.querySelector(".poste-label");
+    const montantEl = row.querySelector(".poste-montant");
+    labelEl.addEventListener("input", () => {
+      const p = postes.find(x => x.id === id);
+      if(p) p.label = labelEl.value;
+    });
+    montantEl.addEventListener("input", () => {
+      const p = postes.find(x => x.id === id);
+      if(p) p.montant = montantEl.value;
+      renderPostesTotal();
+    });
+    row.querySelector(".poste-row__del").addEventListener("click", () => {
+      postes = postes.filter(x => x.id !== id);
+      renderPostes();
+      renderPostesTotal();
+      renderLetter();
+      saveState();
+    });
+  });
+}
+function renderPostesTotal(){
+  const el = document.getElementById("postesTotal");
+  if(!el) return;
+  if(!postes.length){ el.innerHTML = ""; return; }
+  const total = prejudiceTotal();
+  const formatted = total.toLocaleString("fr-FR", { minimumFractionDigits: total % 1 ? 2 : 0, maximumFractionDigits: 2 });
+  el.innerHTML = `<span>Total du préjudice</span><b>${formatted} €</b>`;
+}
+function addPoste(){
+  postes.push({ id: "p" + (++posteSeq), label: "", montant: "" });
+  renderPostes();
+  renderPostesTotal();
+  renderLetter();
+  saveState();
 }
 function contractMentionsHTML(){
   const parts = [];
@@ -1006,7 +1183,11 @@ function buildLetter(){
   const type     = val("fType");
   const dSinistre= val("fDateSinistre");
   const dDecla   = val("fDateDecla") || dSinistre;
-  const montant  = val("fMontant");
+  const totalPrej = prejudiceTotal();
+  const montant  = totalPrej > 0 ? totalPrej.toLocaleString("fr-FR", { maximumFractionDigits: 2 }) : "";
+  const postesFR = postes
+    .filter(p => p.label || p.montant)
+    .map(p => `${p.label || "Poste"} (${(parseFloat(p.montant) || 0).toLocaleString("fr-FR", { maximumFractionDigits: 2 })} €)`);
   const desc     = val("fDesc");
 
   const sinistreFR = dSinistre ? fmtFull(parseDate(dSinistre)) : "[date du sinistre]";
@@ -1036,9 +1217,24 @@ function buildLetter(){
 
   let subject = "", pj = "", body = "", sign = "";
 
-  if(state.letterType === "relance"){
+  if(state.letterType === "declaration"){
+    subject = `Objet : Déclaration de sinistre${type ? " — " + escapeHtml(type) : ""}`;
+    pj = pjLine("PJ : pièces justificatives listées en annexe");
+    body = `
+      <p>Madame, Monsieur,</p>
+      <p>Par la présente, je vous déclare le sinistre suivant, survenu le ${sinistreFR} :
+      ${escapeHtml(description)}.</p>
+      <p>Ce sinistre relève du contrat d'assurance n° ${police}.</p>
+      <p>Conformément à l'article L. 113-2 du Code des assurances, cette déclaration vous est adressée
+      dans les cinq jours ouvrés suivant la survenance du sinistre (deux jours en cas de vol).</p>
+      <p>Vous trouverez ci-joint les justificatifs permettant d'établir la réalité et l'étendue du préjudice.
+      Je me tiens à votre disposition pour tout complément d'information ainsi que pour la visite éventuelle
+      d'un expert.</p>`;
+    sign = "Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.";
+  }
+  else if(state.letterType === "relance"){
     subject = `Objet : Relance — indemnisation du sinistre n° ${ref}`;
-    pj = "PJ : copie des justificatifs déjà transmis";
+    pj = pjLine("PJ : copie des justificatifs déjà transmis");
     body = `
       <p>Madame, Monsieur,</p>
       <p>Par lettre recommandée du ${declaFR}, je vous ai déclaré le sinistre suivant,
@@ -1052,7 +1248,7 @@ function buildLetter(){
   }
   else if(state.letterType === "demeure"){
     subject = `Objet : Mise en demeure de régler l'indemnité — sinistre n° ${ref}`;
-    pj = "PJ : déclaration de sinistre, justificatifs, devis et factures";
+    pj = pjLine("PJ : déclaration de sinistre, justificatifs, devis et factures");
     const montantFR = montant ? `la somme de <strong>${escapeHtml(montant)} €</strong>` : "l'indemnité correspondant au préjudice subi";
     const mentions = contractMentionsHTML();
     body = `
@@ -1067,13 +1263,14 @@ function buildLetter(){
       ${contract.autres ? `<p>Mon contrat comporte en outre les conditions particulières suivantes : ${escapeHtml(contract.autres)}. J'entends qu'elles soient appliquées loyalement.</p>` : ""}
       <p>En conséquence, je vous mets en demeure de me régler ${montantFR} au titre de ce sinistre,
       dans un délai de quinze jours à compter de la réception de la présente.</p>
+      ${postesFR.length > 1 ? `<p>Ce montant se décompose comme suit : ${frList(postesFR)}.</p>` : ""}
       <p>À défaut de règlement dans ce délai, je me réserve le droit de saisir le Médiateur de l'assurance
       puis, le cas échéant, les tribunaux compétents, sans autre préavis.</p>`;
     sign = "Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.";
   }
   else { // médiateur
     subject = `Objet : Saisine du Médiateur de l'assurance — sinistre n° ${ref}`;
-    pj = "PJ : copie de la réclamation préalable et justificatifs";
+    pj = pjLine("PJ : copie de la réclamation préalable et justificatifs");
     body = `
       <p>Madame, Monsieur le Médiateur,</p>
       <p>Assuré auprès de ${escapeHtml(assureur)} (contrat n° ${police}), je n'ai pu obtenir
@@ -1106,13 +1303,22 @@ function decodeEntities(s){
   el.innerHTML = s;
   return el.value;
 }
-// Convertit le HTML en texte : <br> → saut de ligne, </p> → double saut,
-// puis retire les balises restantes.
+// Convertit le HTML en texte : <br> → saut de ligne, </p> → saut de paragraphe,
+// les autres balises sont retirées et les espaces/retours sources sont collapsés.
 function stripTags(s){
-  return s
-    .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/<\/p>/gi, "\n\n")
-    .replace(/<[^>]+>/g, "");
+  const parts = String(s).split(/(<br\s*\/?>|<\/p>|<[^>]+>)/gi);
+  let out = "";
+  for(const part of parts){
+    if(!part) continue;
+    if(/^<br\s*\/?>$/i.test(part)) out += "\n";
+    else if(/^<\/p>$/i.test(part)) out += "\n\n";
+    else if(/^<[^>]+>$/.test(part)) { /* balise : ignorée */ }
+    else out += part.replace(/\s+/g, " ").trim();
+  }
+  return out
+    .replace(/[ \t]*\n[ \t]*/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 function letterPlainText(){
   const L = buildLetter();
@@ -1168,7 +1374,8 @@ const typeKeys = Object.keys(CHECKLISTS);
 const typeListEl = document.querySelector(".check-types");
 let activeType = typeKeys[0];
 let checkedDocs = {}; // cases cochées, par type de sinistre
-let attachedFiles = []; // { name, size, type, dataUrl? } — dataUrl (image, en mémoire seulement) non persisté
+let docNotes = {}; // { [typeKey]: { [index]: string } } — texte renseigné par document coché
+let docFiles = {}; // { [typeKey]: { [index]: [{ name, size, type, dataUrl? }] } } — PJ par document
 
 function renderTypes(){
   typeListEl.innerHTML = "";
@@ -1196,7 +1403,29 @@ function renderDocs(){
   document.getElementById("checkHint").textContent = data.hint;
   const list = document.getElementById("checkList");
   list.innerHTML = "";
+  let currentCat = null;
   data.docs.forEach((doc, i) => {
+    // En-tête de catégorie = emplacement de dépôt côté assureur (un slot par type de pièce)
+    if(doc.category !== currentCat){
+      currentCat = doc.category;
+      const cat = CATEGORIES[doc.category] || { label: doc.category, icon: "📁" };
+      const head = document.createElement("div");
+      head.className = "doc-cat";
+      const icon = document.createElement("span");
+      icon.className = "doc-cat__icon";
+      icon.textContent = cat.icon;
+      const label = document.createElement("span");
+      label.className = "doc-cat__label";
+      label.textContent = cat.label;
+      head.appendChild(icon);
+      head.appendChild(label);
+      list.appendChild(head);
+    }
+
+    const wrap = document.createElement("div");
+    wrap.className = "doc-wrap" + (saved.includes(i) ? " open" : "");
+
+    // Ligne : case + libellé + « où le trouver »
     const row = document.createElement("div");
     row.className = "doc";
     const cb = document.createElement("input");
@@ -1215,17 +1444,106 @@ function renderDocs(){
       where.textContent = doc.where;
       main.appendChild(where);
     }
+    row.appendChild(cb);
+    row.appendChild(main);
+
+    // Panneau révélé à la coche : texte + pièces jointes du document
+    const panel = document.createElement("div");
+    panel.className = "doc__panel";
+
+    if(doc.category === "declaration"){
+      // La déclaration EST le courrier : on renvoie vers le générateur au lieu d'une zone de note.
+      const link = document.createElement("a");
+      link.className = "doc__letter-link";
+      link.href = "#rediger";
+      link.textContent = "Rédiger la déclaration dans « Votre courrier » →";
+      panel.appendChild(link);
+    } else {
+      const ta = document.createElement("textarea");
+      ta.placeholder = doc.template || "Décrivez, indiquez les références, dates, montants…";
+      ta.value = getDocNote(activeType, i) || doc.template;
+      ta.addEventListener("input", () => setDocNote(activeType, i, ta.value));
+      panel.appendChild(ta);
+    }
+
+    const fileWrap = document.createElement("div");
+    fileWrap.className = "doc__files-wrap";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn btn--ghost btn--sm doc-file-btn";
+    btn.textContent = "+ Joindre des fichiers";
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.multiple = true;
+    fileInput.hidden = true;
+    const fileList = document.createElement("ul");
+    fileList.className = "doc__files";
+    btn.addEventListener("click", () => fileInput.click());
+    fileInput.addEventListener("change", (e) => {
+      const files = Array.from(e.target.files || []);
+      if(files.length){
+        addDocFiles(activeType, i, files);
+        renderDocFiles(activeType, i, fileList);
+      }
+      e.target.value = "";
+    });
+    renderDocFiles(activeType, i, fileList);
+    fileWrap.appendChild(btn);
+    fileWrap.appendChild(fileInput);
+    fileWrap.appendChild(fileList);
+    panel.appendChild(fileWrap);
+
+    wrap.appendChild(row);
+    wrap.appendChild(panel);
+
     cb.addEventListener("change", () => {
       checkedDocs[activeType] = Array.from(list.querySelectorAll("input[type=checkbox]"))
         .map((b, idx) => b.checked ? idx : -1).filter(idx => idx >= 0);
+      wrap.classList.toggle("open", cb.checked);
       updateProgress();
+      saveState();
     });
-    row.appendChild(cb);
-    row.appendChild(main);
-    list.appendChild(row);
+
+    list.appendChild(wrap);
   });
   updateProgress();
-  renderAttach();
+  renderRubriques();
+}
+
+function renderDocFiles(t, i, ul){
+  ul.innerHTML = "";
+  const files = getDocFiles(t, i);
+  if(files.length === 0){
+    ul.innerHTML = `<li class="doc__files-empty">Aucun fichier rattaché.</li>`;
+    return;
+  }
+  files.forEach((f, idx) => {
+    const li = document.createElement("li");
+    li.className = "attach-item";
+    const name = document.createElement("span");
+    name.className = "attach-item__name";
+    name.textContent = (f.type && f.type.startsWith("image/") ? "🖼️ " : (f.type === "application/pdf" ? "📄 " : "")) + f.name;
+    name.title = f.name;
+    const size = document.createElement("span");
+    size.className = "attach-item__size";
+    size.textContent = formatSize(f.size);
+    const del = document.createElement("button");
+    del.type = "button";
+    del.className = "attach-item__del";
+    del.textContent = "✕";
+    del.title = "Retirer";
+    del.setAttribute("aria-label", "Retirer " + f.name);
+    del.addEventListener("click", () => {
+      docFiles[t][i].splice(idx, 1);
+      if(docFiles[t][i].length === 0) delete docFiles[t][i];
+      renderDocFiles(t, i, ul);
+      saveState();
+    });
+    li.appendChild(name);
+    li.appendChild(size);
+    li.appendChild(del);
+    ul.appendChild(li);
+  });
 }
 function updateProgress(){
   const boxes = document.querySelectorAll("#checkList input[type=checkbox]");
@@ -1243,187 +1561,315 @@ function formatSize(bytes){
   if(bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " Ko";
   return (bytes / (1024 * 1024)).toFixed(1) + " Mo";
 }
-function renderAttach(){
-  const ul = document.getElementById("attachList");
-  ul.innerHTML = "";
-  if(attachedFiles.length === 0){
-    ul.innerHTML = `<li class="attach__empty">Aucun fichier ajouté pour l'instant.</li>`;
+function getDocNote(t, i){ return (docNotes[t] && docNotes[t][i]) || ""; }
+function getDocFiles(t, i){ return (docFiles[t] && docFiles[t][i]) || []; }
+function setDocNote(t, i, val){
+  if(!docNotes[t]) docNotes[t] = {};
+  docNotes[t][i] = val;
+  saveState();
+}
+function addDocFiles(t, i, files){
+  if(!docFiles[t]) docFiles[t] = {};
+  if(!docFiles[t][i]) docFiles[t][i] = [];
+  files.forEach(f => {
+    const entry = { name: f.name, size: f.size, type: f.type || "" };
+    docFiles[t][i].push(entry);
+    if(f.type && (f.type.startsWith("image/") || f.type === "application/pdf")){
+      const reader = new FileReader();
+      reader.onload = () => { entry.dataUrl = reader.result; };
+      reader.readAsDataURL(f);
+    }
+  });
+  saveState();
+}
+function setupChecklist(){
+  document.getElementById("btnDossier").addEventListener("click", () => generateDossierPdf("all"));
+}
+
+/* -------------------------------------------
+   Génération PDF (pdf-lib) — un vrai .pdf par rubrique :
+   bordereau + photos en pages + pages des PDF joints fusionnées.
+   Le « dossier complet » regroupe toutes les rubriques (+ le courrier).
+   ------------------------------------------- */
+const PDF_PAGE_W = 595.28; // A4 en points
+const PDF_PAGE_H = 841.89;
+const PDF_MARGIN = 50;
+
+function pdfLibOk(){ return !!(window.PDFLib && window.PDFLib.PDFDocument); }
+
+function dataUrlToBytes(dataUrl){
+  const b64 = dataUrl.slice(dataUrl.indexOf(",") + 1);
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for(let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+
+// Retire les caractères que l'encodage WinAnsi des polices standard ne peut pas écrire
+// (emoji, flèches, symboles hors CP1252/Latin-1). Les accents et l'€ sont conservés.
+function pdfSafe(str){
+  return String(str)
+    .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, "")
+    .replace(/[\u200B-\u200F\u2190-\u21FF\u25A0-\u27BF\u2B00-\u2BFF\uFE00-\uFEFF]/g, "")
+    .replace(/[\u0000-\u001F\u007F]/g, "");
+}
+
+function wrapPdfText(text, font, size, maxWidth){
+  const out = [];
+  const words = String(text).split(/\s+/).filter(Boolean);
+  let line = "";
+  for(const w of words){
+    const cand = line ? line + " " + w : w;
+    if(!line || font.widthOfTextAtSize(cand, size) <= maxWidth) line = cand;
+    else { out.push(line); line = w; }
+  }
+  if(line) out.push(line);
+  return out;
+}
+
+// Écrit un texte multi-lignes (sauts de ligne gérés) avec retour à la ligne
+// et saut de page automatique. `cur = { page, y }` est mis à jour en place.
+function pdfText(cur, doc, font, str, size, color, opts){
+  opts = opts || {};
+  const x = opts.x != null ? opts.x : PDF_MARGIN;
+  const lineH = size + 3;
+  const maxW = PDF_PAGE_W - 2 * PDF_MARGIN;
+  const paras = String(str).split("\n");
+  paras.forEach((para, pi) => {
+    wrapPdfText(pdfSafe(para), font, size, maxW).forEach(ln => {
+      if(cur.y - lineH < PDF_MARGIN){
+        cur.page = doc.addPage([PDF_PAGE_W, PDF_PAGE_H]);
+        cur.y = PDF_PAGE_H - PDF_MARGIN;
+      }
+      cur.page.drawText(ln, { x, y: cur.y, size, font, color });
+      cur.y -= lineH;
+    });
+    if(pi < paras.length - 1) cur.y -= 5;
+  });
+  cur.y -= opts.after || 0;
+}
+
+function downloadPdf(bytes, name){
+  const blob = new Blob([bytes], { type: "application/pdf" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+}
+
+function renderRubriques(){
+  const grid = document.getElementById("rubriquesGrid");
+  const data = CHECKLISTS[activeType];
+  const cats = [];
+  data.docs.forEach(d => { if(cats.indexOf(d.category) < 0) cats.push(d.category); });
+  grid.innerHTML = "";
+  cats.forEach(cat => {
+    const info = CATEGORIES[cat] || { label: cat, icon: "📁" };
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "btn btn--ghost btn--sm";
+    b.textContent = info.icon + " " + info.label;
+    b.addEventListener("click", () => generateDossierPdf(cat));
+    grid.appendChild(b);
+  });
+}
+
+function includeLetter(){
+  const el = document.getElementById("chkIncludeLetter");
+  return el ? el.checked : true;
+}
+
+async function generateDossierPdf(scope){
+  if(!pdfLibOk()){
+    alert("La bibliothèque PDF (pdf-lib.min.js) n'est pas chargée.\n\nTéléchargez le fichier pdf-lib.min.js et placez-le dans le même dossier que index.html, puis rechargez la page.");
     return;
   }
-  attachedFiles.forEach((f, i) => {
-    const li = document.createElement("li");
-    li.className = "attach-item";
-    const name = document.createElement("span");
-    name.className = "attach-item__name";
-    name.textContent = (f.type && f.type.startsWith("image/") ? "🖼️ " : (f.type === "application/pdf" ? "📄 " : "")) + f.name;
-    name.title = f.name;
-    const size = document.createElement("span");
-    size.className = "attach-item__size";
-    size.textContent = formatSize(f.size);
-    const del = document.createElement("button");
-    del.type = "button";
-    del.className = "attach-item__del";
-    del.textContent = "✕";
-    del.title = "Retirer";
-    del.setAttribute("aria-label", "Retirer " + f.name);
-    del.addEventListener("click", () => {
-      attachedFiles.splice(i, 1);
-      renderAttach();
-      saveState();
-    });
-    li.appendChild(name);
-    li.appendChild(size);
-    li.appendChild(del);
-    ul.appendChild(li);
-  });
-}
-
-function setupChecklist(){
-  document.getElementById("btnAttach").addEventListener("click", () => {
-    document.getElementById("fileInput").click();
-  });
-  document.getElementById("fileInput").addEventListener("change", (e) => {
-    const files = Array.from(e.target.files || []);
-    files.forEach(f => {
-      const entry = { name: f.name, size: f.size, type: f.type || "" };
-      attachedFiles.push(entry);
-      if(f.type && (f.type.startsWith("image/") || f.type === "application/pdf")){
-        const reader = new FileReader();
-        reader.onload = () => { entry.dataUrl = reader.result; };
-        reader.readAsDataURL(f);
-      }
-    });
-    e.target.value = ""; // permet de resélectionner le même fichier
-    renderAttach();
-    saveState();
-  });
-  document.getElementById("btnDossier").addEventListener("click", printDossier);
-}
-
-function printDossier(){
+  const { PDFDocument, StandardFonts, rgb } = window.PDFLib;
   const data = CHECKLISTS[activeType];
   const checked = checkedDocs[activeType] || [];
-  const total = data.docs.length;
-  const done = checked.length;
-  const L = buildLetter();
-  const sender = L.sender.replace(/<br>/g, "<br/>");
-  const recipient = L.recipient.replace(/<br>/g, "<br/>");
-  const today = fmtFull(new Date());
+  const docsInScope = data.docs
+    .map((d, i) => ({ d, i }))
+    .filter(x => scope === "all" || x.d.category === scope);
+  const scopeLabel = scope === "all" ? "Dossier complet" : ((CATEGORIES[scope] && CATEGORIES[scope].label) || scope);
+  const fileName = "ProIndemni-" + (scope === "all" ? "dossier-complet" : scope) + ".pdf";
 
-  const docRows = data.docs.map((d, i) => {
-    const ok = checked.includes(i);
-    return `<tr${ok ? ' class="ok"' : ""}>
-      <td>${ok ? "✅" : "⬜"}</td>
-      <td>${escapeHtml(d.label)}</td>
-      <td class="muted">${escapeHtml(d.where || "")}</td>
-    </tr>`;
-  }).join("");
+  const doc = await PDFDocument.create();
+  const font = await doc.embedFont(StandardFonts.Helvetica);
+  const bold = await doc.embedFont(StandardFonts.HelveticaBold);
+  const NAVY = rgb(0.12, 0.23, 0.53);
+  const INK = rgb(0.10, 0.10, 0.10);
+  const GREY = rgb(0.40, 0.40, 0.40);
 
-  const filesRows = attachedFiles.length
-    ? attachedFiles.map(f => `<tr><td>📎</td><td>${escapeHtml(f.name)}</td><td class="muted">${formatSize(f.size)}</td></tr>`).join("")
-    : `<tr><td colspan="3" class="muted">Aucune pièce jointe ajoutée.</td></tr>`;
+  // --- 1. Bordereau ---
+  let cur = { page: doc.addPage([PDF_PAGE_W, PDF_PAGE_H]), y: PDF_PAGE_H - PDF_MARGIN };
+  pdfText(cur, doc, bold, "Bordereau de dépôt", 20, NAVY);
+  cur.y -= 6;
+  pdfText(cur, doc, font, scopeLabel + " — " + data.title, 11, GREY);
+  pdfText(cur, doc, font, "Généré le " + fmtFull(new Date()) + " — ProIndemni", 9, GREY);
+  if(cur.y - 8 < PDF_MARGIN){ cur.page = doc.addPage([PDF_PAGE_W, PDF_PAGE_H]); cur.y = PDF_PAGE_H - PDF_MARGIN; }
+  cur.page.drawRectangle({ x: PDF_MARGIN, y: cur.y, width: 90, height: 2, color: NAVY });
+  cur.y -= 24;
 
-  // Images et PDF ajoutés durant cette session (contenu lu en mémoire) sont intégrés au dossier.
-  const images = attachedFiles.filter(f => f.dataUrl && f.type && f.type.startsWith("image/"));
-  const pdfs = attachedFiles.filter(f => f.dataUrl && f.type === "application/pdf");
-  const photosHtml = images.length
-    ? images.map(f => `<div class="photo"><img src="${f.dataUrl}" alt="${escapeHtml(f.name)}"><p class="photo__cap">${escapeHtml(f.name)}</p></div>`).join("")
-    : `<p class="muted">Aucune photo à intégrer. Les images ajoutées lors de cette session apparaîtront ici.</p>`;
-  const pdfsHtml = pdfs.length
-    ? pdfs.map(f => `<div class="pdf"><embed src="${f.dataUrl}" type="application/pdf"><p class="pdf__cap">${escapeHtml(f.name)}</p></div>`).join("")
-    : `<p class="muted">Aucun PDF à intégrer. Les PDF ajoutés lors de cette session apparaîtront ici.</p>`;
+  const done = docsInScope.filter(x => checked.includes(x.i)).length;
+  pdfText(cur, doc, bold, done + " / " + docsInScope.length + " document(s) réuni(s)", 10, INK);
+  cur.y -= 10;
 
-  const html = `<!DOCTYPE html>
-<html lang="fr">
-<head><meta charset="utf-8"><title>Dossier de sinistre — ${escapeHtml(data.title)}</title>
-<style>
-  body{ font-family: Georgia, 'Times New Roman', serif; color:#111; margin:40px; font-size:12pt; }
-  h1{ font-size:20pt; margin:0 0 4px; }
-  .sub{ color:#555; margin:0 0 20px; font-size:11pt; }
-  .bar{ height:3px; background:#1E3A8A; width:120px; margin-bottom:24px; }
-  h2{ font-size:15pt; margin:0 0 12px; }
-  table{ width:100%; border-collapse:collapse; margin:10px 0 18px; }
-  th,td{ border:1px solid #ccc; padding:8px 10px; text-align:left; vertical-align:top; font-size:11pt; }
-  th{ background:#f0f0f0; }
-  .muted{ color:#666; font-size:9.5pt; }
-  tr.ok td{ background:#f4faf4; }
-  .page-break{ page-break-before:always; }
-  /* lettre */
-  .lr{ font-family:Arial,sans-serif; font-size:9pt; color:#666; letter-spacing:.1em; margin:0 0 16px; }
-  .addr td{ border:0; padding:0; font-size:12pt; }
-  .meta{ text-align:right; margin:18px 0 0; font-size:11pt; color:#333; }
-  .pj{ color:#444; margin:2px 0 0; font-size:11pt; }
-  .subject{ font-size:12.5pt; margin:20px 0 0; }
-  .body p{ text-align:justify; margin:0 0 12px; }
-  .sign{ margin-top:24px; }
-  .signline{ margin-top:40px; line-height:1.6; }
-  /* photos */
-  .photo{ page-break-inside:avoid; margin:0 0 22px; }
-  .photo img{ width:100%; max-width:100%; border:1px solid #ddd; }
-  .photo__cap{ font-size:9.5pt; color:#666; margin:6px 0 0; }
-  /* pdf */
-  .pdf{ page-break-inside:avoid; margin:0 0 22px; }
-  .pdf embed{ width:100%; height:880px; border:1px solid #ddd; background:#fff; }
-  .pdf__cap{ font-size:9.5pt; color:#666; margin:6px 0 0; }
-  @media print{ body{ margin:20px; } }
-</style></head>
-<body>
-  <h1>Dossier de sinistre</h1>
-  <p class="sub">${escapeHtml(data.title)} — généré le ${today} — IndemniPro</p>
-  <div class="bar"></div>
+  let lastCat = null;
+  docsInScope.forEach(x => {
+    if(scope === "all" && x.d.category !== lastCat){
+      lastCat = x.d.category;
+      const cat = CATEGORIES[x.d.category] || { label: x.d.category, icon: "📁" };
+      cur.y -= 4;
+      pdfText(cur, doc, bold, cat.label.toUpperCase(), 10, NAVY);
+      if(cur.y - 3 < PDF_MARGIN){ cur.page = doc.addPage([PDF_PAGE_W, PDF_PAGE_H]); cur.y = PDF_PAGE_H - PDF_MARGIN; }
+      cur.page.drawRectangle({ x: PDF_MARGIN, y: cur.y, width: PDF_PAGE_W - 2 * PDF_MARGIN, height: 1, color: NAVY });
+      cur.y -= 10;
+    }
+    const ok = checked.includes(x.i);
+    pdfText(cur, doc, font, (ok ? "[x] " : "[ ] ") + x.d.label, 10.5, ok ? NAVY : INK, { x: PDF_MARGIN + 4 });
+    cur.y -= 5;
+  });
 
-  <section>
-    <h2>1. Courrier</h2>
-    <p class="lr">LETTRE RECOMMANDÉE AVEC ACCUSÉ DE RÉCEPTION</p>
-    <table class="addr" width="100%"><tr>
-      <td>${sender}</td>
-      <td style="text-align:right;">${recipient}</td>
-    </tr></table>
-    <p class="meta">${L.meta}</p>
-    <p class="pj">${L.pj}</p>
-    <p class="subject"><b>${escapeHtml(L.subject)}</b></p>
-    <div class="body">${L.body}</div>
-    <p class="sign">${escapeHtml(L.sign)}</p>
-  </section>
+  // --- 2. Détail des documents cochés (note + fichiers) ---
+  const detailed = docsInScope.filter(x => checked.includes(x.i) && (getDocNote(activeType, x.i).trim() || getDocFiles(activeType, x.i).length));
+  if(detailed.length){
+    cur.y -= 8;
+    pdfText(cur, doc, bold, "Détail des documents cochés", 12, NAVY);
+    cur.y -= 6;
+    detailed.forEach(x => {
+      pdfText(cur, doc, bold, x.d.label, 10.5, INK);
+      const note = getDocNote(activeType, x.i).trim();
+      if(note) pdfText(cur, doc, font, note, 9.5, INK);
+      getDocFiles(activeType, x.i).forEach(f => pdfText(cur, doc, font, "- " + f.name + " (" + formatSize(f.size) + ")", 9, GREY));
+      cur.y -= 8;
+    });
+  }
 
-  <section class="page-break">
-    <h2>2. Bordereau de pièces jointes (${done}/${total} documents réunis)</h2>
-    <table>
-      <tr><th style="width:40px"></th><th>Document</th><th>Où le trouver</th></tr>
-      ${docRows}
-    </table>
-    <p style="font-size:11pt;"><b>Fichiers annexés (${attachedFiles.length})</b></p>
-    <table>
-      <tr><th style="width:40px"></th><th>Fichier</th><th>Taille</th></tr>
-      ${filesRows}
-    </table>
-  </section>
+  // --- 3. Courrier (dossier complet uniquement, optionnel) ---
+  if(scope === "all" && includeLetter()){
+    cur.page = doc.addPage([PDF_PAGE_W, PDF_PAGE_H]);
+    cur.y = PDF_PAGE_H - PDF_MARGIN;
+    pdfText(cur, doc, bold, "Votre courrier", 15, NAVY);
+    cur.y -= 4;
+    pdfText(cur, doc, font, "Généré depuis la section « Rédiger mon courrier » — prêt à envoyer en recommandé.", 9.5, GREY);
+    cur.y -= 12;
+    drawLetterPdf(cur, doc, font, bold, buildLetter());
+  }
 
-  <section class="page-break">
-    <h2>3. Photos (${images.length})</h2>
-    ${photosHtml}
-  </section>
+  // --- 4. Photos (une par page) ---
+  let photosIntroDone = false;
+  for(const x of docsInScope){
+    for(const f of (getDocFiles(activeType, x.i) || [])){
+      if(!(f.dataUrl && f.type && f.type.startsWith("image/"))) continue;
+      let embedded;
+      try {
+        if(f.type === "image/jpeg" || f.type === "image/jpg") embedded = await doc.embedJpg(dataUrlToBytes(f.dataUrl));
+        else if(f.type === "image/png") embedded = await doc.embedPng(dataUrlToBytes(f.dataUrl));
+        else continue;
+      } catch(e){ continue; }
+      if(!photosIntroDone){
+        cur.page = doc.addPage([PDF_PAGE_W, PDF_PAGE_H]);
+        cur.y = PDF_PAGE_H - PDF_MARGIN;
+        pdfText(cur, doc, bold, "Photos", 15, NAVY);
+        cur.y -= 6;
+        photosIntroDone = true;
+      }
+      const capH = 26;
+      const maxW = PDF_PAGE_W - 2 * PDF_MARGIN;
+      const maxH = PDF_PAGE_H - 2 * PDF_MARGIN - capH;
+      const ratio = Math.min(maxW / embedded.width, maxH / embedded.height, 1);
+      const w = embedded.width * ratio;
+      const h = embedded.height * ratio;
+      const pg = doc.addPage([PDF_PAGE_W, PDF_PAGE_H]);
+      pg.drawImage(embedded, { x: (PDF_PAGE_W - w) / 2, y: PDF_PAGE_H - PDF_MARGIN - h, width: w, height: h });
+      pg.drawText(pdfSafe(x.d.label + " — " + f.name), { x: PDF_MARGIN, y: PDF_MARGIN + 4, size: 9, font, color: GREY });
+    }
+  }
 
-  <section class="page-break">
-    <h2>4. Pièces jointes PDF (${pdfs.length})</h2>
-    ${pdfsHtml}
-  </section>
+  // --- 5. PDF joints : pages entièrement fusionnées dans le document ---
+  for(const x of docsInScope){
+    for(const f of (getDocFiles(activeType, x.i) || [])){
+      if(!(f.dataUrl && f.type === "application/pdf")) continue;
+      let src;
+      try { src = await PDFDocument.load(dataUrlToBytes(f.dataUrl)); }
+      catch(e){ continue; }
+      const pages = await doc.copyPages(src, src.getPageIndices());
+      const caption = pdfSafe(x.d.label + " — " + f.name);
+      pages.forEach((p, idx) => {
+        doc.addPage(p);
+        // Pied de page : nom de la pièce pour identifier chaque feuille
+        const barH = 14;
+        p.drawRectangle({ x: 0, y: 0, width: p.getWidth(), height: barH, color: rgb(1, 1, 1) });
+        const tag = pages.length > 1 ? " - page " + (idx + 1) + "/" + pages.length : "";
+        p.drawText(caption + tag, { x: 8, y: 5, size: 8, font, color: GREY });
+      });
+    }
+  }
 
-  <div class="signline page-break">
-    <p>Fait le ____________, à ____________</p>
-    <p>Signature :</p>
-  </div>
-  <script>window.onload = function(){ window.print(); };<\/script>
-</body></html>`;
+  const bytes = await doc.save();
+  downloadPdf(bytes, fileName);
+}
 
-  const w = window.open("", "_blank");
-  if(!w){
-    alert("Votre navigateur a bloqué l'ouverture de la fenêtre d'impression. Autorisez les fenêtres pop-up pour ce site.");
+/* -------------------------------------------
+   Courrier prêt à envoyer — PDF (pdf-lib)
+   ------------------------------------------- */
+
+// Dessine le courrier (mise en page LRAR) à la position `cur`. Réutilisé par le PDF
+// « courrier prêt à envoyer » et par la rubrique « Courrier » du dossier complet.
+function drawLetterPdf(cur, doc, font, bold, L){
+  const { rgb } = window.PDFLib;
+  const NAVY = rgb(0.12, 0.23, 0.53);
+  const INK  = rgb(0.10, 0.10, 0.10);
+  const GREY = rgb(0.40, 0.40, 0.40);
+  const txt = s => decodeEntities(stripTags(s).trim());
+
+  pdfText(cur, doc, bold, "LETTRE RECOMMANDÉE AVEC ACCUSÉ DE RÉCEPTION", 9, GREY);
+  cur.y -= 12;
+
+  pdfText(cur, doc, font, txt(L.sender), 10, INK);
+  cur.y -= 10;
+
+  // Destinataire, aligné à droite (chaque ligne <br> conservée)
+  txt(L.recipient).split("\n").forEach(ln => {
+    cur.page.drawText(ln, { x: PDF_PAGE_W - PDF_MARGIN - font.widthOfTextAtSize(ln, 10), y: cur.y, size: 10, font, color: INK });
+    cur.y -= 13;
+  });
+  cur.y -= 8;
+
+  // Lieu et date, alignés à droite
+  const meta = txt(L.meta);
+  cur.page.drawText(meta, { x: PDF_PAGE_W - PDF_MARGIN - font.widthOfTextAtSize(meta, 10), y: cur.y, size: 10, font, color: INK });
+  cur.y -= 24;
+
+  pdfText(cur, doc, bold, txt(L.subject), 11, NAVY);
+  cur.y -= 4;
+  pdfText(cur, doc, font, txt(L.pj), 9.5, GREY);
+  cur.y -= 6;
+  pdfText(cur, doc, font, txt(L.body), 10.5, INK);
+  cur.y -= 8;
+  pdfText(cur, doc, font, txt(L.sign), 10.5, INK);
+}
+
+async function generateLetterPdf(){
+  if(!pdfLibOk()){
+    alert("La bibliothèque PDF (pdf-lib.min.js) n'est pas chargée.\n\nTéléchargez le fichier pdf-lib.min.js et placez-le dans le même dossier que index.html, puis rechargez la page.");
     return;
   }
-  w.document.open();
-  w.document.write(html);
-  w.document.close();
+  const { PDFDocument, StandardFonts } = window.PDFLib;
+  const L = buildLetter();
+  const doc = await PDFDocument.create();
+  const font = await doc.embedFont(StandardFonts.Helvetica);
+  const bold = await doc.embedFont(StandardFonts.HelveticaBold);
+  const cur = { page: doc.addPage([PDF_PAGE_W, PDF_PAGE_H]), y: PDF_PAGE_H - PDF_MARGIN };
+
+  drawLetterPdf(cur, doc, font, bold, L);
+
+  const bytes = await doc.save();
+  downloadPdf(bytes, "ProIndemni-courrier.pdf");
+  showAffiliateNote();
 }
 
 /* -------------------------------------------
@@ -1441,16 +1887,16 @@ function renderDeadlines(){
   const isVol = deadlineType === "vol";
   const declDelai = parseInt(contract.delai, 10) || (isVol ? 2 : 5);
   const decl = addWorkingDays(base, declDelai);
-  const relance = addDays(base, 30);
-  const demeure = addDays(base, 45);
-  const mediateur = addDays(base, 60);
+  const relance = addDays(decl, 30);
+  const demeure = addDays(decl, 45);
+  const mediateur = addDays(decl, 60);
   const prescription = addDays(base, 730);
 
   const items = [
     { date: decl, small: contract.delai ? declDelai + " j ouvrés (contrat)" : (isVol ? "2 jours ouvrés" : "5 jours ouvrés"), label: "Dernier délai pour déclarer", desc: "Déclaration du sinistre à l'assureur (art. L. 113-2 du Code des assurances).", urgent: true },
-    { date: relance, small: "30 jours", label: "Première relance", desc: "Sans nouvelle de l'assureur, adressez une relance écrite.", urgent: false },
-    { date: demeure, small: "45 jours", label: "Mise en demeure", desc: "Exigez le règlement en visant l'article L. 113-5 (intérêts de retard).", urgent: false },
-    { date: mediateur, small: "≈ 2 mois", label: "Saisie du Médiateur", desc: "Possible après une réclamation écrite restée plus de 2 mois sans issue.", urgent: false },
+    { date: relance, small: "30 j après déclaration", label: "Première relance", desc: "Sans nouvelle de l'assureur, adressez une relance écrite.", urgent: false },
+    { date: demeure, small: "45 j après déclaration", label: "Mise en demeure", desc: "Exigez le règlement en visant l'article L. 113-5 (intérêts de retard).", urgent: false },
+    { date: mediateur, small: "≈ 2 mois après déclaration", label: "Saisie du Médiateur", desc: "Possible après une réclamation écrite restée plus de 2 mois sans issue.", urgent: false },
     { date: prescription, small: "2 ans", label: "Prescription", desc: "Dernier délai pour agir en justice (art. L. 114-1 du Code des assurances).", urgent: false }
   ];
 
@@ -1461,7 +1907,12 @@ function renderDeadlines(){
         <div class="milestone__label">${it.label}</div>
         <div class="milestone__desc">${it.desc}</div>
       </div>
-    </div>`).join("");
+    </div>`).join("") + `
+    <div class="calc-summary">
+      <b>Échéancier automatique.</b> Les dates de relance, de mise en demeure et de saisine du
+      Médiateur sont calculées à partir du <b>${fmtShort(decl)}</b> — le dernier jour pour déclarer${contract.delai ? " selon votre contrat" : ""}.
+      La prescription de 2 ans court, elle, à partir de la date du sinistre (art. L. 114-1).
+    </div>`;
 }
 
 /* -------------------------------------------
@@ -1511,9 +1962,8 @@ function setupActions(){
     showAffiliateNote();
   });
 
-  document.getElementById("btnPrint").addEventListener("click", () => {
-    window.print();
-    showAffiliateNote();
+  document.getElementById("btnPdf").addEventListener("click", () => {
+    generateLetterPdf();
   });
 }
 
@@ -1521,10 +1971,10 @@ function setupActions(){
    Sauvegarde automatique (localStorage)
    ------------------------------------------- */
 const STORAGE_KEY = "indemnipro-state-v1";
-const GEN_FIELDS = ["fRaison","fForme","fGerant","fAdresse","fCp","fVille","fAssureur","fAssAdresse","fPolice","fRef","fType","fDateSinistre","fDateDecla","fMontant","fDesc"];
+const GEN_FIELDS = ["fRaison","fForme","fGerant","fAdresse","fCp","fVille","fAssureur","fAssAdresse","fPolice","fRef","fType","fDateSinistre","fDateDecla","fDesc"];
 const CONTRACT_FIELDS = ["cDelai","cFranchise","cPlafond","cValeur","cExclusions","cAutres"];
 
-function saveState(){
+function collectState(){
   const data = {
     gen: {},
     contract: {},
@@ -1533,18 +1983,30 @@ function saveState(){
     deadlineType: deadlineType,
     activeType: activeType,
     checkedDocs: checkedDocs,
-    attachedFiles: attachedFiles.map(f => ({ name: f.name, size: f.size, type: f.type }))
+    docNotes: docNotes,
+    postes: postes,
+    docFiles: (function(){
+      const out = {};
+      Object.keys(docFiles).forEach(t => {
+        out[t] = {};
+        Object.keys(docFiles[t]).forEach(i => {
+          out[t][i] = (docFiles[t][i] || []).map(f => ({ name: f.name, size: f.size, type: f.type }));
+        });
+      });
+      return out;
+    })()
   };
   GEN_FIELDS.forEach(id => { const el = document.getElementById(id); if(el) data.gen[id] = el.value; });
   CONTRACT_FIELDS.forEach(id => { const el = document.getElementById(id); if(el) data.contract[id] = el.value; });
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+  return data;
+}
+
+function saveState(){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(collectState())); }
   catch(e){ /* stockage indisponible (navigation privée…) : on ignore */ }
 }
 
-function loadState(){
-  let data;
-  try { data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); }
-  catch(e){ return; }
+function applyState(data){
   if(!data || typeof data !== "object") return;
 
   if(data.gen) GEN_FIELDS.forEach(id => {
@@ -1554,11 +2016,86 @@ function loadState(){
     if(data.contract[id] != null){ const el = document.getElementById(id); if(el) el.value = data.contract[id]; }
   });
   if(data.sinistreDate){ const el = document.getElementById("sinistreDate"); if(el) el.value = data.sinistreDate; }
-  if(["relance","demeure","mediateur"].includes(data.letterType)) state.letterType = data.letterType;
+  if(["declaration","relance","demeure","mediateur"].includes(data.letterType)) state.letterType = data.letterType;
   if(["standard","vol"].includes(data.deadlineType)) deadlineType = data.deadlineType;
   if(typeKeys.includes(data.activeType)) activeType = data.activeType;
   if(data.checkedDocs && typeof data.checkedDocs === "object") checkedDocs = data.checkedDocs;
-  if(Array.isArray(data.attachedFiles)) attachedFiles = data.attachedFiles;
+  if(data.docNotes && typeof data.docNotes === "object") docNotes = data.docNotes;
+  if(Array.isArray(data.postes)){
+    postes = data.postes
+      .filter(p => p && typeof p === "object")
+      .map(p => ({ id: p.id || ("p" + (++posteSeq)), label: p.label || "", montant: p.montant != null ? String(p.montant) : "" }));
+    postes.forEach(p => {
+      const m = String(p.id).match(/(\d+)$/);
+      if(m) posteSeq = Math.max(posteSeq, Number(m[1]));
+    });
+  }
+  if(data.docFiles && typeof data.docFiles === "object"){
+    Object.keys(data.docFiles).forEach(t => {
+      docFiles[t] = {};
+      Object.keys(data.docFiles[t]).forEach(i => {
+        if(Array.isArray(data.docFiles[t][i])) docFiles[t][i] = data.docFiles[t][i].map(f => ({ name: f.name, size: f.size, type: f.type || "" }));
+      });
+    });
+  }
+}
+
+function loadState(){
+  let data;
+  try { data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); }
+  catch(e){ return; }
+  applyState(data);
+}
+
+/* -------------------------------------------
+   Sauvegarde / restauration (export / import JSON)
+   ------------------------------------------- */
+function setupDataIO(){
+  const exportBtn = document.getElementById("btnExport");
+  const importBtn = document.getElementById("btnImport");
+  const importFile = document.getElementById("importFile");
+  if(!exportBtn || !importBtn || !importFile) return;
+
+  exportBtn.addEventListener("click", () => {
+    const data = collectState();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "proindemni-dossier-" + new Date().toISOString().slice(0, 10) + ".json";
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  importBtn.addEventListener("click", () => importFile.click());
+
+  importFile.addEventListener("change", () => {
+    const file = importFile.files && importFile.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      let data;
+      try { data = JSON.parse(reader.result); }
+      catch(e){ alert("Fichier invalide : impossible de lire ce JSON."); return; }
+      applyState(data);
+      // re-rendu complet pour refléter les données importées
+      readContract();
+      renderContractRecap();
+      renderTypes();
+      renderDocs();
+      renderPostes();
+      renderPostesTotal();
+      syncSegButtons();
+      syncLetterButtons();
+      renderDeadlines();
+      renderLetter();
+      saveState();
+      alert("Données importées avec succès.");
+    };
+    reader.onerror = () => alert("Impossible de lire le fichier.");
+    reader.readAsText(file);
+    importFile.value = "";
+  });
 }
 
 function syncSegButtons(){
@@ -1583,6 +2120,11 @@ function init(){
   renderTypes();
   renderDocs();
   setupChecklist();
+
+  // chiffrage du préjudice (postes)
+  renderPostes();
+  renderPostesTotal();
+  document.getElementById("btnAddPoste").addEventListener("click", addPoste);
 
   // sauvegarde automatique : toute saisie est conservée
   document.addEventListener("input", saveState);
@@ -1627,6 +2169,9 @@ function init(){
   // affiliation
   renderPartnerLinks();
   setupActions();
+
+  // sauvegarde / restauration
+  setupDataIO();
 
   renderLetter();
 }
