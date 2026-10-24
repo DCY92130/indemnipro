@@ -45,10 +45,12 @@ Sections de la page, dans l'ordre :
    - `.dossier-sub#delais` « Étape 3 · Vos échéances » — calculateur de dates limites
    - plus un bloc **Sauvegarde / restauration** (`.data-io`, boutons `#btnExport` / `#btnImport`)
 4. **Comprendre votre indemnisation** (`#comprendre`, section `section--dark comprendre`) — pédagogie
-   « la réalité du terrain », purement statique : une frise `.jny` en 6 étapes (le parcours réel
-   d'un sinistre) + une grille `.comprendre-grid` de 3 cartes (perte d'exploitation / préparer
-   l'expert / anticiper l'après) + un encart `.comprendre-takeaway` avec CTA vers `#rediger`.
-   Contenu issu de la recherche terrain (cf. mémoire), ton « ni minimiser ni promettre ».
+   « la réalité du terrain » : une frise `.jny` en 6 étapes (le parcours réel d'un sinistre) + une
+   grille `.comprendre-grid` de 4 cartes (perte d'exploitation / préparer l'expert / anticiper
+   l'après / refus et réductions fréquents) + un encart `.comprendre-takeaway` avec CTA vers
+   `#rediger`. Contenu issu de la recherche terrain (cf. mémoire), ton « ni minimiser ni promettre ».
+   La carte 04 porte un lien `.go` avec `data-letter-link="contestation"` qui pré-sélectionne le
+   courrier « Contester un refus » via `setLetter()` (défini à côté de `syncLetterButtons()`).
 5. **Générateur** (`#rediger`) — le courrier (déclaration / relance / mise en demeure / médiateur / contestation d'un refus)
 6. **Partenaires** + **pied de page** (mentions légales)
 

@@ -531,7 +531,7 @@ img{ max-width:100%; display:block; }
 .jny-n{ display:block; font-family:var(--font-mono); font-size:11px; color:var(--red); margin-bottom:6px; }
 .jny-title{ display:block; color:#fff; font-weight:600; font-size:14.5px; line-height:1.25; margin-bottom:4px; }
 .jny-step p{ color:var(--slate-2); font-size:12.5px; line-height:1.45; margin:0; }
-.comprendre-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.comprendre-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
 .comprendre-card{
   background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.14);
   border-radius:var(--radius); padding:28px 26px 24px;
@@ -544,6 +544,8 @@ img{ max-width:100%; display:block; }
 .comprendre-card li::before{ content:"—"; position:absolute; left:0; color:var(--red); }
 .comprendre-card li:last-child{ margin-bottom:0; }
 .comprendre-card b, .comprendre-card strong{ color:#fff; font-weight:600; }
+.comprendre-card .go{ display:inline-block; margin-top:14px; color:var(--red); font-weight:600; font-size:14px; text-decoration:none; }
+.comprendre-card .go:hover{ text-decoration:underline; }
 .comprendre-takeaway{
   margin-top:44px; padding:22px 26px; border-left:4px solid var(--red);
   background:rgba(255,255,255,.04); border-radius:0 var(--radius-sm) var(--radius-sm) 0;
@@ -866,6 +868,17 @@ img{ max-width:100%; display:block; }
             <li>L'indépendant est le plus exposé&nbsp;: pas de chômage, pas d'aide d'un groupe.</li>
             <li>Constituez une trésorerie d'avance&nbsp;: vous payez d'abord, vous êtes remboursé ensuite.</li>
           </ul>
+        </div>
+        <div class="comprendre-card">
+          <span class="n">04</span>
+          <h3>Les refus et réductions fréquents</h3>
+          <span class="sub">Les motifs qui reviennent sans cesse</span>
+          <ul>
+            <li><b>Sous-assurance</b>&nbsp;: assuré 100&nbsp;000&nbsp;€ pour 600&nbsp;000&nbsp;€ de stock, l'indemnité est réduite au 1/6 (règle proportionnelle).</li>
+            <li><b>Conditions de protection non respectées</b>&nbsp;: alarme non branchée, porte non conforme au contrat&nbsp;⇒ refus.</li>
+            <li><b>Exclusion «&nbsp;émeute / attroupement&nbsp;»</b>&nbsp;: distincte du vandalisme, souvent en option ou exclue.</li>
+          </ul>
+          <a class="go" href="#rediger" data-letter-link="contestation">Contester un refus motivé →</a>
         </div>
       </div>
 
@@ -2314,6 +2327,12 @@ function syncLetterButtons(){
   });
   syncRefusFields();
 }
+function setLetter(type){
+  state.letterType = type;
+  syncLetterButtons();
+  renderLetter();
+  saveState();
+}
 
 /* -------------------------------------------
    Initialisation
@@ -2351,14 +2370,14 @@ function init(){
 
   // générateur : type de courrier
   document.querySelectorAll(".letter-switch button").forEach(b => {
-    b.addEventListener("click", () => {
-      state.letterType = b.dataset.letter;
-      syncLetterButtons();
-      renderLetter();
-      saveState();
-    });
+    b.addEventListener("click", () => setLetter(b.dataset.letter));
   });
   syncLetterButtons();
+
+  // liens pédagogiques qui pré-sélectionnent un type de courrier
+  document.querySelectorAll("[data-letter-link]").forEach(a => {
+    a.addEventListener("click", () => setLetter(a.dataset.letterLink));
+  });
 
   // générateur : mise à jour en direct + pas de rechargement de page
   document.getElementById("genForm").addEventListener("submit", e => e.preventDefault());
