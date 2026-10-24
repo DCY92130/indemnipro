@@ -444,12 +444,20 @@ img{ max-width:100%; display:block; }
 .letter-sign{ margin-top:34px; font-family:var(--font-display); font-style:italic; font-size:22px; }
 .gen-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:22px; }
 .gen-affiliate{
-  margin-top:22px; padding:16px 18px; border:1px dashed var(--hairline); border-radius:var(--radius-sm);
-  background:var(--paper-2); font-size:13.5px; color:var(--slate); display:none;
+  margin-top:22px; padding:18px; border:1px solid var(--hairline); border-radius:var(--radius-sm);
+  background:var(--paper-2); font-size:14px; color:var(--slate); line-height:1.6; display:none;
 }
 .gen-affiliate.is-visible{ display:block; }
 .gen-affiliate b{ color:var(--ink); }
-.gen-affiliate a{ color:var(--navy); }
+.gen-affiliate__links{ display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
+.gen-affiliate__links a{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:8px 14px; background:#fff; border:1px solid var(--hairline); border-radius:999px;
+  color:var(--ink); text-decoration:none; font-weight:600; font-size:13.5px;
+  transition:border-color .12s ease, transform .12s ease;
+}
+.gen-affiliate__links a:hover{ border-color:var(--navy); transform:translateY(-1px); }
+.gen-affiliate__disclosure{ display:block; font-size:12px; color:var(--slate-2); }
 .privacy-note{ margin:0 0 26px; padding:12px 16px; border:1px solid var(--hairline); border-left:4px solid var(--navy); border-radius:var(--radius-sm); background:#fff; font-size:13.5px; color:var(--slate); line-height:1.5; }
 .privacy-note b{ color:var(--ink); }
 .aiguillage{ margin:0 0 26px; padding:20px 22px; background:var(--paper); border:1px solid var(--hairline); border-radius:var(--radius); }
@@ -506,17 +514,26 @@ img{ max-width:100%; display:block; }
 @media (max-width:760px){ .contract{ grid-template-columns:1fr; } .contract-recap{ position:static; } }
 
 /* ------------------------------------------------------------
-   Partenaires (affiliation discrète)
+   Partenaires (affiliation visible — cartes produit)
    ------------------------------------------------------------ */
-.partners{ padding:64px 0; background:var(--paper-2); border-top:1px solid var(--hairline); }
-.partners__inner{ max-width:760px; margin:0 auto; text-align:center; padding:0 24px; }
-.partners__label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--slate); margin-bottom:18px; }
-.partners__links{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.partners{ padding:72px 0; background:var(--paper-2); border-top:1px solid var(--hairline); }
+.partners__inner{ max-width:960px; margin:0 auto; text-align:center; padding:0 24px; }
+.partners__label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--slate); margin-bottom:14px; }
+.partners__title{ font-family:var(--font-display); font-size:26px; margin:0 0 8px; color:var(--ink); }
+.partners__sub{ max-width:560px; margin:0 auto 30px; font-size:14.5px; line-height:1.55; color:var(--slate); }
+.partners__links{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
 .partner-link{
-  font-size:14px; color:var(--slate); text-decoration:none; border-bottom:1px dotted var(--slate-2);
-  padding:2px 0;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  padding:24px 18px; background:#fff; border:1px solid var(--hairline);
+  border-radius:var(--radius); text-decoration:none; color:var(--ink);
+  box-shadow:0 2px 10px rgba(19,26,46,.06);
+  transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease;
 }
-.partner-link:hover{ color:var(--navy); border-color:var(--navy); }
+.partner-link:hover{ transform:translateY(-3px); border-color:var(--navy); box-shadow:0 10px 24px rgba(30,58,138,.14); }
+.partner-link__icon{ font-size:28px; line-height:1; }
+.partner-link__label{ font-weight:600; font-size:15px; }
+.partner-link__cta{ font-family:var(--font-mono); font-size:12px; color:var(--navy); }
+@media (max-width:760px){ .partners__links{ grid-template-columns:1fr; } }
 
 /* ------------------------------------------------------------
    Contact
@@ -1162,6 +1179,8 @@ img{ max-width:100%; display:block; }
   <section class="partners">
     <div class="partners__inner">
       <p class="partners__label">Partenaires</p>
+      <h2 class="partners__title">Sécurisez votre local pour éviter une récidive</h2>
+      <p class="partners__sub">Liens affiliés Amazon&nbsp;: si vous achetez via ces liens, ProIndemni perçoit une petite commission, sans surcoût pour vous.</p>
       <div class="partners__links" id="partnerLinks"></div>
     </div>
   </section>
@@ -1247,9 +1266,9 @@ img{ max-width:100%; display:block; }
    du local (pertinent après un sinistre), taguées pour toucher la commission.
    Pour d'autres marques, passer par un réseau gratuit (Awin / Effiliation). */
 const AFFILIATE_LINKS = [
-  { label: "Caméra de surveillance",  url: "https://www.amazon.fr/s?k=camera+surveillance&tag=proindemni-21",     slug: "camera-surveillance" },
-  { label: "Alarme anti-intrusion",   url: "https://www.amazon.fr/s?k=alarme+anti-intrusion&tag=proindemni-21",   slug: "alarme" },
-  { label: "Coffre-fort",             url: "https://www.amazon.fr/s?k=coffre+fort&tag=proindemni-21",             slug: "coffre-fort" }
+  { label: "Caméra de surveillance", icon: "📷", url: "https://www.amazon.fr/s?k=camera+surveillance&tag=proindemni-21",   slug: "camera-surveillance" },
+  { label: "Alarme anti-intrusion",  icon: "🔔", url: "https://www.amazon.fr/s?k=alarme+anti-intrusion&tag=proindemni-21", slug: "alarme" },
+  { label: "Coffre-fort",            icon: "🔒", url: "https://www.amazon.fr/s?k=coffre+fort&tag=proindemni-21",           slug: "coffre-fort" }
 ];
 
 /* -------------------------------------------
@@ -2327,14 +2346,19 @@ function renderDeadlines(){
    ------------------------------------------- */
 function renderPartnerLinks(){
   document.getElementById("partnerLinks").innerHTML = AFFILIATE_LINKS.map(l =>
-    `<a class="partner-link" href="${l.url}" rel="sponsored noopener" data-partner="${l.slug}">${l.label}</a>`
+    `<a class="partner-link" href="${l.url}" rel="sponsored noopener" data-partner="${l.slug}">
+       <span class="partner-link__icon">${l.icon}</span>
+       <span class="partner-link__label">${l.label}</span>
+       <span class="partner-link__cta">Voir sur Amazon&nbsp;→</span>
+     </a>`
   ).join("");
 }
 function showAffiliateNote(){
   const el = document.getElementById("affiliateNote");
   el.classList.add("is-visible");
-  el.innerHTML = `<b>Votre courrier est prêt ✅</b> Pour la suite de vos démarches, ces services peuvent vous aider :
-    ${AFFILIATE_LINKS.map(l => `<a href="${l.url}" rel="sponsored noopener" data-partner="${l.slug}">${l.label}</a>`).join(" · ")}`;
+  el.innerHTML = `<b>Votre courrier est prêt ✅</b> Pour éviter une récidive, pensez à sécuriser votre local&nbsp;:
+    <span class="gen-affiliate__links">${AFFILIATE_LINKS.map(l => `<a href="${l.url}" rel="sponsored noopener" data-partner="${l.slug}">${l.icon} ${l.label}</a>`).join("")}</span>
+    <span class="gen-affiliate__disclosure">Liens affiliés Amazon — petite commission pour ProIndemni, sans surcoût pour vous.</span>`;
 }
 
 /* Compteur de clics partenaires — no-op si Plausible n'est pas chargé */
