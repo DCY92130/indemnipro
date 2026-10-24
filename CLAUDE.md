@@ -28,7 +28,7 @@ Pas de suite de tests — vérification manuelle dans le navigateur. Le JavaScri
 contrôlé en syntaxe via :
 
 ```bash
-sed -n '886,2179p' index.html | node --check
+sed -n '1112,2490p' index.html | node --check
 ```
 
 ## Architecture
@@ -51,7 +51,7 @@ Sections de la page, dans l'ordre :
    `#rediger`. Contenu issu de la recherche terrain (cf. mémoire), ton « ni minimiser ni promettre ».
    La carte 04 porte un lien `.go` avec `data-letter-link="contestation"` qui pré-sélectionne le
    courrier « Contester un refus » via `setLetter()` (défini à côté de `syncLetterButtons()`).
-5. **Générateur** (`#rediger`) — le courrier (déclaration / relance / mise en demeure / médiateur / contestation d'un refus)
+5. **Générateur** (`#rediger`) — le courrier (déclaration / relance / mise en demeure / médiateur / contestation d'un refus). S'ouvre sur un **aiguillage** `.aiguillage` « Quel courrier vous correspond ? » : 5 cartes `.aiguillage-card` avec `data-pick` (→ `setLetter()`) qui pré-sélectionnent le courrier selon la situation, plus une note `.aiguillage__note` « Émeutes / pillages » dont le lien porte `data-pick-type="emeute-pillage"` (→ `selectType()` + ancre `#documents`).
 6. **Partenaires** + **pied de page** (mentions légales)
 
 Les ancres `#documents` / `#contrat` / `#delais` sont conservées sur les `.dossier-sub` (les liens
@@ -65,7 +65,11 @@ du menu restent valables).
 - `CHECKLISTS` — objet clé → `{ title, hint, docs[] }`. Chaque `doc` est
   `{ category, label, where, template }` (`category` = emplacement de dépôt chez l'assureur,
   `where` = « Où le trouver », affiché en surbrillance à l'écran mais **exclu du PDF** ;
-  `template` = texte pré-rempli dans la zone de note).
+  `template` = texte pré-rempli dans la zone de note). 9 entrées, dont `"emeute-pillage"`
+  (plainte préalable, déclaration 5 j, garantie « émeutes et mouvements populaires », L. 121-8
+  charge de la preuve sur l'assureur, L. 211-10 CSI recours contre l'État, perte d'exploitation
+  facultative). Ajouter une entrée est sans effet de bord : `typeKeys = Object.keys(CHECKLISTS)`
+  l'intègre automatiquement et `applyState` valide `activeType` via `typeKeys.includes(...)`.
 - `state = { letterType }` — `"declaration" | "relance" | "demeure" | "mediateur" | "contestation"`.
 - `contract` — les clauses lues depuis le formulaire « Mon contrat ».
 - `postes` — tableau `[{ id, label, montant }]` du chiffrage du préjudice (ligne par ligne),

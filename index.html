@@ -452,6 +452,25 @@ img{ max-width:100%; display:block; }
 .gen-affiliate a{ color:var(--navy); }
 .privacy-note{ margin:0 0 26px; padding:12px 16px; border:1px solid var(--hairline); border-left:4px solid var(--navy); border-radius:var(--radius-sm); background:#fff; font-size:13.5px; color:var(--slate); line-height:1.5; }
 .privacy-note b{ color:var(--ink); }
+.aiguillage{ margin:0 0 26px; padding:20px 22px; background:var(--paper); border:1px solid var(--hairline); border-radius:var(--radius); }
+.aiguillage__head{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+.aiguillage__head h3{ font-family:var(--font-display); font-size:18px; margin:0; color:var(--ink); }
+.aiguillage__head span{ font-size:13.5px; color:var(--slate); }
+.aiguillage__grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+.aiguillage-card{
+  display:flex; flex-direction:column; gap:6px; text-align:left;
+  padding:13px 14px; background:#fff; border:1px solid var(--hairline); border-radius:var(--radius-sm);
+  cursor:pointer; color:var(--ink); transition:border-color .12s ease, box-shadow .12s ease;
+}
+.aiguillage-card:hover{ border-color:var(--slate); box-shadow:0 2px 8px rgba(19,26,46,.06); }
+.aiguillage-card__q{ font-family:var(--font-body); font-size:13.5px; font-weight:600; line-height:1.35; }
+.aiguillage-card__a{ font-family:var(--font-body); font-size:13.5px; font-weight:700; color:var(--red); }
+.aiguillage-card__hint{ font-family:var(--font-body); font-size:12px; color:var(--slate); line-height:1.4; }
+.aiguillage__note{ margin:14px 0 0; font-size:13px; color:var(--slate); line-height:1.5; }
+.aiguillage__note b{ color:var(--ink); }
+.aiguillage__note a{ color:var(--navy); font-weight:600; }
+@media (max-width:900px){ .aiguillage__grid{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:560px){ .aiguillage__grid{ grid-template-columns:1fr; } }
 .legal-warning{ margin:18px 0 0; padding:12px 16px; border:1px solid var(--hairline); border-left:4px solid var(--red); border-radius:var(--radius-sm); background:var(--paper-2); font-size:13px; color:var(--slate); line-height:1.55; }
 .legal-warning b{ color:var(--red-ink); }
 @media (max-width:900px){ .gen{ grid-template-columns:1fr; } .gen-preview{ position:static; } }
@@ -900,6 +919,41 @@ img{ max-width:100%; display:block; }
 
       <p class="privacy-note">🔒 <b>Vos données restent sur votre appareil.</b> Rien n'est envoyé ni stocké sur un serveur&nbsp;: tout est conservé localement dans votre navigateur.</p>
 
+      <div class="aiguillage">
+        <div class="aiguillage__head">
+          <h3>Quel courrier vous correspond&nbsp;?</h3>
+          <span>Choisissez votre situation — le bon courrier se pré-sélectionne.</span>
+        </div>
+        <div class="aiguillage__grid">
+          <button type="button" class="aiguillage-card" data-pick="declaration">
+            <span class="aiguillage-card__q">Le sinistre vient d'arriver</span>
+            <span class="aiguillage-card__a">Déclarer le sinistre →</span>
+            <span class="aiguillage-card__hint">Vol ou cambriolage&nbsp;: 2 jours ouvrés pour déclarer.</span>
+          </button>
+          <button type="button" class="aiguillage-card" data-pick="relance">
+            <span class="aiguillage-card__q">Pas de réponse après ma déclaration</span>
+            <span class="aiguillage-card__a">Relancer l'assureur →</span>
+            <span class="aiguillage-card__hint">L'assureur reste silencieux.</span>
+          </button>
+          <button type="button" class="aiguillage-card" data-pick="demeure">
+            <span class="aiguillage-card__q">Toujours rien, l'échéance approche</span>
+            <span class="aiguillage-card__a">Mettre en demeure →</span>
+            <span class="aiguillage-card__hint">Dernier rappel avant contentieux.</span>
+          </button>
+          <button type="button" class="aiguillage-card" data-pick="contestation">
+            <span class="aiguillage-card__q">J'ai reçu un refus motivé</span>
+            <span class="aiguillage-card__a">Contester le refus →</span>
+            <span class="aiguillage-card__hint">Exclusion, vétusté, sous-assurance…</span>
+          </button>
+          <button type="button" class="aiguillage-card" data-pick="mediateur">
+            <span class="aiguillage-card__q">Réclamation sans issue depuis +2 mois</span>
+            <span class="aiguillage-card__a">Saisir le médiateur →</span>
+            <span class="aiguillage-card__hint">Gratuit, après réclamation écrite.</span>
+          </button>
+        </div>
+        <p class="aiguillage__note">🪧 <b>Émeutes / pillages&nbsp;:</b> déposez plainte <b>avant</b> la déclaration, puis déclarez sous 5 jours ouvrés. Retrouvez la checklist dédiée <a href="#documents" data-pick-type="emeute-pillage">« Émeute / pillage » →</a></p>
+      </div>
+
       <div class="gen">
         <!-- Formulaire -->
         <form class="gen-form" id="genForm" autocomplete="off">
@@ -1185,6 +1239,19 @@ const CHECKLISTS = {
       { category: "photos", label: "Photos des dommages", where: "Prenez-les au plus tôt, sous plusieurs angles.", template: "Lieux et dates des prises de vue, description des dommages…" },
       { category: "devis", label: "Factures et devis de réparation", where: "Devis et factures des artisans.", template: "Artisan, montant HT/TTC, date…" },
       { category: "rapports", label: "Rapport d'expert (si missionné)", where: "Remis par l'expert mandaté.", template: "Nom de l'expert, date, conclusions…" }
+    ]
+  },
+  "emeute-pillage": {
+    title: "Émeute / pillage",
+    hint: "Déposez plainte avant la déclaration. La charge de la preuve de l'émeute pèse sur l'assureur (L. 121-8) et l'État peut être appelé en garantie (L. 211-10 CSI).",
+    docs: [
+      { category: "rapports", label: "Dépôt de plainte (avant la déclaration)", where: "Commissariat ou gendarmerie (pré-plainte en ligne possible). À déposer en priorité, avant même de déclarer.", template: "N° de PV ou de récépissé, service, date du dépôt…" },
+      { category: "declaration", label: "Formulaire de déclaration de sinistre", where: "Généré dans la section « Votre courrier » — type « Déclaration ». Sous 5 jours ouvrés.", template: "Date d'envoi, mode (recommandé AR / espace client), n° de dossier attribué par l'assureur…" },
+      { category: "contrat", label: "N° de police + garantie « émeutes et mouvements populaires »", where: "Conditions générales ou particulières. Figurant dans la plupart des contrats commerces/immeubles professionnels.", template: "N° de contrat, référence de la garantie, plafond, franchise, exclusions…" },
+      { category: "photos", label: "Photos des dégâts et du pillage", where: "Photographiez avant de ranger ou de réparer, sous plusieurs angles.", template: "Lieux et dates des prises de vue, points d'effraction, dégâts constatés…" },
+      { category: "factures", label: "Inventaire des biens volés avec factures", where: "Liste détaillée + factures d'achat. Le stock est indemnisé au prix d'achat, pas au prix de remplacement.", template: "Liste des biens volés, marques/n° de série, valeurs et factures…" },
+      { category: "comptabilite", label: "Perte d'exploitation (si garantie souscrite)", where: "Bilans/comptes de résultat + CA des derniers mois, auprès de l'expert-comptable. Garantie facultative, versée à la reprise de l'activité.", template: "Exercices antérieurs, CA de la période touchée, charges fixes…" },
+      { category: "devis", label: "Devis de remise en état", where: "Devis des artisans (vitrine, serrurerie, remplacement du stock).", template: "Artisan, montant HT/TTC, date, nature des travaux…" }
     ]
   }
 };
@@ -2377,6 +2444,14 @@ function init(){
   // liens pédagogiques qui pré-sélectionnent un type de courrier
   document.querySelectorAll("[data-letter-link]").forEach(a => {
     a.addEventListener("click", () => setLetter(a.dataset.letterLink));
+  });
+
+  // aiguillage « quel courrier me correspond ? »
+  document.querySelectorAll(".aiguillage-card[data-pick]").forEach(b => {
+    b.addEventListener("click", () => setLetter(b.dataset.pick));
+  });
+  document.querySelectorAll("[data-pick-type]").forEach(a => {
+    a.addEventListener("click", () => selectType(a.dataset.pickType));
   });
 
   // générateur : mise à jour en direct + pas de rechargement de page
