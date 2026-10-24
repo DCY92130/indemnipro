@@ -599,6 +599,16 @@ img{ max-width:100%; display:block; }
   .letter-sheet__lr, .gen-actions, .gen-affiliate{ display:none; }
 }
 </style>
+
+<!--
+  Compteur de clics partenaires (optionnel, sans cookie, RGPD-friendly) :
+  Plausible Analytics. À activer :
+  1. Créez un compte sur plausible.io et notez votre domaine (ex. proindemni.fr).
+  2. Décommentez la balise <script> ci-dessous et remplacez VOTRE-DOMAINE.
+  Les clics sur les liens « Partenaires » sont alors comptés via l'événement
+  « Affiliation » (propriété « partner »), sans backend et sans cookie.
+-->
+<!-- <script defer data-domain="VOTRE-DOMAINE" src="https://plausible.io/js/script.js"></script> -->
 </head>
 <body>
 
@@ -1121,9 +1131,9 @@ img{ max-width:100%; display:block; }
    du courrier) et dans la bande « Partenaires ».
    ------------------------------------------- */
 const AFFILIATE_LINKS = [
-  { label: "Assistance juridique spécialisée",   url: "#" },
-  { label: "Comparateur d'assurance pro",        url: "#" },
-  { label: "Expert indépendant en sinistres",    url: "#" }
+  { label: "Assistance juridique spécialisée",   url: "#", slug: "assistance-juridique" },
+  { label: "Comparateur d'assurance pro",        url: "#", slug: "comparateur-assurance" },
+  { label: "Expert indépendant en sinistres",    url: "#", slug: "expert-sinistre" }
 ];
 
 /* -------------------------------------------
@@ -2201,14 +2211,21 @@ function renderDeadlines(){
    ------------------------------------------- */
 function renderPartnerLinks(){
   document.getElementById("partnerLinks").innerHTML = AFFILIATE_LINKS.map(l =>
-    `<a class="partner-link" href="${l.url}" rel="sponsored noopener">${l.label}</a>`
+    `<a class="partner-link" href="${l.url}" rel="sponsored noopener" data-partner="${l.slug}">${l.label}</a>`
   ).join("");
 }
 function showAffiliateNote(){
   const el = document.getElementById("affiliateNote");
   el.classList.add("is-visible");
   el.innerHTML = `<b>Votre courrier est prêt ✅</b> Pour la suite de vos démarches, ces services peuvent vous aider :
-    ${AFFILIATE_LINKS.map(l => `<a href="${l.url}" rel="sponsored noopener">${l.label}</a>`).join(" · ")}`;
+    ${AFFILIATE_LINKS.map(l => `<a href="${l.url}" rel="sponsored noopener" data-partner="${l.slug}">${l.label}</a>`).join(" · ")}`;
+}
+
+/* Compteur de clics partenaires — no-op si Plausible n'est pas chargé */
+function trackPartnerClick(slug){
+  try {
+    if (window.plausible) window.plausible("Affiliation", { props: { partner: slug } });
+  } catch (e) { /* analytics absente : on ignore silencieusement */ }
 }
 
 /* -------------------------------------------
@@ -2468,6 +2485,11 @@ function init(){
 
   // affiliation
   renderPartnerLinks();
+  // compteur de clics partenaires (délégation globale : les liens sont re-rendus)
+  document.addEventListener("click", e => {
+    const a = e.target.closest("[data-partner]");
+    if (a) trackPartnerClick(a.dataset.partner);
+  });
   setupActions();
 
   // sauvegarde / restauration

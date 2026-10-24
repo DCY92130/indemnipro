@@ -100,6 +100,11 @@ du menu restent valables).
 - `renderDeadlines()` — échéancier automatique : les dates de relance / mise en demeure / saisine
   du Médiateur sont calculées **à partir du dernier jour pour déclarer** (`decl`), plus une ligne
   récapitulative `.calc-summary`. La prescription de 2 ans court depuis la date du sinistre.
+- `AFFILIATE_LINKS` — tableau `[{ label, url, slug }]` des **partenaires** (bande `.partners` en pied
+  + note `.gen-affiliate` après génération du courrier). `slug` alimente `data-partner` sur chaque
+  lien, lu par un écouteur délégué → `trackPartnerClick(slug)` → événement Plausible « Affiliation »
+  (no-op si `window.plausible` absent). Le snippet Plausible est **commenté** dans `<head>`
+  (`data-domain="VOTRE-DOMAINE"`) : à activer à la main pour compter les clics sans backend.
 
 ### Sauvegarde locale
 
