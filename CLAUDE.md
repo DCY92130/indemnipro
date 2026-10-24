@@ -44,7 +44,7 @@ Sections de la page, dans l'ordre :
    - `.dossier-sub#contrat` « Étape 2 · Votre contrat » — saisie des clauses (franchise, plafond…)
    - `.dossier-sub#delais` « Étape 3 · Vos échéances » — calculateur de dates limites
    - plus un bloc **Sauvegarde / restauration** (`.data-io`, boutons `#btnExport` / `#btnImport`)
-4. **Générateur** (`#rediger`) — le courrier (déclaration / relance / mise en demeure / médiateur)
+4. **Générateur** (`#rediger`) — le courrier (déclaration / relance / mise en demeure / médiateur / contestation d'un refus)
 5. **Partenaires** + **pied de page** (mentions légales)
 
 Les ancres `#documents` / `#contrat` / `#delais` sont conservées sur les `.dossier-sub` (les liens
@@ -59,7 +59,7 @@ du menu restent valables).
   `{ category, label, where, template }` (`category` = emplacement de dépôt chez l'assureur,
   `where` = « Où le trouver », affiché en surbrillance à l'écran mais **exclu du PDF** ;
   `template` = texte pré-rempli dans la zone de note).
-- `state = { letterType }` — `"declaration" | "relance" | "demeure" | "mediateur"`.
+- `state = { letterType }` — `"declaration" | "relance" | "demeure" | "mediateur" | "contestation"`.
 - `contract` — les clauses lues depuis le formulaire « Mon contrat ».
 - `postes` — tableau `[{ id, label, montant }]` du chiffrage du préjudice (ligne par ligne),
   rendu par `renderPostes()`/`renderPostesTotal()`, total par `prejudiceTotal()`. Remplace l'ancien

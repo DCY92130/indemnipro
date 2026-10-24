@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ProIndemni — Soyez remboursé plus vite après un sinistre pro</title>
-<meta name="description" content="Générez en 2 minutes les courriers qui accélèrent le remboursement de votre assurance pro : déclaration, relance, mise en demeure, saisine du médiateur.">
+<meta name="description" content="Générez en 2 minutes les courriers qui accélèrent le remboursement de votre assurance pro : déclaration, relance, mise en demeure, saisine du médiateur, contestation d'un refus.">
 <meta name="theme-color" content="#1E3A8A">
 
 <link rel="icon" type="image/png" sizes="512x512" href="icon.png">
@@ -15,7 +15,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ProIndemni">
 <meta property="og:title" content="ProIndemni — Soyez remboursé plus vite après un sinistre pro">
-<meta property="og:description" content="Générez en 2 minutes les courriers qui accélèrent le remboursement de votre assurance pro : déclaration, relance, mise en demeure, saisine du médiateur.">
+<meta property="og:description" content="Générez en 2 minutes les courriers qui accélèrent le remboursement de votre assurance pro : déclaration, relance, mise en demeure, saisine du médiateur, contestation d'un refus.">
 <meta property="og:url" content="https://dcgy92130.github.io/indemnipro/">
 <meta property="og:image" content="https://dcgy92130.github.io/indemnipro/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -229,6 +229,7 @@ img{ max-width:100%; display:block; }
 .sec-head .eyebrow{ color:var(--slate); }
 .sec-head h2{ font-size:clamp(30px, 4vw, 44px); letter-spacing:-.01em; margin-bottom:14px; }
 .sec-head p{ color:var(--slate); font-size:17.5px; margin:0; }
+.sec-head__note{ margin:10px 0 0; color:var(--slate); font-size:13.5px; line-height:1.5; }
 .section--dark .sec-head p{ color:var(--slate-2); }
 .section--dark .sec-head .eyebrow{ color:var(--slate-2); }
 
@@ -499,6 +500,25 @@ img{ max-width:100%; display:block; }
 .partner-link:hover{ color:var(--navy); border-color:var(--navy); }
 
 /* ------------------------------------------------------------
+   Contact
+   ------------------------------------------------------------ */
+.contact{ padding:96px 0; background:var(--paper); border-top:1px solid var(--hairline); }
+.contact .sec-head{ max-width:640px; }
+.contact-form{
+  background:#fff; border:1px solid var(--hairline); border-radius:var(--radius);
+  padding:30px; max-width:760px;
+}
+.contact-form input, .contact-form textarea{
+  width:100%; padding:11px 13px; font-family:var(--font-body); font-size:15.5px;
+  border:1px solid var(--hairline); border-radius:var(--radius-sm); background:var(--paper); color:var(--ink);
+}
+.contact-form input:focus, .contact-form textarea:focus{ outline:none; border-color:var(--navy); }
+.contact-form textarea{ resize:vertical; min-height:110px; }
+.contact-form .btn{ margin-top:4px; }
+.contact-note{ margin:16px 0 0; font-size:13.5px; color:var(--slate); line-height:1.55; }
+@media (max-width:700px){ .contact{ padding:64px 0; } }
+
+/* ------------------------------------------------------------
    Pied de page
    ------------------------------------------------------------ */
 .site-foot{ background:var(--ink); color:var(--slate-2); padding:64px 0 40px; font-size:14px; }
@@ -547,9 +567,9 @@ img{ max-width:100%; display:block; }
         <span class="eyebrow"><span class="dot"></span>TPE · PME · artisans · commerçants</span>
         <h1>Votre sinistre pro traîne. <em>Accélérez le remboursement.</em></h1>
         <p class="hero__sub">
-          Un sinistre non indemnisé, c'est de la trésorerie qui dort. Générez en deux minutes
-          le courrier recommandé qui fait avancer votre dossier — déclaration, relance,
-          mise en demeure, saisine du médiateur.
+          Constituez votre dossier (justificatifs, contrat, échéances), puis générez en
+          deux minutes le courrier recommandé adapté à votre situation — déclaration,
+          relance, mise en demeure, saisine du médiateur, contestation d'un refus.
         </p>
         <div class="hero__cta">
           <a class="btn btn--red" href="#rediger">Rédiger mon courrier</a>
@@ -612,7 +632,7 @@ img{ max-width:100%; display:block; }
         <div class="step"><span class="step__bar"></span><span class="step__num">3</span><h3>Limitez l'aggravation</h3><p>Coupez l'eau, sécurisez les lieux, protégez ce qui peut l'être. L'assureur vous le demande.</p></div>
         <div class="step"><span class="step__bar"></span><span class="step__num">4</span><h3>Constituez le dossier</h3><p>Rassemblez les justificatifs du préjudice (checklist ci-dessous, adaptée à votre sinistre).</p></div>
         <div class="step"><span class="step__bar"></span><span class="step__num">5</span><h3>Chiffrez votre demande</h3><p>Appuyez-vous sur des devis et factures pour estimer un montant précis et défendable.</p></div>
-        <div class="step"><span class="step__bar"></span><span class="step__num">6</span><h3>Relancez, puis montez en puissance</h3><p>Déclaration → relance → mise en demeure → médiateur → tribunal. Le générateur ci-dessous rédige les quatre premiers.</p></div>
+        <div class="step"><span class="step__bar"></span><span class="step__num">6</span><h3>Relancez, puis montez en puissance</h3><p>Déclaration → relance → mise en demeure → médiateur → tribunal. Recevez un refus motivé ? Contestez-le : le générateur ci-dessous rédige les cinq courriers.</p></div>
       </div>
     </div>
   </section>
@@ -658,7 +678,8 @@ img{ max-width:100%; display:block; }
         <div class="sec-head">
           <span class="eyebrow"><span class="dot"></span>Étape 2 · Votre contrat</span>
           <h2>Les clauses qui changent votre indemnisation</h2>
-          <p>Sortez votre police et notez ces informations — y compris les clauses particulières propres à votre contrat. Elles alimentent ensuite votre calendrier et vos courriers.</p>
+          <p>Sortez votre police et notez ces informations — y compris les clauses particulières propres à votre contrat. Elles sont ensuite réutilisées automatiquement*.</p>
+          <p class="sec-head__note">* Délai de déclaration → votre échéancier. Franchise, plafond, règle de valeur et clauses particulières → votre mise en demeure. Exclusions → notées au récapitulatif, non reprises dans un courrier.</p>
         </div>
         <div class="contract">
           <form class="contract-form" id="contractForm" autocomplete="off">
@@ -774,6 +795,7 @@ img{ max-width:100%; display:block; }
             <button type="button" data-letter="relance" aria-selected="false">Relance</button>
             <button type="button" data-letter="demeure" aria-selected="false">Mise en demeure</button>
             <button type="button" data-letter="mediateur" aria-selected="false">Médiateur</button>
+            <button type="button" data-letter="contestation" aria-selected="false">Contester un refus</button>
           </div>
 
           <div class="field"><label for="fRaison">Raison sociale</label><input id="fRaison" placeholder="Boulangerie Martin"></div>
@@ -816,6 +838,10 @@ img{ max-width:100%; display:block; }
             <div class="postes__total" id="postesTotal"></div>
           </div>
           <div class="field"><label for="fDesc">Décrivez brièvement le sinistre <span class="hint">(facultatif)</span></label><textarea id="fDesc" placeholder="Dégât des eaux suite à une rupture de canalisation dans l'atelier le…"></textarea></div>
+          <div id="refusFields" hidden>
+            <div class="field"><label for="fDateRefus">Date du refus de l'assureur <span class="hint">(facultatif)</span></label><input type="date" id="fDateRefus"></div>
+            <div class="field"><label for="fRefus">Motif du refus invoqué par l'assureur <span class="hint">(facultatif — recopiez la raison donnée)</span></label><textarea id="fRefus" placeholder="Ex. : « sinistre exclu car survenu lors d'une émeute » ou « indemnité réduite au 1/6 pour sous-assurance »"></textarea></div>
+          </div>
         </form>
 
         <!-- Aperçu -->
@@ -851,6 +877,39 @@ img{ max-width:100%; display:block; }
     <div class="partners__inner">
       <p class="partners__label">Partenaires</p>
       <div class="partners__links" id="partnerLinks"></div>
+    </div>
+  </section>
+
+  <!-- ============================ CONTACT ============================ -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow"><span class="dot"></span>Contact</span>
+        <h2>Une question, une remarque&nbsp;?</h2>
+        <p>Écrivez-nous. Le bouton ci-dessous ouvre <b>votre</b> messagerie avec un message pré-rempli&nbsp;: vous envoyez l'e-mail vous-même, aucune donnée ne part vers un serveur.</p>
+      </div>
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="grid-2">
+          <div class="field">
+            <label for="cNom">Votre nom</label>
+            <input id="cNom" autocomplete="name" placeholder="Claire Martin">
+          </div>
+          <div class="field">
+            <label for="cEmail">Votre e-mail</label>
+            <input id="cEmail" type="email" autocomplete="email" placeholder="vous@exemple.fr">
+          </div>
+        </div>
+        <div class="field">
+          <label for="cObjet">Objet <span class="hint">(facultatif)</span></label>
+          <input id="cObjet" placeholder="Question sur un courrier">
+        </div>
+        <div class="field">
+          <label for="cMessage">Votre message</label>
+          <textarea id="cMessage" rows="5" placeholder="Décrivez votre situation ou votre question…"></textarea>
+        </div>
+        <button type="submit" class="btn btn--red">Envoyer par e-mail</button>
+        <p class="contact-note">Ce bouton ouvre votre logiciel de messagerie (Outlook, Gmail, Mail…). Vous pouvez relire et compléter le message avant de l'envoyer. Votre adresse e-mail n'est pas enregistrée&nbsp;: seul le destinataire la verra, dans le courrier que vous envoyez.</p>
+      </form>
     </div>
   </section>
 
@@ -942,11 +1001,12 @@ const CHECKLISTS = {
   },
   "vol-vandalisme": {
     title: "Vol / vandalisme",
-    hint: "Le dépôt de plainte (ou la main courante) est quasiment toujours exigé.",
+    hint: "Le dépôt de plainte (ou la main courante) est quasiment toujours exigé. En cas d'émeute/pillage : déposez la plainte avant la déclaration.",
     docs: [
       { category: "declaration", label: "Formulaire de déclaration de sinistre", where: "Généré dans la section « Votre courrier » — type « Déclaration ».", template: "Date d'envoi, mode (recommandé AR / espace client), n° de dossier attribué par l'assureur…" },
       { category: "contrat", label: "N° de police / attestation d'assurance", where: "Espace client en ligne de l'assureur, email de souscription ou contrat papier.", template: "N° de contrat, assureur, période de garantie et garanties souscrites…" },
-      { category: "rapports", label: "Dépôt de plainte ou main courante", where: "Commissariat ou gendarmerie (pré-plainte en ligne possible).", template: "N° de PV ou de récépissé, service (commissariat/gendarmerie), date du dépôt…" },
+      { category: "rapports", label: "Dépôt de plainte ou main courante", where: "Commissariat ou gendarmerie (pré-plainte en ligne possible). Émeute/pillage : déposez la plainte avant la déclaration.", template: "N° de PV ou de récépissé, service (commissariat/gendarmerie), date du dépôt…" },
+      { category: "contrat", label: "Copie de la garantie « émeutes et mouvements populaires »", where: "Conditions générales ou particulières du contrat — souvent incluse pour les commerces/immeubles professionnels.", template: "Référence de la garantie, plafond, franchise et exclusions éventuelles…" },
       { category: "photos", label: "Photos des effractions et dégâts", where: "Photographiez avant de ranger ou de réparer.", template: "Lieux et dates des prises de vue, points d'effraction, dégâts constatés…" },
       { category: "factures", label: "Inventaire des biens volés avec factures", where: "Liste détaillée + factures d'achat.", template: "Liste des biens volés, marques/n° de série, valeurs et factures…" },
       { category: "devis", label: "Devis de remplacement des biens", where: "Devis des biens équivalents à remplacer.", template: "Biens à remplacer, référence, montant, fournisseur…" },
@@ -1189,6 +1249,10 @@ function buildLetter(){
     .filter(p => p.label || p.montant)
     .map(p => `${p.label || "Poste"} (${(parseFloat(p.montant) || 0).toLocaleString("fr-FR", { maximumFractionDigits: 2 })} €)`);
   const desc     = val("fDesc");
+  const dRefus   = val("fDateRefus");
+  const motifRefus = val("fRefus");
+  // Refus invoquant un contexte d'émeute/attroupement → argument L. 121-8 (charge de la preuve sur l'assureur)
+  const isEmeute = /émeute|emeute|attroupement|mouvement[s]? populaires?/.test((motifRefus || "").toLowerCase());
 
   const sinistreFR = dSinistre ? fmtFull(parseDate(dSinistre)) : "[date du sinistre]";
   const declaFR    = dDecla    ? fmtFull(parseDate(dDecla))    : "[date de déclaration]";
@@ -1266,6 +1330,28 @@ function buildLetter(){
       ${postesFR.length > 1 ? `<p>Ce montant se décompose comme suit : ${frList(postesFR)}.</p>` : ""}
       <p>À défaut de règlement dans ce délai, je me réserve le droit de saisir le Médiateur de l'assurance
       puis, le cas échéant, les tribunaux compétents, sans autre préavis.</p>`;
+    sign = "Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.";
+  }
+  else if(state.letterType === "contestation"){
+    subject = `Objet : Contestation de votre refus d'indemnisation — sinistre n° ${ref}`;
+    pj = pjLine("PJ : déclaration de sinistre, justificatifs et courrier de refus reçu");
+    const refusFR = dRefus ? `Par courrier du ${fmtFull(parseDate(dRefus))}, vous m'avez notifié` : `Vous m'avez notifié`;
+    const motifFR = motifRefus ? ` pour le motif suivant : « ${escapeHtml(motifRefus)} »` : "";
+    body = `
+      <p>Madame, Monsieur,</p>
+      <p>Assuré auprès de ${escapeHtml(assureur)} (contrat n° ${police}), je vous ai déclaré le sinistre suivant,
+      survenu le ${sinistreFR} : ${escapeHtml(description)} (dossier n° ${ref}).</p>
+      <p>${refusFR} votre refus de m'indemniser${motifFR}.</p>
+      <p>Je conteste formellement cette décision.</p>
+      <p>En application de l'article <strong>L. 113-1 du Code des assurances</strong>, une exclusion de garantie
+      n'est opposable à l'assuré que si elle est <strong>formelle et limitée</strong>. Par ailleurs, il appartient
+      à l'assureur — et non à l'assuré — de rapporter la preuve des circonstances invoquées pour refuser sa
+      garantie ou réduire l'indemnité. Les justificatifs que je vous ai transmis établissent la réalité et
+      l'étendue de mon préjudice ; le sinistre relève bien de la garantie souscrite.</p>
+      ${isEmeute ? `<p>Si votre refus est fondé sur un motif d'« émeute » ou d'« attroupement », je vous rappelle qu'en application de l'article <strong>L. 121-8 du Code des assurances</strong>, c'est à l'assureur qu'il appartient de rapporter la preuve que le sinistre résulte d'un tel événement. La garantie « émeutes et mouvements populaires » figure au demeurant dans la plupart des contrats d'assurance des commerces et immeubles professionnels, et ne saurait être écartée par principe.</p>` : ""}
+      ${montant ? `<p>Je vous demande en conséquence de réexaminer mon dossier et de me verser la somme de <strong>${escapeHtml(montant)} €</strong> au titre de ce sinistre${postesFR.length > 1 ? `, qui se décompose comme suit : ${frList(postesFR)}` : ""}.</p>` : `<p>Je vous demande en conséquence de réexaminer mon dossier et de me verser l'indemnité correspondant au préjudice subi.</p>`}
+      <p>À défaut de réponse satisfaisante de votre part dans un délai de deux mois, je saisirai le Médiateur de
+      l'assurance, puis, le cas échéant, les tribunaux compétents.</p>`;
     sign = "Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.";
   }
   else { // médiateur
@@ -1777,15 +1863,23 @@ async function generateDossierPdf(scope){
         cur.y -= 6;
         photosIntroDone = true;
       }
-      const capH = 26;
+      const caption = pdfSafe(x.d.label + " — " + f.name);
+      const capSize = 10;
+      const capLineH = capSize + 4;
+      const capMargin = PDF_MARGIN;
+      const capLines = wrapPdfText(caption, bold, capSize, PDF_PAGE_W - 2 * capMargin);
+      const capH = capLines.length * capLineH + 18;
       const maxW = PDF_PAGE_W - 2 * PDF_MARGIN;
-      const maxH = PDF_PAGE_H - 2 * PDF_MARGIN - capH;
+      const maxH = PDF_PAGE_H - PDF_MARGIN - capH;
       const ratio = Math.min(maxW / embedded.width, maxH / embedded.height, 1);
       const w = embedded.width * ratio;
       const h = embedded.height * ratio;
       const pg = doc.addPage([PDF_PAGE_W, PDF_PAGE_H]);
-      pg.drawImage(embedded, { x: (PDF_PAGE_W - w) / 2, y: PDF_PAGE_H - PDF_MARGIN - h, width: w, height: h });
-      pg.drawText(pdfSafe(x.d.label + " — " + f.name), { x: PDF_MARGIN, y: PDF_MARGIN + 4, size: 9, font, color: GREY });
+      pg.drawRectangle({ x: 0, y: PDF_PAGE_H - capH, width: PDF_PAGE_W, height: capH, color: rgb(1, 1, 1) });
+      capLines.forEach((ln, i) => {
+        pg.drawText(ln, { x: capMargin, y: PDF_PAGE_H - 10 - i * capLineH, size: capSize, bold, color: INK });
+      });
+      pg.drawImage(embedded, { x: (PDF_PAGE_W - w) / 2, y: PDF_PAGE_H - capH - h, width: w, height: h });
     }
   }
 
@@ -1800,11 +1894,18 @@ async function generateDossierPdf(scope){
       const caption = pdfSafe(x.d.label + " — " + f.name);
       pages.forEach((p, idx) => {
         doc.addPage(p);
-        // Pied de page : nom de la pièce pour identifier chaque feuille
-        const barH = 14;
-        p.drawRectangle({ x: 0, y: 0, width: p.getWidth(), height: barH, color: rgb(1, 1, 1) });
-        const tag = pages.length > 1 ? " - page " + (idx + 1) + "/" + pages.length : "";
-        p.drawText(caption + tag, { x: 8, y: 5, size: 8, font, color: GREY });
+        // Bandeau d'en-tête : nom de la pièce en haut de la feuille, en plus gros
+        const size = 10;
+        const lineH = size + 4;
+        const margin = 10;
+        const tag = pages.length > 1 ? " — page " + (idx + 1) + "/" + pages.length : "";
+        const lines = wrapPdfText(caption + tag, bold, size, p.getWidth() - 2 * margin);
+        const barH = lines.length * lineH + 18;
+        const barY = p.getHeight() - barH;
+        p.drawRectangle({ x: 0, y: barY, width: p.getWidth(), height: barH, color: rgb(1, 1, 1) });
+        lines.forEach((ln, i) => {
+          p.drawText(ln, { x: margin, y: barY + barH - 10 - i * lineH, size, bold, color: INK });
+        });
       });
     }
   }
@@ -1971,7 +2072,7 @@ function setupActions(){
    Sauvegarde automatique (localStorage)
    ------------------------------------------- */
 const STORAGE_KEY = "indemnipro-state-v1";
-const GEN_FIELDS = ["fRaison","fForme","fGerant","fAdresse","fCp","fVille","fAssureur","fAssAdresse","fPolice","fRef","fType","fDateSinistre","fDateDecla","fDesc"];
+const GEN_FIELDS = ["fRaison","fForme","fGerant","fAdresse","fCp","fVille","fAssureur","fAssAdresse","fPolice","fRef","fType","fDateSinistre","fDateDecla","fDateRefus","fRefus","fDesc"];
 const CONTRACT_FIELDS = ["cDelai","cFranchise","cPlafond","cValeur","cExclusions","cAutres"];
 
 function collectState(){
@@ -2016,7 +2117,7 @@ function applyState(data){
     if(data.contract[id] != null){ const el = document.getElementById(id); if(el) el.value = data.contract[id]; }
   });
   if(data.sinistreDate){ const el = document.getElementById("sinistreDate"); if(el) el.value = data.sinistreDate; }
-  if(["declaration","relance","demeure","mediateur"].includes(data.letterType)) state.letterType = data.letterType;
+  if(["declaration","relance","demeure","mediateur","contestation"].includes(data.letterType)) state.letterType = data.letterType;
   if(["standard","vol"].includes(data.deadlineType)) deadlineType = data.deadlineType;
   if(typeKeys.includes(data.activeType)) activeType = data.activeType;
   if(data.checkedDocs && typeof data.checkedDocs === "object") checkedDocs = data.checkedDocs;
@@ -2103,10 +2204,15 @@ function syncSegButtons(){
     x.setAttribute("aria-selected", x.dataset.deadline === deadlineType ? "true" : "false");
   });
 }
+function syncRefusFields(){
+  const el = document.getElementById("refusFields");
+  if(el) el.hidden = (state.letterType !== "contestation");
+}
 function syncLetterButtons(){
   document.querySelectorAll(".letter-switch button").forEach(x => {
     x.setAttribute("aria-selected", x.dataset.letter === state.letterType ? "true" : "false");
   });
+  syncRefusFields();
 }
 
 /* -------------------------------------------
@@ -2172,6 +2278,17 @@ function init(){
 
   // sauvegarde / restauration
   setupDataIO();
+
+  // formulaire de contact — ouvre le client mail (rien ne transite par un serveur)
+  document.getElementById("contactForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const nom = document.getElementById("cNom").value.trim();
+    const email = document.getElementById("cEmail").value.trim();
+    const objet = document.getElementById("cObjet").value.trim() || "Message via ProIndemni";
+    const message = document.getElementById("cMessage").value.trim();
+    const lignes = [message, "", nom && "Nom : " + nom, email && "E-mail : " + email].filter(Boolean);
+    window.location.href = "mailto:Fransez@hotmail.fr?subject=" + encodeURIComponent(objet) + "&body=" + encodeURIComponent(lignes.join("\n"));
+  });
 
   renderLetter();
 }
