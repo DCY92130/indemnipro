@@ -44,8 +44,13 @@ Sections de la page, dans l'ordre :
    - `.dossier-sub#contrat` « Étape 2 · Votre contrat » — saisie des clauses (franchise, plafond…)
    - `.dossier-sub#delais` « Étape 3 · Vos échéances » — calculateur de dates limites
    - plus un bloc **Sauvegarde / restauration** (`.data-io`, boutons `#btnExport` / `#btnImport`)
-4. **Générateur** (`#rediger`) — le courrier (déclaration / relance / mise en demeure / médiateur / contestation d'un refus)
-5. **Partenaires** + **pied de page** (mentions légales)
+4. **Comprendre votre indemnisation** (`#comprendre`, section `section--dark comprendre`) — pédagogie
+   « la réalité du terrain », purement statique : une frise `.jny` en 6 étapes (le parcours réel
+   d'un sinistre) + une grille `.comprendre-grid` de 3 cartes (perte d'exploitation / préparer
+   l'expert / anticiper l'après) + un encart `.comprendre-takeaway` avec CTA vers `#rediger`.
+   Contenu issu de la recherche terrain (cf. mémoire), ton « ni minimiser ni promettre ».
+5. **Générateur** (`#rediger`) — le courrier (déclaration / relance / mise en demeure / médiateur / contestation d'un refus)
+6. **Partenaires** + **pied de page** (mentions légales)
 
 Les ancres `#documents` / `#contrat` / `#delais` sont conservées sur les `.dossier-sub` (les liens
 du menu restent valables).

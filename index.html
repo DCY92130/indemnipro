@@ -519,6 +519,44 @@ img{ max-width:100%; display:block; }
 @media (max-width:700px){ .contact{ padding:64px 0; } }
 
 /* ------------------------------------------------------------
+   Comprendre votre indemnisation
+   ------------------------------------------------------------ */
+.comprendre{ padding:96px 0; }
+.comprendre .sec-head{ max-width:720px; }
+.jny{ display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin-bottom:44px; }
+.jny-step{
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--radius-sm); padding:16px 14px 14px;
+}
+.jny-n{ display:block; font-family:var(--font-mono); font-size:11px; color:var(--red); margin-bottom:6px; }
+.jny-title{ display:block; color:#fff; font-weight:600; font-size:14.5px; line-height:1.25; margin-bottom:4px; }
+.jny-step p{ color:var(--slate-2); font-size:12.5px; line-height:1.45; margin:0; }
+.comprendre-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.comprendre-card{
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--radius); padding:28px 26px 24px;
+}
+.comprendre-card .n{ display:inline-block; font-family:var(--font-mono); font-size:12px; color:var(--red); margin-bottom:8px; }
+.comprendre-card h3{ color:#fff; font-size:21px; margin-bottom:2px; }
+.comprendre-card .sub{ display:block; margin:0 0 16px; color:var(--slate-2); font-family:var(--font-mono); font-size:12.5px; }
+.comprendre-card ul{ margin:0; padding:0; list-style:none; }
+.comprendre-card li{ color:var(--slate-2); font-size:14.5px; line-height:1.55; padding-left:16px; position:relative; margin-bottom:10px; }
+.comprendre-card li::before{ content:"—"; position:absolute; left:0; color:var(--red); }
+.comprendre-card li:last-child{ margin-bottom:0; }
+.comprendre-card b, .comprendre-card strong{ color:#fff; font-weight:600; }
+.comprendre-takeaway{
+  margin-top:44px; padding:22px 26px; border-left:4px solid var(--red);
+  background:rgba(255,255,255,.04); border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.comprendre-takeaway p{ color:var(--slate-2); font-size:16px; margin:0 0 14px; line-height:1.6; }
+.comprendre-takeaway b{ color:#fff; }
+@media (max-width:900px){
+  .jny{ grid-template-columns:repeat(2,1fr); }
+  .comprendre-grid{ grid-template-columns:1fr; }
+}
+@media (max-width:560px){ .jny{ grid-template-columns:1fr; } }
+
+/* ------------------------------------------------------------
    Pied de page
    ------------------------------------------------------------ */
 .site-foot{ background:var(--ink); color:var(--slate-2); padding:64px 0 40px; font-size:14px; }
@@ -553,6 +591,7 @@ img{ max-width:100%; display:block; }
     <nav class="site-nav" aria-label="Navigation principale">
       <a href="#etapes">Étapes</a>
       <a href="#dossier">Mon dossier</a>
+      <a href="#comprendre">L'indemnisation</a>
       <a href="#rediger">Votre courrier</a>
     </nav>
   </div>
@@ -772,6 +811,67 @@ img{ max-width:100%; display:block; }
           <button type="button" class="btn btn--ghost btn--sm" id="btnImport">⬆ Importer</button>
           <input type="file" id="importFile" accept="application/json,.json" hidden>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 3bis. COMPRENDRE ============================ -->
+  <section class="section section--dark comprendre" id="comprendre">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">La réalité du terrain</span>
+        <h2>Ce que l'assurance rembourse — et ce qu'elle ne rembourse pas</h2>
+        <p>Le parcours réel d'un sinistre, et trois réalités que les commerçants découvrent trop tard. Les connaître avant, c'est constituer un dossier plus solide et éviter les mauvaises surprises.</p>
+      </div>
+
+      <div class="jny" aria-label="Le parcours réel d'un sinistre">
+        <div class="jny-step"><span class="jny-n">1</span><strong class="jny-title">Déclaration</strong><p>Dans les 5 jours ouvrés (2 en cas de vol).</p></div>
+        <div class="jny-step"><span class="jny-n">2</span><strong class="jny-title">Mesures conservatoires</strong><p>Déblayer, sécuriser, bâcher.</p></div>
+        <div class="jny-step"><span class="jny-n">3</span><strong class="jny-title">Passage de l'expert</strong><p>Souvent plusieurs visites.</p></div>
+        <div class="jny-step"><span class="jny-n">4</span><strong class="jny-title">Chiffrage</strong><p>Contenu + perte d'exploitation.</p></div>
+        <div class="jny-step"><span class="jny-n">5</span><strong class="jny-title">Indemnisation</strong><p>Des mois plus tard — jusqu'à 6.</p></div>
+        <div class="jny-step"><span class="jny-n">6</span><strong class="jny-title">Après-sinistre</strong><p>Franchise, résiliation, malus.</p></div>
+      </div>
+
+      <div class="comprendre-grid">
+        <div class="comprendre-card">
+          <span class="n">01</span>
+          <h3>La perte d'exploitation</h3>
+          <span class="sub">La garantie qu'on croit avoir</span>
+          <ul>
+            <li>Elle n'est <b>pas automatique</b>&nbsp;: optionnelle, hors responsabilité civile pro — elle relève du contrat «&nbsp;dommages aux biens&nbsp;».</li>
+            <li>Même souscrite, elle est versée <b>à la reprise de l'activité</b>, pas pendant la fermeture.</li>
+            <li>Elle se calcule sur <b>vos exercices antérieurs</b>&nbsp;: un commerce récent ou saisonnier est pénalisé.</li>
+            <li>Vérifiez qu'elle figure dans vos conditions particulières avant d'y compter.</li>
+          </ul>
+        </div>
+        <div class="comprendre-card">
+          <span class="n">02</span>
+          <h3>Préparez l'expert</h3>
+          <span class="sub">La charge de la preuve est sur vous</span>
+          <ul>
+            <li>Le stock est indemnisé au <b>prix d'achat</b>, pas au prix de remplacement.</li>
+            <li>Un inventaire non daté ou «&nbsp;invalide&nbsp;» fait recalculer l'indemnité à la baisse.</li>
+            <li>Photographiez avant de ranger ou réparer&nbsp;; conservez factures et inventaire daté.</li>
+            <li>Les biens non remplaçables (collections, éditions épuisées) sont évalués au «&nbsp;prix courant&nbsp;», bien inférieur.</li>
+          </ul>
+        </div>
+        <div class="comprendre-card">
+          <span class="n">03</span>
+          <h3>Anticipez l'après</h3>
+          <span class="sub">L'indemnisation n'est jamais 100&nbsp;%</span>
+          <ul>
+            <li>Franchise et vétusté restent <b>toujours à votre charge</b>.</li>
+            <li>Après sinistre, l'assureur peut <b>résilier</b> le contrat et majorer la prime.</li>
+            <li>L'indépendant est le plus exposé&nbsp;: pas de chômage, pas d'aide d'un groupe.</li>
+            <li>Constituez une trésorerie d'avance&nbsp;: vous payez d'abord, vous êtes remboursé ensuite.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="comprendre-takeaway">
+        <p>En clair&nbsp;: l'assurance protège votre outil de travail, elle ne remplace pas votre trésorerie. <b>Vous avancez souvent les frais</b> — plus votre dossier est complet et daté, plus vite et mieux vous êtes remboursé.</p>
+        <a class="btn btn--red" href="#rediger">Rédiger mon courrier</a>
       </div>
     </div>
   </section>
