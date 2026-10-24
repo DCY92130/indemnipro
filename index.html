@@ -2723,8 +2723,7 @@ function init(){
     const objet = document.getElementById("cObjet").value.trim() || "Message via ProIndemni";
     const message = document.getElementById("cMessage").value.trim();
     const lignes = [message, "", nom && "Nom : " + nom, email && "E-mail : " + email].filter(Boolean);
-    // adresse reconstituée à l'exécution pour ne pas être lisible en clair dans le source
-    const contactEmail = "rf.liamtoh@zesnarF".split("").reverse().join("");
+    const contactEmail = "contact@proindemni.fr";
     window.location.href = "mailto:" + contactEmail + "?subject=" + encodeURIComponent(objet) + "&body=" + encodeURIComponent(lignes.join("\n"));
   });
 
