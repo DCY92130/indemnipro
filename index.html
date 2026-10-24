@@ -1242,12 +1242,14 @@ img{ max-width:100%; display:block; }
 /* Partenaires affiliés — HORS assurance (ORIAS) et en affiliation réellement
    gratuite ET libre-service : inscription en ligne instantanée, sans appel
    commercial ni statut de client.
-   Amazon = Amazon Associates (gratuit, self-service). Pour d'autres marques,
-   passer par un réseau gratuit (Awin / Effiliation) puis coller ici le lien de
-   tracking obtenu. NB : la plupart des programmes FR « devenir partenaire »
-   (Legalstart, Dougs…) demandent nom/téléphone et rappellent → exclus. */
+   Amazon = Amazon Associates (gratuit, self-service), tag de suivi : proindemni-21.
+   Les liens pointent vers des recherches de matériel de protection/sécurisation
+   du local (pertinent après un sinistre), taguées pour toucher la commission.
+   Pour d'autres marques, passer par un réseau gratuit (Awin / Effiliation). */
 const AFFILIATE_LINKS = [
-  { label: "Matériel de protection du local",  url: "https://www.amazon.fr",      slug: "protection-local" }
+  { label: "Caméra de surveillance",  url: "https://www.amazon.fr/s?k=camera+surveillance&tag=proindemni-21",     slug: "camera-surveillance" },
+  { label: "Alarme anti-intrusion",   url: "https://www.amazon.fr/s?k=alarme+anti-intrusion&tag=proindemni-21",   slug: "alarme" },
+  { label: "Coffre-fort",             url: "https://www.amazon.fr/s?k=coffre+fort&tag=proindemni-21",             slug: "coffre-fort" }
 ];
 
 /* -------------------------------------------
