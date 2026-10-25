@@ -141,6 +141,10 @@ main{ flex:1; }
 .site-foot__legal b{ color:#C6CEE0; }
 @media (max-width:700px){ .site-foot .wrap{ grid-template-columns:1fr; } }
 </style>
+
+<!-- Statistiques (visites + envois) sans cookie : GoatCounter -->
+<script data-goatcounter="https://proindemni.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 
@@ -222,6 +226,7 @@ document.getElementById("contactForm").addEventListener("submit", e => {
   const message = document.getElementById("cMessage").value.trim();
   const lignes = [message, "", nom && "Nom : " + nom, email && "E-mail : " + email].filter(Boolean);
   const contactEmail = "contact@proindemni.fr";
+  try { if (window.goatcounter) window.goatcounter.count({ path: "/contact/envoi", event: true }); } catch (e) {}
   window.location.href = "mailto:" + contactEmail + "?subject=" + encodeURIComponent(objet) + "&body=" + encodeURIComponent(lignes.join("\n"));
 });
 </script>

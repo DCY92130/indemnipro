@@ -665,14 +665,13 @@ img{ max-width:100%; display:block; }
 </style>
 
 <!--
-  Compteur de clics partenaires (optionnel, sans cookie, RGPD-friendly) :
-  Plausible Analytics. À activer :
-  1. Créez un compte sur plausible.io et notez votre domaine (ex. proindemni.fr).
-  2. Décommentez la balise <script> ci-dessous et remplacez VOTRE-DOMAINE.
-  Les clics sur les liens « Partenaires » sont alors comptés via l'événement
-  « Affiliation » (propriété « partner »), sans backend et sans cookie.
+  Statistiques (visites + clics) sans cookie, RGPD-friendly : GoatCounter.
+  Les visites sont comptées automatiquement. Les clics sur les boutons CTA
+  et les liens « Partenaires » remontent en événements via les chemins
+  /cta/<label> et /affiliation/<partenaire>.
 -->
-<!-- <script defer data-domain="VOTRE-DOMAINE" src="https://plausible.io/js/script.js"></script> -->
+<script data-goatcounter="https://proindemni.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 
@@ -2336,17 +2335,17 @@ function showAffiliateNote(){
     <span class="gen-affiliate__disclosure">Liens affiliés Amazon — petite commission pour ProIndemni, sans surcoût pour vous.</span>`;
 }
 
-/* Compteur de clics partenaires — no-op si Plausible n'est pas chargé */
+/* Compteur de clics partenaires — événement GoatCounter, no-op si absent */
 function trackPartnerClick(slug){
   try {
-    if (window.plausible) window.plausible("Affiliation", { props: { partner: slug } });
+    if (window.goatcounter) window.goatcounter.count({ path: "/affiliation/" + slug, event: true });
   } catch (e) { /* analytics absente : on ignore silencieusement */ }
 }
 
-/* Compteur de clics CTA (hero / header) — no-op si Plausible n'est pas chargé */
+/* Compteur de clics CTA (hero / header) — événement GoatCounter, no-op si absent */
 function trackCta(label){
   try {
-    if (window.plausible) window.plausible("CTA", { props: { cta: label } });
+    if (window.goatcounter) window.goatcounter.count({ path: "/cta/" + label, event: true });
   } catch (e) { /* analytics absente : on ignore silencieusement */ }
 }
 
