@@ -443,6 +443,9 @@ img{ max-width:100%; display:block; }
 .letter-close{ margin-top:8px; }
 .letter-sign{ margin-top:34px; font-family:var(--font-display); font-style:italic; font-size:22px; }
 .gen-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:22px; }
+.gen-send-note{ margin:16px 0 0; padding:12px 16px; border:1px solid var(--hairline); border-left:4px solid var(--navy); border-radius:var(--radius-sm); background:#fff; font-size:13.5px; color:var(--slate); line-height:1.55; }
+.gen-send-note b{ color:var(--ink); }
+.gen-send-note a{ color:var(--navy); font-weight:600; text-decoration:underline; }
 .gen-affiliate{
   margin-top:22px; padding:18px; border:1px solid var(--hairline); border-radius:var(--radius-sm);
   background:var(--paper-2); font-size:14px; color:var(--slate); line-height:1.6; display:none;
@@ -1167,6 +1170,8 @@ img{ max-width:100%; display:block; }
             <button class="btn btn--ghost" id="btnDownload" type="button">Télécharger .doc</button>
           </div>
 
+          <p class="gen-send-note">Envoyez ce courrier en <b>lettre recommandée avec accusé de réception</b> — <a href="https://www.ar24.fr/" target="_blank" rel="noopener" data-cta="lrar-ar24">commander en ligne (AR24)</a>.</p>
+
           <p class="legal-warning">⚠️ <b>Modèle indicatif, pas un conseil juridique.</b> Vérifiez les délais et clauses de <b>votre</b> contrat (franchise, plafond, exclusions) avant d'envoyer ce courrier.</p>
 
           <div class="gen-affiliate" id="affiliateNote"></div>
@@ -1578,6 +1583,8 @@ function buildLetter(){
   const motifRefus = val("fRefus");
   // Refus invoquant un contexte d'émeute/attroupement → argument L. 121-8 (charge de la preuve sur l'assureur)
   const isEmeute = /émeute|emeute|attroupement|mouvement[s]? populaires?/.test((motifRefus || "").toLowerCase());
+  // Refus invoquant une exclusion de garantie → cibler l'exclusion précise sous L. 113-1 (revirement 2026 : on conteste l'exclusion opposée, pas la clause entière)
+  const isExclusion = /exclu|hors garantie|non couvert|non garanti/.test((motifRefus || "").toLowerCase());
 
   const sinistreFR = dSinistre ? fmtFull(parseDate(dSinistre)) : "[date du sinistre]";
   const declaFR    = dDecla    ? fmtFull(parseDate(dDecla))    : "[date de déclaration]";
@@ -1669,7 +1676,7 @@ function buildLetter(){
       <p>${refusFR} votre refus de m'indemniser${motifFR}.</p>
       <p>Je conteste formellement cette décision.</p>
       <p>En application de l'article <strong>L. 113-1 du Code des assurances</strong>, une exclusion de garantie
-      n'est opposable à l'assuré que si elle est <strong>formelle et limitée</strong>. Par ailleurs, il appartient
+      n'est opposable à l'assuré que si elle est <strong>formelle et limitée</strong>.${isExclusion ? ` L'exclusion que vous m'opposez ne me paraît pas répondre, telle que rédigée, à cette exigence de clarté : elle ne permet pas de savoir précisément les situations exclues de la garantie.` : ""} Par ailleurs, il appartient
       à l'assureur — et non à l'assuré — de rapporter la preuve des circonstances invoquées pour refuser sa
       garantie ou réduire l'indemnité. Les justificatifs que je vous ai transmis établissent la réalité et
       l'étendue de mon préjudice ; le sinistre relève bien de la garantie souscrite.</p>
