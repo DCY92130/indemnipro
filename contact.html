@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — ProIndemni</title>
+<meta name="description" content="Une question sur vos courriers de sinistre pro ? Écrivez à ProIndemni — le formulaire ouvre votre messagerie, aucune donnée ne part vers un serveur.">
+<meta name="theme-color" content="#1E3A8A">
+
+<link rel="icon" type="image/png" sizes="512x512" href="icon.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231E3A8A'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' font-weight='700' fill='%23F6F4EF' text-anchor='middle'%3EPI%3C/text%3E%3Ccircle cx='49' cy='15' r='7' fill='%23C8102E'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:        #131A2E;
+  --navy:       #1E3A8A;
+  --navy-2:     #16264F;
+  --red:        #C8102E;
+  --red-ink:    #B00D29;
+  --paper:      #F6F4EF;
+  --paper-2:    #EFECE4;
+  --hairline:   #E2DED3;
+  --slate:      #5B6472;
+  --slate-2:    #8A93A6;
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body:    "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --radius: 14px;
+  --radius-sm: 8px;
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  font-family:var(--font-body);
+  font-size:17px;
+  line-height:1.6;
+  color:var(--ink);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main, header, footer{ position:relative; z-index:1; }
+
+h1,h2,h3,h4{ font-family:var(--font-display); font-weight:600; line-height:1.12; margin:0; }
+a{ color:var(--navy); }
+img{ max-width:100%; display:block; }
+:focus-visible{ outline:3px solid var(--red); outline-offset:2px; border-radius:2px; }
+::selection{ background:var(--red); color:#fff; }
+
+.wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
+
+/* En-tête */
+.site-head{
+  position:sticky; top:0; z-index:50;
+  background:rgba(246,244,239,.86);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--hairline);
+}
+.site-head__inner{ display:flex; align-items:center; justify-content:space-between; height:66px; }
+.brand{ display:flex; align-items:baseline; gap:10px; text-decoration:none; color:var(--ink); }
+.brand__name{ font-family:var(--font-display); font-weight:700; font-size:24px; letter-spacing:-.02em; }
+.brand__name .accent{ color:var(--red); }
+.brand__tag{ font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate); }
+.brand__back{ font-family:var(--font-mono); font-size:13px; letter-spacing:.04em; color:var(--slate); text-decoration:none; }
+.brand__back:hover{ color:var(--red); }
+@media (max-width:760px){ .brand__tag{ display:none; } }
+
+/* Boutons */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-family:var(--font-body); font-weight:600; font-size:16px;
+  padding:14px 24px; border-radius:999px; cursor:pointer;
+  border:1px solid transparent; text-decoration:none;
+  transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.btn:active{ transform:translateY(1px); }
+.btn--red{ background:var(--red); color:#fff; box-shadow:0 8px 20px rgba(200,16,46,.28); }
+.btn--red:hover{ background:var(--red-ink); }
+.btn--sm{ padding:10px 18px; font-size:14.5px; }
+
+/* Section contact */
+main{ flex:1; }
+.contact{ padding:96px 0; background:var(--paper); }
+.contact .sec-head{ max-width:640px; }
+.sec-head{ max-width:640px; margin-bottom:52px; }
+.sec-head .eyebrow{ color:var(--slate); }
+.sec-head h2{ font-size:clamp(30px, 4vw, 44px); letter-spacing:-.01em; margin-bottom:14px; }
+.sec-head p{ color:var(--slate); font-size:17.5px; margin:0; }
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--font-mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--slate); margin-bottom:22px;
+}
+.eyebrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--red); }
+
+.contact-form{
+  background:#fff; border:1px solid var(--hairline); border-radius:var(--radius);
+  padding:30px; max-width:760px;
+}
+.contact-form input, .contact-form textarea{
+  width:100%; padding:11px 13px; font-family:var(--font-body); font-size:15.5px;
+  border:1px solid var(--hairline); border-radius:var(--radius-sm); background:var(--paper); color:var(--ink);
+}
+.contact-form input:focus, .contact-form textarea:focus{ outline:none; border-color:var(--navy); }
+.contact-form textarea{ resize:vertical; min-height:110px; }
+.contact-form .btn{ margin-top:4px; }
+.contact-note{ margin:16px 0 0; font-size:13.5px; color:var(--slate); line-height:1.55; }
+
+.field{ margin-bottom:18px; }
+.field:last-child{ margin-bottom:0; }
+.field label{ display:block; font-weight:600; font-size:14.5px; margin-bottom:6px; }
+.field .hint{ font-weight:400; color:var(--slate); font-size:13px; }
+.grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+@media (max-width:600px){ .grid-2{ grid-template-columns:1fr; } .contact{ padding:64px 0; } }
+
+/* Pied de page */
+.site-foot{ background:var(--ink); color:var(--slate-2); padding:64px 0 40px; font-size:14px; }
+.site-foot .wrap{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+.site-foot h4{ color:#fff; font-size:17px; margin-bottom:12px; }
+.site-foot p{ margin:0 0 10px; line-height:1.6; }
+.site-foot a{ color:#C6CEE0; }
+.site-foot__legal{ grid-column:1 / -1; border-top:1px solid rgba(255,255,255,.1); padding-top:24px; margin-top:8px; font-size:12.5px; line-height:1.7; color:var(--slate-2); }
+.site-foot__legal b{ color:#C6CEE0; }
+@media (max-width:700px){ .site-foot .wrap{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap site-head__inner">
+    <a class="brand" href="index.html" aria-label="ProIndemni — accueil">
+      <span class="brand__name"><span class="accent">Pro</span>Indemni</span>
+      <span class="brand__tag">sinistre · assurance pro</span>
+    </a>
+    <a class="brand__back" href="index.html">← Retour à l'outil</a>
+    <a class="btn btn--red btn--sm" href="index.html#rediger">Rédiger un courrier</a>
+  </div>
+</header>
+
+<main>
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow"><span class="dot"></span>Contact</span>
+        <h2>Une question, une remarque&nbsp;?</h2>
+        <p>Écrivez-nous. Le bouton ci-dessous ouvre <b>votre</b> messagerie avec un message pré-rempli&nbsp;: vous envoyez l'e-mail vous-même, aucune donnée ne part vers un serveur.</p>
+      </div>
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="grid-2">
+          <div class="field">
+            <label for="cNom">Votre nom</label>
+            <input id="cNom" autocomplete="name" placeholder="Claire Martin">
+          </div>
+          <div class="field">
+            <label for="cEmail">Votre e-mail</label>
+            <input id="cEmail" type="email" autocomplete="email" placeholder="vous@exemple.fr">
+          </div>
+        </div>
+        <div class="field">
+          <label for="cObjet">Objet <span class="hint">(facultatif)</span></label>
+          <input id="cObjet" placeholder="Question sur un courrier">
+        </div>
+        <div class="field">
+          <label for="cMessage">Votre message</label>
+          <textarea id="cMessage" rows="5" placeholder="Décrivez votre situation ou votre question…"></textarea>
+        </div>
+        <button type="submit" class="btn btn--red">Envoyer par e-mail</button>
+        <p class="contact-note">Ce bouton ouvre votre logiciel de messagerie (Outlook, Gmail, Mail…). Vous pouvez relire et compléter le message avant de l'envoyer. Votre adresse e-mail n'est pas enregistrée&nbsp;: seul le destinataire la verra, dans le courrier que vous envoyez.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <h4>ProIndemni</h4>
+      <p>Un outil d'aide à la rédaction de vos courriers de sinistre, pensé pour les TPE et PME françaises.</p>
+    </div>
+    <div>
+      <h4>Sources officielles</h4>
+      <p><a href="https://www.legifrance.gouv.fr" rel="noopener" target="_blank">Code des assurances — Légifrance</a></p>
+      <p><a href="https://www.mediation-assurance.org/" rel="noopener" target="_blank">La Médiation de l'assurance</a></p>
+      <p><a href="https://www.service-public.gouv.fr" rel="noopener" target="_blank">Service-Public.fr</a></p>
+    </div>
+    <div class="site-foot__legal">
+      <b>Mentions légales</b> — ProIndemni est un service d'information et d'aide à la rédaction.
+      Il <b>n'est pas un intermédiaire en assurance</b> au sens de l'article L. 511-1 du Code des assurances et
+      n'est pas immatriculé à l'ORIAS. Il ne fournit <b>ni conseil juridique ni conseil en assurance</b>.
+      Les délais indiqués sont ceux prévus par le Code des assurances et la réglementation en vigueur ;
+      <b>votre contrat d'assurance peut prévoir des délais différents</b> — vérifiez votre police avant toute démarche.
+      Les courriers générés sont des modèles : adaptez-les à votre situation. Les liens « Partenaires » peuvent
+      être des liens d'affiliation rémunérés. Les délais sont calculés hors jours fériés et ne constituent qu'une aide indicative.
+    </div>
+  </div>
+</footer>
+
+<script>
+// Formulaire de contact — ouvre le client mail (rien ne transite par un serveur)
+document.getElementById("contactForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const nom = document.getElementById("cNom").value.trim();
+  const email = document.getElementById("cEmail").value.trim();
+  const objet = document.getElementById("cObjet").value.trim() || "Message via ProIndemni";
+  const message = document.getElementById("cMessage").value.trim();
+  const lignes = [message, "", nom && "Nom : " + nom, email && "E-mail : " + email].filter(Boolean);
+  const contactEmail = "contact@proindemni.fr";
+  window.location.href = "mailto:" + contactEmail + "?subject=" + encodeURIComponent(objet) + "&body=" + encodeURIComponent(lignes.join("\n"));
+});
+</script>
+</body>
+</html>

@@ -109,6 +109,7 @@ img{ max-width:100%; display:block; }
   border-bottom:2px solid transparent; padding:4px 0;
 }
 .site-nav a:hover{ border-color:var(--red); }
+.site-head__actions{ display:flex; align-items:center; gap:10px; }
 @media (max-width:760px){
   .site-nav{ display:none; }
   .brand__tag{ display:none; }
@@ -690,7 +691,10 @@ img{ max-width:100%; display:block; }
       <a href="#comprendre">L'indemnisation</a>
       <a href="#rediger">Votre courrier</a>
     </nav>
-    <a class="btn btn--red btn--sm" href="#rediger" data-cta="rediger-header">Rédiger</a>
+    <div class="site-head__actions">
+      <a class="btn btn--ghost btn--sm" href="contact.html">Contact</a>
+      <a class="btn btn--red btn--sm" href="#rediger" data-cta="rediger-header">Rédiger</a>
+    </div>
   </div>
 </header>
 
@@ -1187,39 +1191,6 @@ img{ max-width:100%; display:block; }
       <h2 class="partners__title">Sécurisez votre local pour éviter une récidive</h2>
       <p class="partners__sub">Liens affiliés Amazon&nbsp;: si vous achetez via ces liens, ProIndemni perçoit une petite commission, sans surcoût pour vous.</p>
       <div class="partners__links" id="partnerLinks"></div>
-    </div>
-  </section>
-
-  <!-- ============================ CONTACT ============================ -->
-  <section class="contact" id="contact">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow"><span class="dot"></span>Contact</span>
-        <h2>Une question, une remarque&nbsp;?</h2>
-        <p>Écrivez-nous. Le bouton ci-dessous ouvre <b>votre</b> messagerie avec un message pré-rempli&nbsp;: vous envoyez l'e-mail vous-même, aucune donnée ne part vers un serveur.</p>
-      </div>
-      <form class="contact-form" id="contactForm" novalidate>
-        <div class="grid-2">
-          <div class="field">
-            <label for="cNom">Votre nom</label>
-            <input id="cNom" autocomplete="name" placeholder="Claire Martin">
-          </div>
-          <div class="field">
-            <label for="cEmail">Votre e-mail</label>
-            <input id="cEmail" type="email" autocomplete="email" placeholder="vous@exemple.fr">
-          </div>
-        </div>
-        <div class="field">
-          <label for="cObjet">Objet <span class="hint">(facultatif)</span></label>
-          <input id="cObjet" placeholder="Question sur un courrier">
-        </div>
-        <div class="field">
-          <label for="cMessage">Votre message</label>
-          <textarea id="cMessage" rows="5" placeholder="Décrivez votre situation ou votre question…"></textarea>
-        </div>
-        <button type="submit" class="btn btn--red">Envoyer par e-mail</button>
-        <p class="contact-note">Ce bouton ouvre votre logiciel de messagerie (Outlook, Gmail, Mail…). Vous pouvez relire et compléter le message avant de l'envoyer. Votre adresse e-mail n'est pas enregistrée&nbsp;: seul le destinataire la verra, dans le courrier que vous envoyez.</p>
-      </form>
     </div>
   </section>
 
@@ -2747,18 +2718,6 @@ function init(){
 
   // sauvegarde / restauration
   setupDataIO();
-
-  // formulaire de contact — ouvre le client mail (rien ne transite par un serveur)
-  document.getElementById("contactForm").addEventListener("submit", e => {
-    e.preventDefault();
-    const nom = document.getElementById("cNom").value.trim();
-    const email = document.getElementById("cEmail").value.trim();
-    const objet = document.getElementById("cObjet").value.trim() || "Message via ProIndemni";
-    const message = document.getElementById("cMessage").value.trim();
-    const lignes = [message, "", nom && "Nom : " + nom, email && "E-mail : " + email].filter(Boolean);
-    const contactEmail = "contact@proindemni.fr";
-    window.location.href = "mailto:" + contactEmail + "?subject=" + encodeURIComponent(objet) + "&body=" + encodeURIComponent(lignes.join("\n"));
-  });
 
   renderLetter();
 }
