@@ -80,10 +80,8 @@ img{ max-width:100%; display:block; }
 .brand{ display:flex; align-items:baseline; gap:10px; text-decoration:none; color:var(--ink); }
 .brand__name{ font-family:var(--font-display); font-weight:700; font-size:24px; letter-spacing:-.02em; }
 .brand__name .accent{ color:var(--red); }
-.brand__tag{ font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate); }
 .brand__back{ font-family:var(--font-mono); font-size:13px; letter-spacing:.04em; color:var(--slate); text-decoration:none; }
 .brand__back:hover{ color:var(--red); }
-@media (max-width:760px){ .brand__tag{ display:none; } }
 
 /* Boutons */
 .btn{
@@ -150,7 +148,6 @@ main{ flex:1; }
   <div class="wrap site-head__inner">
     <a class="brand" href="index.html" aria-label="ProIndemni — accueil">
       <span class="brand__name"><span class="accent">Pro</span>Indemni</span>
-      <span class="brand__tag">sinistre · assurance pro</span>
     </a>
     <a class="brand__back" href="index.html">← Retour à l'outil</a>
     <a class="btn btn--red btn--sm" href="index.html#rediger">Rédiger un courrier</a>
