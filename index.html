@@ -591,7 +591,7 @@ img{ max-width:100%; display:block; }
 .comprendre-takeaway p{ color:var(--slate-2); font-size:16px; margin:0 0 14px; line-height:1.6; }
 .comprendre-takeaway b{ color:#fff; }
 
-/* Simulateur règle proportionnelle (L. 121-5) */
+/* Simulateur règle proportionnelle */
 .rp{
   margin-top:28px; padding:28px 28px 24px;
   background:var(--paper); color:var(--ink);
@@ -945,7 +945,7 @@ img{ max-width:100%; display:block; }
         <div class="comprendre-card">
           <span class="n">02</span>
           <h3>Préparez l'expert</h3>
-          <span class="sub">La charge de la preuve est sur vous</span>
+          <span class="sub">Rassemblez vos justificatifs</span>
           <ul>
             <li>Le stock est indemnisé au <b>prix d'achat</b>, pas au prix de remplacement.</li>
             <li>Un inventaire non daté ou «&nbsp;invalide&nbsp;» fait recalculer l'indemnité à la baisse.</li>
@@ -981,7 +981,7 @@ img{ max-width:100%; display:block; }
         <div class="rp__head">
           <span class="eyebrow">Simulateur</span>
           <h3>Règle proportionnelle&nbsp;: comprenez votre niveau de couverture</h3>
-          <p>Quand votre <b>capital assuré</b> est inférieur à la <b>valeur réelle</b> des biens au jour du sinistre, l'assureur réduit l'indemnité dans la même proportion (art. L. 121-5 du Code des assurances). Ce simulateur vous montre le mécanisme&nbsp;— le chiffre exact dépend des clauses de <b>votre</b> contrat.</p>
+          <p>Quand votre <b>capital assuré</b> est inférieur à la <b>valeur réelle</b> des biens au jour du sinistre, l'assureur réduit l'indemnité dans la même proportion. Ce simulateur vous montre le mécanisme&nbsp;— le chiffre exact dépend des clauses de <b>votre</b> contrat.</p>
         </div>
 
         <div class="rp__grid">
@@ -1350,7 +1350,7 @@ const CHECKLISTS = {
   },
   "emeute-pillage": {
     title: "Émeute / pillage",
-    hint: "Déposez plainte avant la déclaration. La charge de la preuve de l'émeute pèse sur l'assureur (L. 121-8) et l'État peut être appelé en garantie (L. 211-10 CSI).",
+    hint: "Déposez plainte avant la déclaration.",
     docs: [
       { category: "rapports", label: "Dépôt de plainte (avant la déclaration)", where: "Commissariat ou gendarmerie (pré-plainte en ligne possible). À déposer en priorité, avant même de déclarer.", template: "N° de PV ou de récépissé, service, date du dépôt…" },
       { category: "declaration", label: "Formulaire de déclaration de sinistre", where: "Généré dans la section « Votre courrier » — type « Déclaration ». Sous 5 jours ouvrés.", template: "Date d'envoi, mode (recommandé AR / espace client), n° de dossier attribué par l'assureur…" },
@@ -2270,11 +2270,11 @@ function renderDeadlines(){
   const prescription = addDays(base, 730);
 
   const items = [
-    { date: decl, small: contract.delai ? declDelai + " j ouvrés (contrat)" : (isVol ? "2 jours ouvrés" : "5 jours ouvrés"), label: "Dernier délai pour déclarer", desc: "Déclaration du sinistre à l'assureur (art. L. 113-2 du Code des assurances).", urgent: true },
+    { date: decl, small: contract.delai ? declDelai + " j ouvrés (contrat)" : (isVol ? "2 jours ouvrés" : "5 jours ouvrés"), label: "Dernier délai pour déclarer", desc: "Déclaration du sinistre à l'assureur.", urgent: true },
     { date: relance, small: "30 j après déclaration", label: "Première relance", desc: "Sans nouvelle de l'assureur, adressez une relance écrite.", urgent: false },
     { date: demeure, small: "45 j après déclaration", label: "Mise en demeure", desc: "Exigez le règlement de l'indemnité (intérêts de retard possibles).", urgent: false },
     { date: mediateur, small: "≈ 2 mois après déclaration", label: "Saisie du Médiateur", desc: "Possible après une réclamation écrite restée plus de 2 mois sans issue.", urgent: false },
-    { date: prescription, small: "2 ans", label: "Prescription", desc: "Dernier délai pour agir en justice (art. L. 114-1 du Code des assurances).", urgent: false }
+    { date: prescription, small: "2 ans", label: "Prescription", desc: "Dernier délai pour agir en justice.", urgent: false }
   ];
 
   box.innerHTML = items.map(it => `
@@ -2288,7 +2288,7 @@ function renderDeadlines(){
     <div class="calc-summary">
       <b>Échéancier automatique.</b> Les dates de relance, de mise en demeure et de saisine du
       Médiateur sont calculées à partir du <b>${fmtShort(decl)}</b> — le dernier jour pour déclarer${contract.delai ? " selon votre contrat" : ""}.
-      La prescription de 2 ans court, elle, à partir de la date du sinistre (art. L. 114-1).
+      La prescription de 2 ans court, elle, à partir de la date du sinistre.
     </div>`;
 }
 
@@ -2633,7 +2633,7 @@ function init(){
   document.getElementById("contractForm").addEventListener("input", onContractChange);
   document.getElementById("contractForm").addEventListener("change", onContractChange);
 
-  // simulateur règle proportionnelle (L. 121-5)
+  // simulateur règle proportionnelle
   RP_FIELDS.forEach(id => {
     const el = document.getElementById(id);
     if(el){
