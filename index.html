@@ -1224,10 +1224,13 @@ img{ max-width:100%; display:block; }
    gratuite ET libre-service : inscription en ligne instantanée, sans appel
    commercial ni statut de client.
    Amazon = Amazon Associates (gratuit, self-service), tag de suivi : proindemni-21.
-   Les liens pointent vers des recherches de matériel de protection/sécurisation
-   du local (pertinent après un sinistre), taguées pour toucher la commission.
-   Pour d'autres marques, passer par un réseau gratuit (Awin / Effiliation). */
+   Les liens Amazon pointent vers des recherches de matériel de surveillance
+   (caméra, alarme, coffre), pertinentes après un sinistre.
+   Awin = programme Heimwerkertools - FR (HWT, quincaillerie/outillage, commission 6 %).
+   Le lien Awin pointe vers la catégorie « Quincaillerie de porte » (serrures,
+   cylindres, renforts) pour re-sécuriser le local ; tracké via clickref. */
 const AFFILIATE_LINKS = [
+  { label: "Re-sécuriser le local", icon: "🔐", url: "https://www.awin1.com/cread.php?awinmid=86907&awinaffid=3133794&clickref=re-securiser-local&ued=https%3A%2F%2Fwww.hwt-pro.com%2Ffr%2Fquincaillerie-de-porte", slug: "re-securiser-local" },
   { label: "Caméra de surveillance", icon: "📷", url: "https://www.amazon.fr/s?k=camera+surveillance&tag=proindemni-21",   slug: "camera-surveillance" },
   { label: "Alarme anti-intrusion",  icon: "🔔", url: "https://www.amazon.fr/s?k=alarme+anti-intrusion&tag=proindemni-21", slug: "alarme" },
   { label: "Coffre-fort",            icon: "🔒", url: "https://www.amazon.fr/s?k=coffre+fort&tag=proindemni-21",           slug: "coffre-fort" }
