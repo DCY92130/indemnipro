@@ -523,7 +523,11 @@ img{ max-width:100%; display:block; }
 .partners__label{ font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--slate); margin-bottom:14px; }
 .partners__title{ font-family:var(--font-display); font-size:26px; margin:0 0 8px; color:var(--ink); }
 .partners__sub{ max-width:560px; margin:0 auto 30px; font-size:14.5px; line-height:1.55; color:var(--slate); }
-.partners__links{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.partners__links{ display:block; }
+.partners__group{ margin-bottom:34px; }
+.partners__group:last-child{ margin-bottom:0; }
+.partners__group-title{ font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate); margin:0 0 16px; }
+.partners__group-links{ display:grid; grid-template-columns:repeat(auto-fit, minmax(210px,1fr)); gap:16px; }
 .partner-link{
   display:flex; flex-direction:column; align-items:center; gap:6px;
   padding:24px 18px; background:#fff; border:1px solid var(--hairline);
@@ -535,7 +539,7 @@ img{ max-width:100%; display:block; }
 .partner-link__icon{ font-size:28px; line-height:1; }
 .partner-link__label{ font-weight:600; font-size:15px; }
 .partner-link__cta{ font-family:var(--font-mono); font-size:12px; color:var(--navy); }
-@media (max-width:760px){ .partners__links{ grid-template-columns:1fr; } }
+@media (max-width:760px){ .partners__group-links{ grid-template-columns:1fr; } }
 
 /* ------------------------------------------------------------
    Contact
@@ -640,6 +644,32 @@ img{ max-width:100%; display:block; }
   .rp__clauses ul{ grid-template-columns:1fr; }
 }
 @media (max-width:560px){ .jny{ grid-template-columns:1fr; } }
+
+/* ------------------------------------------------------------
+   Sections repliables (accordéon mobile)
+   ------------------------------------------------------------ */
+.fold{ margin-top:28px; }
+.fold__toggle{
+  display:flex; align-items:center; gap:10px; width:100%;
+  padding:14px 18px; cursor:pointer; list-style:none;
+  background:#fff; border:1px solid var(--hairline); border-radius:var(--radius-sm);
+  font-family:var(--font-body); font-size:15px; font-weight:600; line-height:1.3;
+  color:var(--ink); text-align:left;
+}
+.fold__toggle::-webkit-details-marker{ display:none; }
+.fold__toggle .chev{ margin-left:auto; font-family:var(--font-mono); font-size:13px; color:var(--slate); transition:transform .18s ease; }
+.fold[open] .fold__toggle .chev{ transform:rotate(90deg); }
+.fold--dark .fold__toggle{ background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.14); color:#fff; }
+.fold--dark .fold__toggle .chev{ color:var(--slate-2); }
+.fold > .jny{ margin-top:20px; }
+.fold > .rp{ margin-top:20px; }
+.fold > .steps{ margin-top:20px; }
+@media (max-width:600px){
+  .step{ padding:18px 18px 16px; }
+  .step__num{ margin-bottom:10px; }
+  .step h3{ font-size:18px; margin-bottom:6px; }
+  .step p{ font-size:14.5px; }
+}
 
 /* ------------------------------------------------------------
    Pied de page
@@ -762,7 +792,9 @@ img{ max-width:100%; display:block; }
         <h2>Les six gestes qui font avancer un dossier</h2>
         <p>Dans l'ordre. Chaque étape manquée, c'est un retard d'indemnisation de plus.</p>
       </div>
-      <div class="steps">
+      <details class="fold" id="foldEtapes">
+        <summary class="fold__toggle">Les six gestes, dans l'ordre <span class="chev">▸</span></summary>
+        <div class="steps">
         <div class="step"><span class="step__bar"></span><span class="step__num">1</span><h3>Déclarez le sinistre</h3><p>Par écrit, dans les 5 jours ouvrés (2 jours pour un vol). Gardez la preuve d'envoi : c'est elle qui fait foi.</p></div>
         <div class="step"><span class="step__bar"></span><span class="step__num">2</span><h3>Préservez les preuves</h3><p>Photos datées, factures, et laissez les biens endommagés à disposition de l'expert.</p></div>
         <div class="step"><span class="step__bar"></span><span class="step__num">3</span><h3>Limitez l'aggravation</h3><p>Coupez l'eau, sécurisez les lieux, protégez ce qui peut l'être. L'assureur vous le demande.</p></div>
@@ -770,6 +802,7 @@ img{ max-width:100%; display:block; }
         <div class="step"><span class="step__bar"></span><span class="step__num">5</span><h3>Chiffrez votre demande</h3><p>Appuyez-vous sur des devis et factures pour estimer un montant précis et défendable.</p></div>
         <div class="step"><span class="step__bar"></span><span class="step__num">6</span><h3>Relancez, puis montez en puissance</h3><p>Déclaration → relance → mise en demeure → médiateur → tribunal. Recevez un refus motivé ? Contestez-le : le générateur ci-dessous rédige les cinq courriers.</p></div>
       </div>
+      </details>
     </div>
   </section>
 
@@ -921,7 +954,9 @@ img{ max-width:100%; display:block; }
         <p>Le parcours réel d'un sinistre, et trois réalités que les commerçants découvrent trop tard. Les connaître avant, c'est constituer un dossier plus solide et éviter les mauvaises surprises.</p>
       </div>
 
-      <div class="jny" aria-label="Le parcours réel d'un sinistre">
+      <details class="fold fold--dark" id="foldComprendre">
+        <summary class="fold__toggle">Le parcours réel d'un sinistre, en détail <span class="chev">▸</span></summary>
+        <div class="jny" aria-label="Le parcours réel d'un sinistre">
         <div class="jny-step"><span class="jny-n">1</span><strong class="jny-title">Déclaration</strong><p>Dans les 5 jours ouvrés (2 en cas de vol).</p></div>
         <div class="jny-step"><span class="jny-n">2</span><strong class="jny-title">Mesures conservatoires</strong><p>Déblayer, sécuriser, bâcher.</p></div>
         <div class="jny-step"><span class="jny-n">3</span><strong class="jny-title">Passage de l'expert</strong><p>Souvent plusieurs visites.</p></div>
@@ -976,8 +1011,11 @@ img{ max-width:100%; display:block; }
           <a class="go" href="#rediger" data-letter-link="contestation">Contester un refus motivé →</a>
         </div>
       </div>
+      </details>
 
-      <div class="rp" id="rp">
+      <details class="fold" id="foldRp">
+        <summary class="fold__toggle">Simulateur — règle proportionnelle (taux de couverture) <span class="chev">▸</span></summary>
+        <div class="rp" id="rp">
         <div class="rp__head">
           <span class="eyebrow">Simulateur</span>
           <h3>Règle proportionnelle&nbsp;: comprenez votre niveau de couverture</h3>
@@ -1027,6 +1065,7 @@ img{ max-width:100%; display:block; }
 
         <p class="rp__disclaimer">Estimation indicative et pédagogique. Le résultat exact dépend des clauses de votre contrat et de l'expertise. Ne remplace pas un conseil juridique&nbsp;— ProIndemni n'est pas immatriculé ORIAS.</p>
       </div>
+      </details>
 
       <div class="comprendre-takeaway">
         <p>En clair&nbsp;: l'assurance protège votre outil de travail, elle ne remplace pas votre trésorerie. <b>Vous avancez souvent les frais</b> — plus votre dossier est complet et daté, plus vite et mieux vous êtes remboursé.</p>
@@ -1174,8 +1213,8 @@ img{ max-width:100%; display:block; }
   <section class="partners">
     <div class="partners__inner">
       <p class="partners__label">Partenaires</p>
-      <h2 class="partners__title">Sécurisez votre local pour éviter une récidive</h2>
-      <p class="partners__sub">Liens affiliés Amazon&nbsp;: si vous achetez via ces liens, ProIndemni perçoit une petite commission, sans surcoût pour vous.</p>
+      <h2 class="partners__title">Équipez-vous pour la suite du sinistre</h2>
+      <p class="partners__sub">Liens affiliés (Amazon &amp; Awin)&nbsp;: si vous achetez via ces liens, ProIndemni perçoit une petite commission, sans surcoût pour vous.</p>
       <div class="partners__links" id="partnerLinks"></div>
     </div>
   </section>
@@ -1226,14 +1265,21 @@ img{ max-width:100%; display:block; }
    Amazon = Amazon Associates (gratuit, self-service), tag de suivi : proindemni-21.
    Les liens Amazon pointent vers des recherches de matériel de surveillance
    (caméra, alarme, coffre), pertinentes après un sinistre.
-   Awin = programme Heimwerkertools - FR (HWT, quincaillerie/outillage, commission 6 %).
-   Le lien Awin pointe vers la catégorie « Quincaillerie de porte » (serrures,
-   cylindres, renforts) pour re-sécuriser le local ; tracké via clickref. */
+   Awin = deux programmes : Heimwerkertools - FR (HWT, quincaillerie, 6 %) et
+   Trotec - FR (séchage/mesure, 2,17 %). Les URLs Awin pointent vers des catégories
+   cohérentes avec le « moment post-sinistre » (re-sécuriser, puis assécher et
+   documenter) ; trackés via clickref. Chaque lien porte `group` + `merchant`. */
 const AFFILIATE_LINKS = [
-  { label: "Re-sécuriser le local", icon: "🔐", url: "https://www.awin1.com/cread.php?awinmid=86907&awinaffid=3133794&clickref=re-securiser-local&ued=https%3A%2F%2Fwww.hwt-pro.com%2Ffr%2Fquincaillerie-de-porte", slug: "re-securiser-local" },
-  { label: "Caméra de surveillance", icon: "📷", url: "https://www.amazon.fr/s?k=camera+surveillance&tag=proindemni-21",   slug: "camera-surveillance" },
-  { label: "Alarme anti-intrusion",  icon: "🔔", url: "https://www.amazon.fr/s?k=alarme+anti-intrusion&tag=proindemni-21", slug: "alarme" },
-  { label: "Coffre-fort",            icon: "🔒", url: "https://www.amazon.fr/s?k=coffre+fort&tag=proindemni-21",           slug: "coffre-fort" }
+  // Groupe « Re-sécuriser le local »
+  { group: "secu", label: "Re-sécuriser le local", icon: "🔐", merchant: "HWT", url: "https://www.awin1.com/cread.php?awinmid=86907&awinaffid=3133794&clickref=re-securiser-local&ued=https%3A%2F%2Fwww.hwt-pro.com%2Ffr%2Fquincaillerie-de-porte", slug: "re-securiser-local" },
+  { group: "secu", label: "Caméra de surveillance", icon: "📷", merchant: "Amazon", url: "https://www.amazon.fr/s?k=camera+surveillance&tag=proindemni-21",   slug: "camera-surveillance" },
+  { group: "secu", label: "Alarme anti-intrusion",  icon: "🔔", merchant: "Amazon", url: "https://www.amazon.fr/s?k=alarme+anti-intrusion&tag=proindemni-21", slug: "alarme" },
+  { group: "secu", label: "Coffre-fort",            icon: "🔒", merchant: "Amazon", url: "https://www.amazon.fr/s?k=coffre+fort&tag=proindemni-21",           slug: "coffre-fort" },
+  // Groupe « Assécher & documenter après sinistre » (Trotec)
+  { group: "sechage", label: "Déshumidificateur d'air", icon: "💧", merchant: "Trotec", url: "https://www.awin1.com/cread.php?awinmid=62319&awinaffid=3133794&clickref=deshumidificateur&ued=https%3A%2F%2Ffr.trotec.com%2Fshop%2Fdeshumidification.html", slug: "deshumidificateur" },
+  { group: "sechage", label: "Pompe à eau",            icon: "🚰", merchant: "Trotec", url: "https://www.awin1.com/cread.php?awinmid=62319&awinaffid=3133794&clickref=pompe-a-eau&ued=https%3A%2F%2Ffr.trotec.com%2Fshop%2Fpompes-a-eau.html", slug: "pompe-a-eau" },
+  { group: "sechage", label: "Purificateur d'air",     icon: "🌬️", merchant: "Trotec", url: "https://www.awin1.com/cread.php?awinmid=62319&awinaffid=3133794&clickref=purificateur-air&ued=https%3A%2F%2Ffr.trotec.com%2Fshop%2Fpurificateur-d-air-humidificateur.html", slug: "purificateur-air" },
+  { group: "sechage", label: "Humidimètre",            icon: "📏", merchant: "Trotec", url: "https://www.awin1.com/cread.php?awinmid=62319&awinaffid=3133794&clickref=humidimetre&ued=https%3A%2F%2Ffr.trotec.com%2Fshop%2Finstrument-de-mesure.html", slug: "humidimetre" }
 ];
 
 /* -------------------------------------------
@@ -2299,20 +2345,32 @@ function renderDeadlines(){
    Liens d'affiliation (discrets)
    ------------------------------------------- */
 function renderPartnerLinks(){
-  document.getElementById("partnerLinks").innerHTML = AFFILIATE_LINKS.map(l =>
-    `<a class="partner-link" href="${l.url}" rel="sponsored noopener" data-partner="${l.slug}">
-       <span class="partner-link__icon">${l.icon}</span>
-       <span class="partner-link__label">${l.label}</span>
-       <span class="partner-link__cta">Voir sur Amazon&nbsp;→</span>
-     </a>`
-  ).join("");
+  const GROUPS = [
+    { key: "secu",    title: "Re-sécuriser le local" },
+    { key: "sechage", title: "Assécher & documenter après sinistre" }
+  ];
+  document.getElementById("partnerLinks").innerHTML = GROUPS.map(g => {
+    const links = AFFILIATE_LINKS.filter(l => l.group === g.key);
+    return `<div class="partners__group">
+      <h3 class="partners__group-title">${g.title}</h3>
+      <div class="partners__group-links">
+        ${links.map(l =>
+          `<a class="partner-link" href="${l.url}" rel="sponsored noopener" data-partner="${l.slug}">
+             <span class="partner-link__icon">${l.icon}</span>
+             <span class="partner-link__label">${l.label}</span>
+             <span class="partner-link__cta">Voir sur ${l.merchant}&nbsp;→</span>
+           </a>`
+        ).join("")}
+      </div>
+    </div>`;
+  }).join("");
 }
 function showAffiliateNote(){
   const el = document.getElementById("affiliateNote");
   el.classList.add("is-visible");
-  el.innerHTML = `<b>Votre courrier est prêt ✅</b> Pour éviter une récidive, pensez à sécuriser votre local&nbsp;:
+  el.innerHTML = `<b>Votre courrier est prêt ✅</b> Pour la suite du sinistre, pensez à sécuriser votre local et à assécher les lieux&nbsp;:
     <span class="gen-affiliate__links">${AFFILIATE_LINKS.map(l => `<a href="${l.url}" rel="sponsored noopener" data-partner="${l.slug}">${l.icon} ${l.label}</a>`).join("")}</span>
-    <span class="gen-affiliate__disclosure">Liens affiliés Amazon — petite commission pour ProIndemni, sans surcoût pour vous.</span>`;
+    <span class="gen-affiliate__disclosure">Liens affiliés — petite commission pour ProIndemni, sans surcoût pour vous.</span>`;
 }
 
 /* Compteur de clics partenaires — événement GoatCounter, no-op si absent */
@@ -2658,6 +2716,20 @@ function init(){
     const a = e.target.closest("[data-cta]");
     if (a) trackCta(a.dataset.cta);
   });
+
+  // sections repliables : ouvertes sur desktop, repliées sur mobile
+  document.querySelectorAll("details.fold").forEach(d => {
+    d.open = !matchMedia("(max-width:700px)").matches;
+  });
+  // déplier un <details> ciblé par une ancre (ex. hero « Vérifier mon niveau de couverture » → #rp)
+  document.addEventListener("click", e => {
+    const a = e.target.closest('a[href^="#"]');
+    if(!a) return;
+    const t = document.getElementById(a.getAttribute("href").slice(1));
+    const d = t && t.closest("details.fold");
+    if(d) d.open = true;
+  });
+
   setupActions();
 
   // sauvegarde / restauration
