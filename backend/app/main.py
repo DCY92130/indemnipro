@@ -15,8 +15,11 @@ from fastapi.responses import JSONResponse
 from app.config import get_settings
 from app.errors import AppError, InvalidFileTypeError, UploadTooLargeError
 from app.schemas import AuditResponse, Orientation, TextInput
+from app.schemas_cgv import CgvOrientation, CgvResponse
 from app.services.audit import AuditService
+from app.services.audit_cgv import CgvService
 from app.services.orientation import orienter
+from app.services.orientation_cgv import orienter_cgv
 
 logging.basicConfig(
     level=logging.INFO,
@@ -41,6 +44,7 @@ MAX_UPLOAD_BYTES = 25 * 1024 * 1024  # 25 Mo
 # Le service est construit à la première requête : si la clé API est absente,
 # le démarrage ne plante pas et `/health` le signale clairement.
 _service: AuditService | None = None
+_cgv_service: CgvService | None = None
 
 
 def _get_service() -> AuditService:
@@ -48,6 +52,13 @@ def _get_service() -> AuditService:
     if _service is None:
         _service = AuditService(settings)
     return _service
+
+
+def _get_cgv_service() -> CgvService:
+    global _cgv_service
+    if _cgv_service is None:
+        _cgv_service = CgvService(settings)
+    return _cgv_service
 
 
 @app.exception_handler(AppError)
@@ -104,3 +115,38 @@ async def audit_text(payload: TextInput) -> AuditResponse:
     """Audite un texte brut (endpoint de développement / tests sans PDF)."""
     audit = await _get_service().audit_text(payload.text)
     return AuditResponse(audit=audit, orientation=Orientation(**orienter(audit)))
+
+
+@app.post("/audit/cgv", response_model=CgvResponse)
+async def audit_cgv_pdf(file: UploadFile = File(...)) -> CgvResponse:
+    """Reçoit un PDF de CGV fournisseur, renvoie la lecture factuelle + la
+    checklist de négociation (déterministe, sans avis)."""
+    filename = file.filename or ""
+    if not filename.lower().endswith(".pdf"):
+        raise InvalidFileTypeError("Seuls les fichiers PDF sont acceptés.")
+
+    content = await file.read()
+    if len(content) > MAX_UPLOAD_BYTES:
+        raise UploadTooLargeError("Fichier trop volumineux (max 25 Mo).")
+
+    tmp_path: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+            tmp.write(content)
+            tmp_path = Path(tmp.name)
+        resultat = await _get_cgv_service().audit_file(tmp_path)
+        return CgvResponse(
+            resultat=resultat, orientation=CgvOrientation(**orienter_cgv(resultat))
+        )
+    finally:
+        if tmp_path is not None:
+            tmp_path.unlink(missing_ok=True)
+
+
+@app.post("/audit/cgv/text", response_model=CgvResponse)
+async def audit_cgv_text(payload: TextInput) -> CgvResponse:
+    """Lit un texte brut de CGV (endpoint de développement / tests)."""
+    resultat = await _get_cgv_service().audit_text(payload.text)
+    return CgvResponse(
+        resultat=resultat, orientation=CgvOrientation(**orienter_cgv(resultat))
+    )

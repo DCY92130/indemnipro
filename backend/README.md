@@ -41,6 +41,8 @@ python cli.py ../chemin/vers/contrat.pdf
 | GET     | `/health`     | État + indique si la clé LLM est configurée                        |
 | POST    | `/audit`      | Upload d'un PDF → `{ audit, orientation }` (aiguillage courrier/dossier) |
 | POST    | `/audit/text` | Texte brut → `{ audit, orientation }` (dev/tests)                  |
+| POST    | `/audit/cgv`      | Upload d'un PDF de **CGV fournisseur** → `{ resultat, orientation }` (checklist de négociation) |
+| POST    | `/audit/cgv/text` | Texte brut de CGV → `{ resultat, orientation }` (dev/tests)        |
 
 Exemple :
 
@@ -78,6 +80,25 @@ partir des champs factuels de l'audit (perte d'exploitation couverte ?, exclusio
 émeutes ?, vol couvert ?, délai raccourci), il renvoie le courrier et la checklist
 qui conviennent (`{ courrier, checklist, raisons }`), sans émettre d'avis.
 Voir `app/services/orientation.py` et `CONCEPTION-AUDIT-PAYANT.md §6`.
+
+## Module CGV fournisseur (même tuyau, domaine différent)
+
+En plus de l'audit de contrat d'assurance, le backend expose une **lecture de
+CGV / conditions commerciales d'un fournisseur** (`/audit/cgv`), destinée à un
+commerçant/artisan qui s'apprête à signer. Il réutilise **exactement les mêmes
+briques génériques** (`PdfExtractor`, `PresidioAnonymizer`, `DeepSeekClient`,
+schéma Pydantic, skeleton FastAPI) et ne remplace que le domaine :
+
+- `app/services/prompt_cgv.py` — extraction factuelle des clauses commerciales
+  (prix/révision, minimum de commande, délais de livraison, pénalités, réserve
+  de propriété, garanties, exclusivité, durée/résiliation, juridiction…).
+- `app/schemas_cgv.py` — schémas `CgvResult` / `CgvOrientation` / `CgvResponse`.
+- `app/services/orientation_cgv.py` — transforme les clauses « dures » détectées
+  en **checklist de négociation** (déterministe, jamais un avis du LLM).
+
+C'est un document **B2B public** (pas de données de particuliers) : le champ
+RGPD y est bien plus réduit que le contrat d'assurance. L'aiguillage renvoie
+`{ points_negociation, raisons }` plutôt qu'un courrier de sinistre.
 
 ## ⚠️ Limites connues & conformité RGPD
 
