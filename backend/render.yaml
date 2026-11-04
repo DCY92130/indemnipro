@@ -4,6 +4,7 @@ services:
   - type: web
     name: proindemni-backend
     runtime: python
+    plan: free             # 0.1 CPU / 512 Mo — sans plan, Render prend un plan payant par défaut
     rootDir: backend
     buildCommand: pip install -r requirements.txt && python -m spacy download fr_core_news_md
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
