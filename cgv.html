@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ProIndemni — Lisez les CGV de votre fournisseur avant de signer</title>
+<meta name="description" content="Déposez les conditions générales de vente (CGV) d'un fournisseur : ProIndemni en extrait les clauses clés (prix, pénalités, délais, résiliation…) et liste les points à vérifier avant de signer.">
+<meta name="theme-color" content="#1E3A8A">
+
+<link rel="icon" type="image/png" sizes="512x512" href="icon.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231E3A8A'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' font-weight='700' fill='%23F6F4EF' text-anchor='middle'%3EPI%3C/text%3E%3Ccircle cx='49' cy='15' r='7' fill='%23C8102E'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   PROINDEMNI — design tokens (identiques à index.html)
+   Palette : encre navy / bleu poste / timbre rouge / papier
+   ============================================================ */
+:root{
+  --ink:        #131A2E;
+  --navy:       #1E3A8A;
+  --navy-2:     #16264F;
+  --red:        #C8102E;
+  --red-ink:    #B00D29;
+  --paper:      #F6F4EF;
+  --paper-2:    #EFECE4;
+  --hairline:   #E2DED3;
+  --slate:      #5B6472;
+  --slate-2:    #8A93A6;
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body:    "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 2px rgba(19,26,46,.06), 0 8px 28px rgba(19,26,46,.10);
+  --shadow-lg: 0 2px 6px rgba(19,26,46,.08), 0 24px 60px rgba(19,26,46,.18);
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  font-family:var(--font-body);
+  font-size:17px;
+  line-height:1.6;
+  color:var(--ink);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main, header, footer{ position:relative; z-index:1; }
+
+h1,h2,h3,h4{ font-family:var(--font-display); font-weight:600; line-height:1.12; margin:0; }
+a{ color:var(--navy); }
+img{ max-width:100%; display:block; }
+:focus-visible{ outline:3px solid var(--red); outline-offset:2px; border-radius:2px; }
+::selection{ background:var(--red); color:#fff; }
+
+.wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
+
+/* ------------------------------------------------------------
+   En-tête
+   ------------------------------------------------------------ */
+.site-head{
+  position:sticky; top:0; z-index:50;
+  background:rgba(246,244,239,.86);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--hairline);
+}
+.site-head__inner{ display:flex; align-items:center; justify-content:space-between; height:66px; }
+.brand{ display:flex; align-items:baseline; gap:10px; text-decoration:none; color:var(--ink); }
+.brand__name{ font-family:var(--font-display); font-weight:700; font-size:24px; letter-spacing:-.02em; }
+.brand__name .accent{ color:var(--red); }
+.site-nav{ display:flex; gap:22px; margin-left:auto; }
+.site-nav a{
+  font-size:14.5px; font-weight:500; text-decoration:none; color:var(--ink);
+  border-bottom:2px solid transparent; padding:4px 0;
+}
+.site-nav a:hover{ border-color:var(--red); }
+.site-nav a.is-active{ border-color:var(--red); font-weight:600; }
+.site-head__actions{ display:flex; align-items:center; gap:10px; }
+@media (max-width:760px){ .site-nav{ display:none; } }
+
+/* ------------------------------------------------------------
+   Boutons
+   ------------------------------------------------------------ */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-family:var(--font-body); font-weight:600; font-size:16px;
+  padding:14px 24px; border-radius:999px; cursor:pointer;
+  border:1px solid transparent; text-decoration:none;
+  transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.btn:active{ transform:translateY(1px); }
+.btn--red{ background:var(--red); color:#fff; box-shadow:0 8px 20px rgba(200,16,46,.28); }
+.btn--red:hover{ background:var(--red-ink); }
+.btn--ghost{ background:transparent; color:var(--ink); border-color:var(--hairline); }
+.btn--ghost:hover{ border-color:var(--slate); background:var(--paper-2); }
+.btn--navy{ background:var(--navy); color:#fff; }
+.btn--navy:hover{ background:var(--navy-2); }
+.btn--white{ background:#fff; color:var(--navy); }
+.btn--white:hover{ background:var(--paper); }
+.btn--sm{ padding:10px 18px; font-size:14.5px; }
+.btn:disabled{ opacity:.55; cursor:not-allowed; box-shadow:none; }
+
+/* ------------------------------------------------------------
+   Hero
+   ------------------------------------------------------------ */
+.hero{
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(30,58,138,.35), transparent 60%),
+    var(--ink);
+  color:#fff;
+  padding:80px 0 72px;
+  overflow:hidden;
+}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--font-mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--slate-2); margin-bottom:22px;
+}
+.eyebrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--red); }
+.hero h1{ font-size:clamp(34px, 4.6vw, 56px); letter-spacing:-.02em; margin:0 0 20px; color:#fff; }
+.hero h1 em{ font-style:italic; color:var(--red); }
+.hero__sub{ font-size:19px; color:#C6CEE0; max-width:56ch; margin:0 0 30px; }
+.hero__cta{ display:flex; gap:14px; flex-wrap:wrap; }
+
+/* ------------------------------------------------------------
+   Sections génériques
+   ------------------------------------------------------------ */
+.section{ padding:88px 0; }
+.section--alt{ background:var(--paper-2); }
+.sec-head{ max-width:680px; margin-bottom:40px; }
+.sec-head .eyebrow{ color:var(--slate); }
+.sec-head h2{ font-size:clamp(28px, 3.6vw, 40px); letter-spacing:-.01em; margin-bottom:14px; }
+.sec-head p{ color:var(--slate); font-size:17px; margin:0; }
+.sec-head p b{ color:var(--ink); }
+
+/* ------------------------------------------------------------
+   Zone de dépôt
+   ------------------------------------------------------------ */
+.panel{ background:#fff; border:1px solid var(--hairline); border-radius:var(--radius); padding:30px; }
+.dropzone{
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+  padding:56px 32px; text-align:center; cursor:pointer;
+  border:2px dashed var(--hairline); border-radius:var(--radius);
+  background:var(--paper); transition:border-color .14s ease, background .14s ease;
+}
+.dropzone:hover{ border-color:var(--slate); }
+.dropzone.is-drag{ border-color:var(--red); background:#FFF5F5; }
+.dropzone__icon{ font-size:34px; line-height:1; }
+.dropzone__title{ font-weight:600; font-size:18px; }
+.dropzone__hint{ color:var(--slate); font-size:14px; margin:0; }
+.dropzone__formats{ font-family:var(--font-mono); font-size:12px; color:var(--slate-2); }
+.dropzone input[type="file"]{ display:none; }
+
+/* ------------------------------------------------------------
+   États : chargement / erreur
+   ------------------------------------------------------------ */
+.state{ display:none; }
+.state.is-visible{ display:block; }
+.loading{
+  display:flex; align-items:center; gap:16px; padding:24px 26px;
+  border:1px solid var(--hairline); border-left:4px solid var(--navy);
+  border-radius:var(--radius-sm); background:#fff; margin-top:24px;
+}
+.spinner{
+  width:28px; height:28px; flex:none; border-radius:50%;
+  border:3px solid var(--hairline); border-top-color:var(--navy);
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{ to{ transform:rotate(360deg); } }
+.loading__text{ font-size:15px; color:var(--ink); }
+.loading__hint{ display:block; font-size:13px; color:var(--slate); margin-top:2px; }
+.error{
+  padding:20px 24px; margin-top:24px;
+  border:1px solid var(--hairline); border-left:4px solid var(--red);
+  border-radius:var(--radius-sm); background:#FFF5F5; color:var(--red-ink);
+}
+.error__title{ font-weight:600; margin:0 0 6px; }
+.error p{ margin:0; font-size:14.5px; line-height:1.5; }
+.error .retry{ margin-top:14px; }
+
+/* ------------------------------------------------------------
+   Résultat
+   ------------------------------------------------------------ */
+#result{ display:none; }
+#result.is-visible{ display:block; }
+
+.synthese{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:28px; }
+.synthese__item{
+  background:#fff; border:1px solid var(--hairline); border-radius:var(--radius-sm);
+  padding:16px 18px;
+}
+.synthese__label{ display:block; font-family:var(--font-mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--slate); margin-bottom:6px; }
+.synthese__value{ font-weight:600; font-size:16px; line-height:1.4; }
+.synthese__value.is-missing{ font-weight:400; color:var(--slate-2); font-style:italic; }
+
+.result-block{ margin-bottom:34px; }
+.result-block h3{ font-size:20px; margin-bottom:6px; }
+.result-block__hint{ color:var(--slate); font-size:14px; margin:0 0 18px; }
+
+.clause{
+  background:#fff; border:1px solid var(--hairline); border-radius:var(--radius-sm);
+  padding:18px 20px; margin-bottom:12px;
+}
+.clause__head{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:8px; }
+.clause__nom{ font-weight:600; font-size:16px; }
+.clause__montant{
+  font-family:var(--font-mono); font-size:13px; font-weight:500;
+  background:var(--paper-2); border:1px solid var(--hairline); border-radius:6px;
+  padding:4px 10px; color:var(--navy); white-space:nowrap;
+}
+.clause__contenu{ font-size:15px; line-height:1.6; color:var(--ink); margin:0 0 6px; }
+.clause__source{ font-family:var(--font-mono); font-size:12px; color:var(--slate); }
+.clause__contenu.is-missing{ color:var(--slate-2); font-style:italic; }
+
+.seuil{
+  display:flex; align-items:baseline; gap:12px; padding:13px 0;
+  border-bottom:1px solid var(--hairline);
+}
+.seuil:last-child{ border-bottom:0; }
+.seuil__intitule{ font-weight:600; font-size:15px; }
+.seuil__valeur{ font-family:var(--font-mono); font-size:14px; color:var(--navy); font-weight:500; }
+.seuil__source{ margin-left:auto; font-family:var(--font-mono); font-size:12px; color:var(--slate); white-space:nowrap; }
+
+.points{ list-style:none; margin:0; padding:0; }
+.points li{
+  position:relative; padding:14px 16px 14px 46px; margin-bottom:10px;
+  background:#fff; border:1px solid var(--hairline); border-radius:var(--radius-sm);
+  font-size:15px; line-height:1.55;
+}
+.points li::before{
+  content:"→"; position:absolute; left:16px; top:14px;
+  width:20px; height:20px; border-radius:50%;
+  background:var(--red); color:#fff; font-size:13px; line-height:20px; text-align:center;
+}
+.points__empty{
+  padding:18px 22px; border:1px dashed var(--hairline); border-radius:var(--radius-sm);
+  color:var(--slate); font-size:15px; text-align:center;
+}
+
+.empty-note{
+  padding:40px; text-align:center; color:var(--slate);
+  border:1px dashed var(--hairline); border-radius:var(--radius);
+}
+
+.disclaimer{
+  margin:8px 0 0; padding:14px 18px;
+  border:1px solid var(--hairline); border-left:4px solid var(--red);
+  border-radius:var(--radius-sm); background:var(--paper-2);
+  font-size:13.5px; color:var(--slate); line-height:1.6;
+}
+.disclaimer b{ color:var(--red-ink); }
+.rgpd{
+  margin:16px 0 0; padding:14px 18px;
+  border:1px solid var(--hairline); border-left:4px solid var(--navy);
+  border-radius:var(--radius-sm); background:#fff;
+  font-size:13px; color:var(--slate); line-height:1.6;
+}
+.rgpd b{ color:var(--ink); }
+
+@media (max-width:760px){
+  .synthese{ grid-template-columns:1fr; }
+  .seuil{ flex-wrap:wrap; }
+  .seuil__source{ margin-left:0; width:100%; }
+  .hero{ padding:56px 0 52px; }
+  .section{ padding:64px 0; }
+}
+
+/* ------------------------------------------------------------
+   Pied de page
+   ------------------------------------------------------------ */
+.site-foot{ background:var(--ink); color:var(--slate-2); padding:64px 0 40px; font-size:14px; }
+.site-foot .wrap{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+.site-foot h4{ color:#fff; font-size:17px; margin-bottom:12px; }
+.site-foot p{ margin:0 0 10px; line-height:1.6; }
+.site-foot a{ color:#C6CEE0; }
+.site-foot__legal{ grid-column:1 / -1; border-top:1px solid rgba(255,255,255,.1); padding-top:24px; margin-top:8px; font-size:12.5px; line-height:1.7; color:var(--slate-2); }
+.site-foot__legal b{ color:#C6CEE0; }
+@media (max-width:700px){ .site-foot .wrap{ grid-template-columns:1fr; } }
+</style>
+
+<script data-goatcounter="https://proindemni.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<!-- ============================ EN-TÊTE ============================ -->
+<header class="site-head">
+  <div class="wrap site-head__inner">
+    <a class="brand" href="index.html" aria-label="ProIndemni — accueil">
+      <span class="brand__name"><span class="accent">Pro</span>Indemni</span>
+    </a>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="index.html">Le générateur de courriers</a>
+      <a href="cgv.html" class="is-active" aria-current="page">Lire des CGV</a>
+    </nav>
+    <div class="site-head__actions">
+      <a class="btn btn--ghost btn--sm" href="contact.html">Contact</a>
+      <a class="btn btn--red btn--sm" href="#upload" data-cta="cgv-header">Lire mes CGV</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow"><span class="dot"></span>Commerçants · artisans · indépendants</span>
+      <h1>Lisez les <em>CGV</em> d'un fournisseur avant de signer.</h1>
+      <p class="hero__sub">
+        Déposez le PDF des conditions générales de vente : ProIndemni en extrait les
+        clauses qui comptent — prix et révision, minimum de commande, délais de
+        livraison, pénalités, réserve de propriété, résiliation, juridiction — et
+        liste les points à vérifier avant d'engager votre entreprise.
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--red" href="#upload" data-cta="cgv-hero">Analyser un document</a>
+        <a class="btn btn--ghost" href="#how" style="color:#fff;border-color:rgba(255,255,255,.25)">Comment ça marche</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ DÉPÔT ============================ -->
+  <section class="section" id="upload">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Étape unique</span>
+        <h2>Déposez le PDF des CGV</h2>
+        <p>Le document est <b>pseudonymisé localement</b> avant d'être envoyé à un
+        modèle de lecture. Vous recevez un relevé factuel, pas un avis juridique.</p>
+      </div>
+
+      <div class="panel">
+        <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="Déposer un fichier PDF">
+          <span class="dropzone__icon">📄</span>
+          <span class="dropzone__title">Glissez votre PDF ici</span>
+          <p class="dropzone__hint">ou cliquez pour choisir un fichier</p>
+          <span class="dropzone__formats">PDF uniquement · 25 Mo maximum</span>
+          <input type="file" id="fileInput" accept="application/pdf">
+        </div>
+
+        <div class="state loading" id="loading" aria-live="polite">
+          <span class="spinner"></span>
+          <div class="loading__text">
+            Lecture du document en cours…
+            <span class="loading__hint">Comptez de 10 à 30 secondes selon la longueur des CGV — jusqu'à une minute la première fois si le service sort de veille.</span>
+          </div>
+        </div>
+
+        <div class="state error" id="error" aria-live="assertive" hidden>
+          <p class="error__title">Impossible de lire ce document.</p>
+          <p id="errorMsg"></p>
+          <button class="btn btn--ghost btn--sm retry" id="btnRetry">Réessayer</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ RÉSULTAT ============================ -->
+  <section class="section section--alt" id="result" aria-live="polite">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Lecture factuelle</span>
+        <h2>Ce que dit le document</h2>
+        <p>Extraction neutre des clauses et des chiffres clés, avec leur source dans le document.</p>
+      </div>
+
+      <div id="resultBody"></div>
+
+      <div class="disclaimer">
+        <b>Relevé indicatif, pas un conseil juridique.</b> Cette lecture est produite
+        automatiquement à partir de votre document et peut contenir des oublis ou des
+        inexactitudes. Vérifiez chaque point dans le texte original avant de vous engager.
+      </div>
+      <div class="rgpd">
+        <b>Confidentialité.</b> Votre document est pseudonymisé localement (masquage des
+        e-mails, téléphones, SIRET, noms…) avant d'être transmis à un modèle de lecture
+        hébergé chez un tiers. Aucune copie du document n'est conservée par ProIndemni.
+        Les CGV sont un document B2B public : le champ d'application RGPD est réduit.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ COMMENT ÇA MARCHE ============================ -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Comment ça marche</span>
+        <h2>Un relevé, puis des points à négocier</h2>
+        <p>Trois étapes, aucun jugement sur le caractère « abusif » d'une clause — seulement des faits.</p>
+      </div>
+      <div class="synthese" style="grid-template-columns:repeat(3,1fr)">
+        <div class="synthese__item">
+          <span class="synthese__label">1 · Extraction</span>
+          <span class="synthese__value">Les clauses et chiffres clés sont relevés fidèlement, page par page.</span>
+        </div>
+        <div class="synthese__item">
+          <span class="synthese__label">2 · Repérage</span>
+          <span class="synthese__value">Les clauses « sensibles » (pénalités, exclusivité, reconduction…) sont signalées.</span>
+        </div>
+        <div class="synthese__item">
+          <span class="synthese__label">3 · Checklist</span>
+          <span class="synthese__value">Une liste de points à vérifier ou négocier avant de signer.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================ PIED DE PAGE ============================ -->
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <h4>ProIndemni</h4>
+      <p>Un outil d'aide à la rédaction de vos courriers de sinistre et à la lecture
+      de vos documents commerciaux, pensé pour les TPE et PME françaises.</p>
+      <p><a href="index.html">← Retour au générateur de courriers</a></p>
+    </div>
+    <div>
+      <h4>Sources officielles</h4>
+      <p><a href="https://www.legifrance.gouv.fr" rel="noopener" target="_blank">Code de commerce — Légifrance</a></p>
+      <p><a href="https://www.economie.gouv.fr" rel="noopener" target="_blank">Bercy — pratiques commerciales</a></p>
+      <p><a href="https://www.service-public.gouv.fr" rel="noopener" target="_blank">Service-Public.fr</a></p>
+    </div>
+    <div class="site-foot__legal">
+      <b>Mentions légales</b> — ProIndemni est un service d'information et d'aide à la rédaction.
+      Il <b>n'est pas un intermédiaire en assurance</b> au sens de l'article L. 511-1 du Code des assurances et
+      n'est pas immatriculé à l'ORIAS. Il ne fournit <b>ni conseil juridique ni conseil en assurance</b>.
+      La lecture de CGV est <b>indicative</b> : elle ne remplace pas la relecture attentive du document
+      original ni, le cas échéant, l'avis d'un professionnel du droit. Les documents déposés sont
+      traités de façon éphémère et ne sont pas conservés.
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   PROINDEMNI — lecture de CGV (logique applicative)
+   ============================================================ */
+
+const BACKEND_URL = "https://proindemni-backend.onrender.com";
+const NON_MENTIONNE = "Non mentionné dans le document";
+
+const dropzone = document.getElementById("dropzone");
+const fileInput = document.getElementById("fileInput");
+const loading = document.getElementById("loading");
+const errorBox = document.getElementById("error");
+const errorMsg = document.getElementById("errorMsg");
+const result = document.getElementById("result");
+const resultBody = document.getElementById("resultBody");
+const btnRetry = document.getElementById("btnRetry");
+
+let lastFile = null;
+
+/* ----- Échappement HTML (le contenu vient d'un LLM) ----- */
+function esc(s) {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/* ----- Sélection d'un fichier ----- */
+dropzone.addEventListener("click", () => fileInput.click());
+dropzone.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fileInput.click(); }
+});
+fileInput.addEventListener("change", () => {
+  if (fileInput.files && fileInput.files[0]) handleFile(fileInput.files[0]);
+});
+
+/* ----- Glisser-déposer ----- */
+["dragenter", "dragover"].forEach((ev) =>
+  dropzone.addEventListener(ev, (e) => {
+    e.preventDefault();
+    dropzone.classList.add("is-drag");
+  })
+);
+["dragleave", "drop"].forEach((ev) =>
+  dropzone.addEventListener(ev, (e) => {
+    e.preventDefault();
+    dropzone.classList.remove("is-drag");
+  })
+);
+dropzone.addEventListener("drop", (e) => {
+  const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+  if (file) handleFile(file);
+});
+
+btnRetry.addEventListener("click", () => {
+  if (lastFile) handleFile(lastFile);
+});
+
+/* ----- Traitement ----- */
+function handleFile(file) {
+  if (!file.name.toLowerCase().endsWith(".pdf")) {
+    showError("Ce fichier n'est pas un PDF. Déposez un document au format PDF.");
+    return;
+  }
+  if (file.size > 25 * 1024 * 1024) {
+    showError("Ce fichier dépasse 25 Mo. Compressez-le ou découpez-le avant de le déposer.");
+    return;
+  }
+  lastFile = file;
+  readFile(file);
+}
+
+async function readFile(file) {
+  resetView();
+
+  const form = new FormData();
+  form.append("file", file);
+
+  try {
+    const res = await fetch(BACKEND_URL + "/audit/cgv", {
+      method: "POST",
+      body: form,
+    });
+
+    if (!res.ok) {
+      let message = "Erreur " + res.status + ".";
+      try {
+        const data = await res.json();
+        if (data && data.error && data.error.message) message = data.error.message;
+      } catch (_) { /* réponse non-JSON, on garde le message générique */ }
+      throw new Error(message);
+    }
+
+    const data = await res.json();
+    renderResult(data);
+  } catch (err) {
+    // Erreur réseau (timeout, serveur injoignable) ou message d'erreur renvoyé
+    if (err && err.message) {
+      showError(err.message);
+    } else {
+      showError("Impossible de joindre le service de lecture. Vérifiez votre connexion puis réessayez.");
+    }
+  }
+}
+
+function resetView() {
+  loading.classList.add("is-visible");
+  errorBox.hidden = true;
+  result.classList.remove("is-visible");
+  resultBody.innerHTML = "";
+}
+
+function showError(message) {
+  loading.classList.remove("is-visible");
+  errorBox.hidden = false;
+  errorMsg.textContent = message;
+  result.classList.remove("is-visible");
+  resultBody.innerHTML = "";
+}
+
+function isMissing(value) {
+  return !value || String(value).trim() === "" || String(value).trim() === NON_MENTIONNE;
+}
+
+/* ----- Rendu ----- */
+function renderResult(data) {
+  loading.classList.remove("is-visible");
+  errorBox.hidden = true;
+
+  const resultat = data.resultat || {};
+  const orientation = data.orientation || {};
+  const synthese = resultat.synthese || {};
+  const clauses = resultat.clauses || [];
+  const seuils = resultat.seuils || [];
+  const points = orientation.points_negociation || [];
+
+  const html = [];
+
+  /* Synthèse */
+  html.push('<div class="synthese">');
+  html.push(syntheseItem("Fournisseur", synthese.fournisseur));
+  html.push(syntheseItem("Titre du document", synthese.titre_document));
+  html.push(syntheseItem("Version / date", synthese.date_version));
+  html.push(syntheseItem("Champ d'application", synthese.champ_application));
+  html.push("</div>");
+
+  /* Points de négociation (mis en avant) */
+  html.push('<div class="result-block">');
+  html.push("<h3>Points à vérifier avant de signer</h3>");
+  html.push('<p class="result-block__hint">Les clauses sensibles détectées, à relire et éventuellement négocier.</p>');
+  if (points.length) {
+    html.push('<ul class="points">');
+    for (const p of points) html.push("<li>" + esc(p) + "</li>");
+    html.push("</ul>");
+  } else {
+    html.push('<p class="points__empty">Aucune clause sensible détectée dans ce document.</p>');
+  }
+  html.push("</div>");
+
+  /* Chiffres clés */
+  const seuilsUtiles = seuils.filter((s) => s && !isMissing(s.valeur));
+  if (seuilsUtiles.length) {
+    html.push('<div class="result-block">');
+    html.push("<h3>Chiffres clés</h3>");
+    html.push('<p class="result-block__hint">Les montants, délais et seuils relevés dans le document.</p>');
+    html.push('<div class="panel" style="padding:8px 20px;">');
+    for (const s of seuilsUtiles) {
+      html.push('<div class="seuil">');
+      html.push('<span class="seuil__intitule">' + esc(s.intitule) + "</span>");
+      html.push('<span class="seuil__valeur">' + esc(s.valeur) + "</span>");
+      html.push('<span class="seuil__source">' + esc(s.source) + "</span>");
+      html.push("</div>");
+    }
+    html.push("</div></div>");
+  }
+
+  /* Clauses complètes */
+  if (clauses.length) {
+    html.push('<div class="result-block">');
+    html.push("<h3>Clauses relevées</h3>");
+    html.push('<p class="result-block__hint">La lecture complète du document, clause par clause.</p>');
+    for (const c of clauses) {
+      const nom = c.nom || "Clause";
+      const contenu = c.contenu;
+      const montant = c.montant;
+      const source = c.source;
+      html.push('<div class="clause">');
+      html.push('<div class="clause__head">');
+      html.push('<span class="clause__nom">' + esc(nom) + "</span>");
+      if (!isMissing(montant)) {
+        html.push('<span class="clause__montant">' + esc(montant) + "</span>");
+      }
+      html.push("</div>");
+      if (isMissing(contenu)) {
+        html.push('<p class="clause__contenu is-missing">Non mentionné dans le document.</p>');
+      } else {
+        html.push('<p class="clause__contenu">' + esc(contenu) + "</p>");
+      }
+      if (!isMissing(source)) {
+        html.push('<span class="clause__source">source : ' + esc(source) + "</span>");
+      }
+      html.push("</div>");
+    }
+    html.push("</div>");
+  }
+
+  html.push(
+    '<button class="btn btn--navy" id="btnAnother" type="button">Lire un autre document</button>'
+  );
+
+  resultBody.innerHTML = html.join("");
+  result.classList.add("is-visible");
+  result.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  const btnAnother = document.getElementById("btnAnother");
+  if (btnAnother) {
+    btnAnother.addEventListener("click", () => {
+      document.getElementById("upload").scrollIntoView({ behavior: "smooth" });
+      fileInput.value = "";
+    });
+  }
+}
+
+function syntheseItem(label, value) {
+  const missing = isMissing(value);
+  return (
+    '<div class="synthese__item">' +
+    '<span class="synthese__label">' + esc(label) + "</span>" +
+    '<span class="synthese__value' + (missing ? " is-missing" : "") + '">' +
+    (missing ? "Non mentionné dans le document" : esc(value)) +
+    "</span></div>"
+  );
+}
+</script>
+</body>
+</html>
