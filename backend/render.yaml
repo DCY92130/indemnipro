@@ -1,14 +1,12 @@
-# Blueprint Render — déploiement Docker en un clic depuis GitHub.
-# À utiliser comme point de départ RAPIDE. Pour une mise en prod RGPD,
-# préférez un hébergeur UE (Scaleway/OVH) — voir DEPLOYMENT.md.
+# Blueprint Render — service Python natif (plan gratuit, sans Docker).
+# Pour une mise en prod RGPD, préférez un hébergeur UE (Scaleway/OVH) — voir DEPLOYMENT.md.
 services:
   - type: web
     name: proindemni-backend
-    runtime: docker
-    repo: https://github.com/DCY92130/indemnipro
-    branch: main
+    runtime: python
     rootDir: backend
-    dockerfilePath: Dockerfile
+    buildCommand: pip install -r requirements.txt && python -m spacy download fr_core_news_md
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     envVars:
       - key: DEEPSEEK_API_KEY
