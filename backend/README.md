@@ -63,6 +63,7 @@ curl -F "file=@contrat.pdf" http://localhost:8000/audit
 | `MAX_INPUT_CHARS`      | `180000`                  | Garde-fou de taille (voir limitation)       |
 | `CORS_ORIGINS`         | `*`                       | Origines autorisées                         |
 | `SPACY_MODEL`          | `fr_core_news_lg`         | Modèle spaCy NER — `fr_core_news_md` en hébergement léger |
+| `PRESIDIO_ENABLED`     | `true`                    | Passe NER Presidio/spaCy. Mettre `false` sur l'hébergement gratuit (512 Mo) : le chargement du modèle dépasse la RAM et tue le process (OOM). La passe regex seule reste active. |
 
 ## Pipeline
 

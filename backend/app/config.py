@@ -42,6 +42,12 @@ class Settings(BaseSettings):
     # Modèle spaCy français. `fr_core_news_lg` (571 Mo) = qualité max en local ;
     # `fr_core_news_md` (~45 Mo) est recommandé pour un hébergement léger.
     spacy_model: str = "fr_core_news_lg"
+    # Passe NER Presidio : activée par défaut (anonymisation complète en local).
+    # Désactivée sur l'hébergement gratuit Render (512 Mo) car le chargement du
+    # modèle spaCy + registre Presidio dépasse la RAM disponible et fait tuer le
+    # process (OOM). Le repli regex seul reste actif et suffit pour les CGV
+    # (document B2B public, champ RGPD réduit).
+    presidio_enabled: bool = True
 
     @property
     def is_configured(self) -> bool:

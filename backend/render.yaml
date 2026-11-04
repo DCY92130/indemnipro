@@ -14,5 +14,7 @@ services:
         sync: false            # saisie à la main dans le dashboard Render (secret)
       - key: SPACY_MODEL
         value: fr_core_news_md # modèle léger (~45 Mo) pour l'hébergement
+      - key: PRESIDIO_ENABLED
+        value: "false"         # désactive la passe NER (OOM sur 512 Mo) — regex seule
       - key: CORS_ORIGINS
         value: "*"

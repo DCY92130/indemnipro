@@ -21,7 +21,9 @@ class AuditService:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
         self.extractor = PdfExtractor()
-        self.anonymizer = PresidioAnonymizer(spacy_model=settings.spacy_model)
+        self.anonymizer = PresidioAnonymizer(
+            spacy_model=settings.spacy_model, enabled=settings.presidio_enabled
+        )
         self.llm = DeepSeekClient(settings)
 
     async def audit_file(self, path: str | Path) -> AuditResult:

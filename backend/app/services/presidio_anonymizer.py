@@ -51,8 +51,9 @@ class PresidioAnonymizer:
     repli regex reste actif si le modèle demandé est absent.
     """
 
-    def __init__(self, spacy_model: str = SPACY_MODEL) -> None:
+    def __init__(self, spacy_model: str = SPACY_MODEL, enabled: bool = True) -> None:
         self._spacy_model = spacy_model
+        self._enabled = enabled
         self._regex = Anonymizer()
         self._analyzer = None
         self._anonymizer_engine = None
@@ -75,6 +76,13 @@ class PresidioAnonymizer:
         """Charge Presidio une seule fois ; mémorise l'échec éventuel."""
         if self._state is not None:
             return self._state
+        if not self._enabled:
+            self._state = False
+            logger.info(
+                "Passe NER Presidio désactivée (PRESIDIO_ENABLED=false) — "
+                "anonymisation regex seule."
+            )
+            return False
         try:
             self._build_engine()
             self._state = True
