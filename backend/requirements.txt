@@ -1,0 +1,21 @@
+# --- Ingestion PDF ---
+pymupdf==1.24.11
+
+# --- API LLM (SDK officiel OpenAI, redirigé vers DeepSeek via base_url) ---
+openai>=1.51.0,<2.0.0
+
+# --- Configuration & validation ---
+pydantic>=2.9.0,<3.0.0
+pydantic-settings>=2.5.0,<3.0.0
+
+# --- Serveur HTTP ---
+fastapi>=0.115.0,<1.0.0
+uvicorn[standard]>=0.30.0
+python-multipart>=0.0.12
+
+# --- Anonymisation NER (Presidio, self-hosted — repli regex si absent) ---
+presidio-analyzer>=2.2.0
+presidio-anonymizer>=2.2.0
+spacy>=3.7.0
+# Modèle spaCy français à télécharger une fois (hors pip) :
+#   python -m spacy download fr_core_news_lg

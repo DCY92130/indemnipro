@@ -1,0 +1,11 @@
+# Ne jamais copier dans l'image : secrets, dépendances locales, artefacts.
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pdf
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.git/

@@ -1,0 +1,19 @@
+# Blueprint Render — déploiement Docker en un clic depuis GitHub.
+# À utiliser comme point de départ RAPIDE. Pour une mise en prod RGPD,
+# préférez un hébergeur UE (Scaleway/OVH) — voir DEPLOYMENT.md.
+services:
+  - type: web
+    name: proindemni-backend
+    runtime: docker
+    repo: https://github.com/DCY92130/indemnipro
+    branch: main
+    rootDir: backend
+    dockerfilePath: Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: DEEPSEEK_API_KEY
+        sync: false            # saisie à la main dans le dashboard Render (secret)
+      - key: SPACY_MODEL
+        value: fr_core_news_md # modèle léger (~45 Mo) pour l'hébergement
+      - key: CORS_ORIGINS
+        value: "*"
