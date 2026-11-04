@@ -9,6 +9,7 @@ import tempfile
 from pathlib import Path
 
 from fastapi import FastAPI, File, Request, UploadFile
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -33,11 +34,30 @@ app = FastAPI(title="ProIndemni — Audit de contrat multirisque pro", version="
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origin_list,
+    # `or ["*"]` : si CORS_ORIGINS est vide (ou mal renseigné en prod), on ne
+    # laisse jamais la liste vide — sans quoi aucune réponse ne porterait l'en-tête
+    # Access-Control-Allow-Origin et le front (proindemni.fr) serait bloqué.
+    allow_origins=settings.cors_origin_list or ["*"],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def _ensure_cors_on_errors(request: Request, call_next):
+    """Filet de sécurité : garantit l'en-tête CORS sur *toutes* les réponses.
+
+    Selon la version de Starlette, les réponses produites par les handlers
+    d'exception (PDF scanné → 422, erreur interne → 500) peuvent contourner le
+    CORSMiddleware et partir sans Access-Control-Allow-Origin. Sans cet en-tête,
+    le navigateur masque le corps de la réponse et le front ne peut pas afficher
+    le message d'erreur utile. On l'ajoute donc ici, sans doublon.
+    """
+    response = await call_next(request)
+    if "access-control-allow-origin" not in response.headers:
+        response.headers["access-control-allow-origin"] = "*"
+    return response
 
 MAX_UPLOAD_BYTES = 25 * 1024 * 1024  # 25 Mo
 
@@ -75,6 +95,21 @@ async def _unexpected_error_handler(_: Request, exc: Exception) -> JSONResponse:
     return JSONResponse(
         status_code=500,
         content={"error": {"code": "internal_error", "message": "Erreur interne."}},
+    )
+
+
+@app.exception_handler(RequestValidationError)
+async def _validation_error_handler(_: Request, exc: RequestValidationError) -> JSONResponse:
+    """Renvoie les erreurs de validation (ex. champ `file` manquant) en JSON lisible,
+    au même format `{"error": {...}}` que les autres erreurs — et non le `{"detail": [...]}`
+    par défaut de FastAPI que le front ne sait pas lire."""
+    errors = exc.errors() or []
+    first = errors[0] if errors else {}
+    loc = ".".join(str(x) for x in first.get("loc", []) if x != "body")
+    message = f"Champ « {loc} » invalide : {first.get('msg', 'requête invalide')}" if loc else "Requête invalide."
+    return JSONResponse(
+        status_code=422,
+        content={"error": {"code": "invalid_request", "message": message}},
     )
 
 

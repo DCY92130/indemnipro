@@ -524,6 +524,23 @@ function handleFile(file) {
   readFile(file);
 }
 
+/* ----- Traduction des codes d'erreur du backend en messages clairs ----- */
+const ERROR_HINTS = {
+  pdf_no_text_layer: "Ce PDF ne contient pas de texte : c'est probablement un document scanné (image). Convertissez-le en PDF « texte » (via un OCR) puis réessayez.",
+  pdf_encrypted: "Ce PDF est protégé par mot de passe. Fournissez une version déverrouillée.",
+  pdf_corrupted: "Ce fichier est corrompu ou n'est pas un PDF valide.",
+  upload_too_large: "Ce fichier dépasse la limite de 25 Mo.",
+  invalid_file_type: "Seuls les fichiers PDF sont acceptés.",
+  invalid_request: "La requête est invalide. Réessayez avec un fichier PDF."
+};
+
+function friendlyError(data) {
+  const code = data && data.error && data.error.code;
+  if (code && ERROR_HINTS[code]) return ERROR_HINTS[code];
+  if (data && data.error && data.error.message) return data.error.message;
+  return null;
+}
+
 async function readFile(file) {
   resetView();
 
@@ -540,7 +557,8 @@ async function readFile(file) {
       let message = "Erreur " + res.status + ".";
       try {
         const data = await res.json();
-        if (data && data.error && data.error.message) message = data.error.message;
+        const friendly = friendlyError(data);
+        if (friendly) message = friendly;
       } catch (_) { /* réponse non-JSON, on garde le message générique */ }
       throw new Error(message);
     }
@@ -548,11 +566,12 @@ async function readFile(file) {
     const data = await res.json();
     renderResult(data);
   } catch (err) {
-    // Erreur réseau (timeout, serveur injoignable) ou message d'erreur renvoyé
-    if (err && err.message) {
+    // "Failed to fetch" = erreur réseau ou blocage CORS (serveur injoignable,
+    // réveil en cours, ou en-tête CORS absent) — pas un message d'erreur métier.
+    if (err && err.message && err.message !== "Failed to fetch") {
       showError(err.message);
     } else {
-      showError("Impossible de joindre le service de lecture. Vérifiez votre connexion puis réessayez.");
+      showError("Impossible de joindre le service de lecture. Il est peut-être en train de se réveiller (comptez jusqu'à une minute la première fois) ou temporairement indisponible. Réessayez dans quelques instants.");
     }
   }
 }
