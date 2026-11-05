@@ -221,6 +221,21 @@ img{ max-width:100%; display:block; }
 .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
 @media (max-width:600px){ .grid-2{ grid-template-columns:1fr; } }
 
+/* Bandeau « exemple pré-rempli » */
+.demo-notice{
+  display:none;
+  background:#FDF6E9;
+  border:1px solid #EBD9B4;
+  color:#7A5A1B;
+  font-size:13.5px;
+  line-height:1.55;
+  padding:11px 14px;
+  border-radius:var(--radius-sm);
+  margin:0 0 18px;
+}
+.demo-notice.visible{ display:block; }
+.demo-notice b{ font-weight:600; }
+
 /* Générateur */
 .gen{ padding:64px 0; }
 .gen-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
@@ -379,6 +394,7 @@ img{ max-width:100%; display:block; }
           <h3>Votre commande</h3>
         </div>
         <p class="dossier-sub__lead">Renseignez le fournisseur et les références de la commande en retard. Ces éléments alimentent automatiquement le courrier.</p>
+        <p class="demo-notice">Exemple pré-rempli : remplacez ces informations par les vôtres. <b>Dès votre première saisie, l'exemple s'efface.</b></p>
         <form id="commandeForm" novalidate>
           <div class="grid-2">
             <div class="field">
@@ -440,6 +456,7 @@ img{ max-width:100%; display:block; }
       </div>
       <div class="gen-grid">
         <form class="gen-form" id="genForm" novalidate>
+          <p class="demo-notice">Exemple pré-rempli : remplacez ces informations par les vôtres. <b>Dès votre première saisie, l'exemple s'efface.</b></p>
           <div class="letter-switch" role="tablist" aria-label="Type de courrier">
             <button type="button" data-letter="relance" aria-selected="true">Relance</button>
             <button type="button" data-letter="demeure" aria-selected="false">Mise en demeure</button>
@@ -565,6 +582,25 @@ const state = { letterType: "relance" };
 let checkedDocs = {};
 let docNotes = {};  // { [index]: string }
 let docFiles = {};  // { [index]: [{ name, size, type, dataUrl? }] }
+
+/* Exemple pré-rempli : la lettre apparaît « pré-rédigée » au premier chargement,
+   puis s'efface dès que l'utilisateur saisit ses propres informations. */
+const EXAMPLE = {
+  fRaison: "Menuiserie Martin",
+  fForme: "SARL",
+  fGerant: "Claire Martin",
+  fAdresse: "8 rue de l'Atelier",
+  fCp: "69003",
+  fVille: "Lyon",
+  fFournisseur: "Dupont Matériaux SAS",
+  fFourAdresse: "12 rue des Ateliers, 75011 Paris",
+  fCmdNum: "2026-0147",
+  fMontant: "1 250,00",
+  fDateCmd: "2026-09-21",
+  fDateLivraison: "2026-10-05",
+  fProduits: "20 panneaux OSB 18 mm, 6 bastaings 6 m, 1 porte de service"
+};
+let demoActive = false;
 
 /* -------------------------------------------
    Helpers génériques
@@ -1270,8 +1306,31 @@ function applyState(data){
 function loadState(){
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if(raw) applyState(JSON.parse(raw));
+    if(raw){ applyState(JSON.parse(raw)); return true; }
   } catch(e) {}
+  return false;
+}
+
+function setDemoNotice(){
+  document.querySelectorAll(".demo-notice").forEach(el => el.classList.toggle("visible", demoActive));
+}
+function prefillExample(){
+  [...GEN_FIELDS, ...CMD_FIELDS].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.value = EXAMPLE[id] || "";
+  });
+  demoActive = true;
+  setDemoNotice();
+}
+function clearDemo(keepId){
+  if(!demoActive) return;
+  [...GEN_FIELDS, ...CMD_FIELDS].forEach(id => {
+    if(id === keepId) return;
+    const el = document.getElementById(id);
+    if(el) el.value = "";
+  });
+  demoActive = false;
+  setDemoNotice();
 }
 
 function setupDataIO(){
@@ -1326,7 +1385,8 @@ function setLetter(type){
    Initialisation
    ------------------------------------------- */
 function init(){
-  loadState();
+  const hadState = loadState();
+  if(!hadState) prefillExample();
   renderDocs();
   syncLetterButtons();
   renderLetter();
@@ -1347,8 +1407,20 @@ function init(){
     b.addEventListener("click", () => setLetter(b.getAttribute("data-letter")));
   });
 
-  // Re-rendu du courrier à chaque saisie + persistance
-  document.addEventListener("input", () => { renderLetter(); saveState(); });
+  // Exemple pré-rempli : sélection au focus, effacement du reste à la 1re saisie
+  document.addEventListener("focusin", (e) => {
+    if(!demoActive) return;
+    if(e.target && (GEN_FIELDS.includes(e.target.id) || CMD_FIELDS.includes(e.target.id))){
+      const el = e.target;
+      setTimeout(() => { if(document.activeElement === el) el.select(); }, 0);
+    }
+  });
+  document.addEventListener("input", (e) => {
+    if(demoActive && e.target && (GEN_FIELDS.includes(e.target.id) || CMD_FIELDS.includes(e.target.id))){
+      clearDemo(e.target.id);
+    }
+    renderLetter(); saveState();
+  });
   document.addEventListener("change", () => { renderLetter(); saveState(); });
 
   ["genForm", "commandeForm"].forEach(id => {
