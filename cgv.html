@@ -216,15 +216,27 @@ img{ max-width:100%; display:block; }
 
 .clause{
   background:#fff; border:1px solid var(--hairline); border-radius:var(--radius-sm);
-  padding:18px 20px; margin-bottom:12px;
+  margin-bottom:12px; overflow:hidden;
 }
-.clause__head{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:8px; }
-.clause__nom{ font-weight:600; font-size:16px; }
+.clause summary{ list-style:none; cursor:pointer; }
+.clause summary::-webkit-details-marker{ display:none; }
+.clause__head{
+  display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+  padding:16px 20px;
+}
+.clause__head:hover{ background:var(--paper); }
+.clause__nom{ font-weight:600; font-size:16px; flex:1 1 auto; }
 .clause__montant{
   font-family:var(--font-mono); font-size:13px; font-weight:500;
   background:var(--paper-2); border:1px solid var(--hairline); border-radius:6px;
   padding:4px 10px; color:var(--navy); white-space:nowrap;
 }
+.clause__chevron{
+  flex:none; font-family:var(--font-mono); font-size:12px; color:var(--slate);
+  transition:transform .18s ease;
+}
+.clause[open] .clause__chevron{ transform:rotate(180deg); }
+.clause__body{ padding:0 20px 16px; }
 .clause__contenu{ font-size:15px; line-height:1.6; color:var(--ink); margin:0 0 6px; }
 .clause__source{ font-family:var(--font-mono); font-size:12px; color:var(--slate); }
 .clause__contenu.is-missing{ color:var(--slate-2); font-style:italic; }
@@ -647,23 +659,25 @@ function renderResult(data) {
     html.push("</div></div>");
   }
 
-  /* Clauses complètes */
+  /* Clauses complètes — repliées sur l'essentiel, dépliables pour le détail */
   if (clauses.length) {
     html.push('<div class="result-block">');
     html.push("<h3>Clauses relevées</h3>");
-    html.push('<p class="result-block__hint">La lecture complète du document, clause par clause.</p>');
+    html.push('<p class="result-block__hint">L\'essentiel de chaque clause — cliquez pour déplier le texte et la source.</p>');
     for (const c of clauses) {
       const nom = c.nom || "Clause";
       const contenu = c.contenu;
       const montant = c.montant;
       const source = c.source;
-      html.push('<div class="clause">');
-      html.push('<div class="clause__head">');
+      html.push('<details class="clause">');
+      html.push('<summary class="clause__head">');
       html.push('<span class="clause__nom">' + esc(nom) + "</span>");
       if (!isMissing(montant)) {
         html.push('<span class="clause__montant">' + esc(montant) + "</span>");
       }
-      html.push("</div>");
+      html.push('<span class="clause__chevron" aria-hidden="true">▾</span>');
+      html.push("</summary>");
+      html.push('<div class="clause__body">');
       if (isMissing(contenu)) {
         html.push('<p class="clause__contenu is-missing">Non mentionné dans le document.</p>');
       } else {
@@ -673,6 +687,7 @@ function renderResult(data) {
         html.push('<span class="clause__source">source : ' + esc(source) + "</span>");
       }
       html.push("</div>");
+      html.push("</details>");
     }
     html.push("</div>");
   }
