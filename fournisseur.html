@@ -975,8 +975,8 @@ function dataUrlToBytes(dataUrl){
 function pdfSafe(str){
   return String(str)
     .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, "")
-    .replace(/[​-‏←-⇿■-➿⬀-⯿︀-﻿]/g, "")
-    .replace(/[ -]/g, "");
+    .replace(/[\u200B-\u200F\u2190-\u21FF\u25A0-\u27BF\u2B00-\u2BFF\uFE00-\uFEFF]/g, "")
+    .replace(/[\u0000-\u001F\u007F]/g, "");
 }
 function wrapPdfText(text, font, size, maxWidth){
   const out = [];
