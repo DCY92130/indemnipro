@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fournisseur en retard ? — ProIndemni</title>
+<meta name="description" content="Votre fournisseur livre en retard ? Rédigez une lettre de relance ou de mise en demeure et constituez votre dossier de pièces — courriers et PDF prêts à envoyer, sans serveur.">
+<meta name="theme-color" content="#1E3A8A">
+
+<link rel="icon" type="image/png" sizes="512x512" href="icon.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231E3A8A'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' font-weight='700' fill='%23F6F4EF' text-anchor='middle'%3EPI%3C/text%3E%3Ccircle cx='49' cy='15' r='7' fill='%23C8102E'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:        #131A2E;
+  --navy:       #1E3A8A;
+  --navy-2:     #16264F;
+  --red:        #C8102E;
+  --red-ink:    #B00D29;
+  --paper:      #F6F4EF;
+  --paper-2:    #EFECE4;
+  --hairline:   #E2DED3;
+  --slate:      #5B6472;
+  --slate-2:    #8A93A6;
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body:    "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 3px rgba(19,26,46,.08), 0 8px 28px rgba(19,26,46,.06);
+  --shadow-lg: 0 20px 50px rgba(19,26,46,.18);
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  font-family:var(--font-body);
+  font-size:17px;
+  line-height:1.6;
+  color:var(--ink);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main, header, footer{ position:relative; z-index:1; }
+
+h1,h2,h3,h4{ font-family:var(--font-display); font-weight:600; line-height:1.12; margin:0; }
+a{ color:var(--navy); }
+img{ max-width:100%; display:block; }
+:focus-visible{ outline:3px solid var(--red); outline-offset:2px; border-radius:2px; }
+::selection{ background:var(--red); color:#fff; }
+
+.wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
+
+/* En-tête */
+.site-head{
+  position:sticky; top:0; z-index:50;
+  background:rgba(246,244,239,.86);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--hairline);
+}
+.site-head__inner{ display:flex; align-items:center; justify-content:space-between; gap:12px; height:66px; }
+.brand{ display:flex; align-items:baseline; gap:10px; text-decoration:none; color:var(--ink); }
+.brand__name{ font-family:var(--font-display); font-weight:700; font-size:24px; letter-spacing:-.02em; }
+.brand__name .accent{ color:var(--red); }
+.brand__back{ font-family:var(--font-mono); font-size:13px; letter-spacing:.04em; color:var(--slate); text-decoration:none; white-space:nowrap; }
+.brand__back:hover{ color:var(--red); }
+
+/* Boutons */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-family:var(--font-body); font-weight:600; font-size:16px;
+  padding:14px 24px; border-radius:999px; cursor:pointer;
+  border:1px solid transparent; text-decoration:none;
+  transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.btn:active{ transform:translateY(1px); }
+.btn--red{ background:var(--red); color:#fff; box-shadow:0 8px 20px rgba(200,16,46,.28); }
+.btn--red:hover{ background:var(--red-ink); }
+.btn--navy{ background:var(--navy); color:#fff; box-shadow:0 8px 20px rgba(30,58,138,.22); }
+.btn--navy:hover{ background:var(--navy-2); }
+.btn--ghost{ background:transparent; color:var(--navy); border-color:var(--hairline); }
+.btn--ghost:hover{ border-color:var(--navy); }
+.btn--sm{ padding:10px 18px; font-size:14.5px; }
+
+/* Hero */
+.hero{ padding:72px 0 24px; }
+.hero__inner{ display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:center; }
+.hero .eyebrow{ margin-bottom:18px; }
+.hero h1{ font-size:clamp(34px, 5vw, 58px); letter-spacing:-.02em; line-height:1.05; margin-bottom:20px; }
+.hero h1 .accent{ color:var(--red); }
+.hero__lead{ font-size:19px; color:var(--slate); max-width:560px; margin:0 0 8px; }
+.hero__letter{ position:relative; }
+.sheet{
+  background:#fff; border:1px solid var(--hairline); border-radius:var(--radius);
+  box-shadow:var(--shadow-lg); padding:30px 32px;
+  transform:rotate(1.5deg);
+}
+.sheet__lr{ font-family:var(--font-mono); font-size:11px; letter-spacing:.12em; color:var(--slate-2); border-bottom:1px solid var(--hairline); padding-bottom:10px; margin-bottom:16px; }
+.sheet__addr{ display:grid; grid-template-columns:1fr 1fr; gap:12px; font-size:13px; line-height:1.5; color:var(--slate); margin-bottom:18px; }
+.sheet__addr strong{ color:var(--ink); font-weight:600; }
+.sheet .barcode{ height:26px; border-radius:4px; background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 5px); margin:14px 0 6px; opacity:.2; }
+.stamp{
+  position:absolute; right:-14px; bottom:-14px;
+  width:88px; height:88px; border-radius:50%;
+  border:3px solid var(--red); color:var(--red);
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  transform:rotate(-12deg); background:rgba(255,255,255,.9);
+}
+
+/* Sections */
+.section{ padding:64px 0; }
+.section--alt{ background:var(--paper-2); border-top:1px solid var(--hairline); border-bottom:1px solid var(--hairline); }
+.sec-head{ max-width:640px; margin-bottom:44px; }
+.sec-head h2{ font-size:clamp(28px, 3.6vw, 40px); letter-spacing:-.01em; margin-bottom:14px; }
+.sec-head p{ color:var(--slate); font-size:17.5px; margin:0; }
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--font-mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--slate); margin-bottom:22px;
+}
+.eyebrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--red); }
+
+/* Aiguillage */
+.aiguillage{ background:var(--navy-2); color:#fff; padding:64px 0; }
+.aiguillage__head{ max-width:640px; margin-bottom:36px; }
+.aiguillage__head h2{ font-size:clamp(26px, 3.2vw, 36px); margin-bottom:12px; }
+.aiguillage__head p{ color:#C6CEE0; margin:0; font-size:16.5px; }
+.aiguillage__grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.aiguillage-card{
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--radius); padding:26px; cursor:pointer;
+  text-align:left; color:#fff; transition:transform .14s ease, background .14s ease, border-color .14s ease;
+}
+.aiguillage-card:hover{ transform:translateY(-3px); background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.28); }
+.aiguillage-card__q{ font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--red); margin-bottom:12px; display:block; }
+.aiguillage-card__a{ font-family:var(--font-display); font-weight:600; font-size:22px; margin-bottom:10px; }
+.aiguillage-card__hint{ color:#C6CEE0; font-size:14.5px; margin:0; line-height:1.5; }
+.aiguillage__note{ margin-top:24px; font-size:14px; color:#C6CEE0; }
+
+/* Dossier */
+.dossier-sub{ background:#fff; border:1px solid var(--hairline); border-radius:var(--radius); box-shadow:var(--shadow); padding:32px; margin-bottom:28px; }
+.dossier-sub__head{ display:flex; align-items:baseline; gap:14px; margin-bottom:8px; }
+.dossier-sub__num{ font-family:var(--font-mono); font-size:13px; color:var(--red); letter-spacing:.08em; white-space:nowrap; }
+.dossier-sub__head h3{ font-size:22px; }
+.dossier-sub__lead{ color:var(--slate); margin:0 0 24px; }
+
+/* Checklist */
+.check-panel__hint{ font-size:14px; color:var(--slate); margin:0 0 18px; }
+.doc-cat{ display:flex; align-items:center; gap:10px; margin:22px 0 8px; padding-bottom:6px; border-bottom:1px solid var(--hairline); }
+.doc-cat__icon{ font-size:15px; }
+.doc-cat__label{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--slate); }
+.doc-wrap{ border:1px solid var(--hairline); border-radius:var(--radius-sm); margin-bottom:10px; background:var(--paper); }
+.doc{ display:flex; align-items:flex-start; gap:12px; padding:14px 16px; }
+.doc input[type=checkbox]{ width:18px; height:18px; margin-top:3px; accent-color:var(--red); flex:none; }
+.doc__main{ flex:1; }
+.doc__main label{ font-weight:600; cursor:pointer; display:block; }
+.doc__where{ display:block; font-size:13.5px; color:var(--slate); margin-top:2px; }
+.doc__panel{ display:none; padding:0 16px 16px 46px; }
+.doc-wrap.open .doc__panel{ display:block; }
+.doc__panel textarea{
+  width:100%; min-height:88px; padding:10px 12px; margin-bottom:12px;
+  font-family:var(--font-body); font-size:14.5px; line-height:1.5;
+  border:1px solid var(--hairline); border-radius:var(--radius-sm); background:#fff; color:var(--ink); resize:vertical;
+}
+.doc__panel textarea:focus{ outline:none; border-color:var(--navy); }
+.doc__files-wrap{ margin-top:4px; }
+.doc-file-btn{ margin-bottom:8px; }
+.doc__files{ list-style:none; margin:0; padding:0; }
+.doc__files-empty{ font-size:13px; color:var(--slate-2); font-style:italic; }
+.attach-item{ display:flex; align-items:center; gap:8px; padding:6px 10px; background:#fff; border:1px solid var(--hairline); border-radius:6px; margin-bottom:6px; font-size:13.5px; }
+.attach-item__name{ flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.attach-item__size{ color:var(--slate); font-family:var(--font-mono); font-size:12px; }
+.attach-item__del{ border:none; background:none; color:var(--slate-2); cursor:pointer; font-size:14px; padding:2px 6px; }
+.attach-item__del:hover{ color:var(--red); }
+.check-progress{ margin:18px 0; font-size:15px; color:var(--slate); }
+.check-progress b{ color:var(--navy); }
+.check-actions{ display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin-top:18px; }
+.dossier-include{ display:inline-flex; align-items:center; gap:8px; font-size:14.5px; color:var(--slate); }
+.dossier-include input{ accent-color:var(--red); }
+.check-actions__hint{ width:100%; font-size:13px; color:var(--slate); margin:0; }
+.rubriques{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+
+/* Sauvegarde / restauration */
+.data-io{ background:var(--paper); border:1px dashed var(--hairline); border-radius:var(--radius); padding:22px 24px; }
+.data-io__title{ font-size:15px; font-weight:600; margin-bottom:4px; }
+.data-io p{ font-size:13.5px; color:var(--slate); margin:0 0 14px; }
+.data-io__actions{ display:flex; flex-wrap:wrap; gap:10px; }
+
+/* Formulaires */
+.field{ margin-bottom:18px; }
+.field:last-child{ margin-bottom:0; }
+.field label{ display:block; font-weight:600; font-size:14.5px; margin-bottom:6px; }
+.field .hint{ font-weight:400; color:var(--slate); font-size:13px; }
+.field input, .field textarea{
+  width:100%; padding:11px 13px; font-family:var(--font-body); font-size:15.5px;
+  border:1px solid var(--hairline); border-radius:var(--radius-sm); background:var(--paper); color:var(--ink);
+}
+.field input:focus, .field textarea:focus{ outline:none; border-color:var(--navy); }
+.field textarea{ resize:vertical; min-height:88px; }
+.grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+@media (max-width:600px){ .grid-2{ grid-template-columns:1fr; } }
+
+/* Générateur */
+.gen{ padding:64px 0; }
+.gen-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
+.gen-form{ background:#fff; border:1px solid var(--hairline); border-radius:var(--radius); box-shadow:var(--shadow); padding:28px; }
+.letter-switch{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
+.letter-switch button{
+  flex:1; min-width:150px; padding:12px 16px; border-radius:999px; cursor:pointer;
+  font-family:var(--font-body); font-weight:600; font-size:14.5px;
+  border:1px solid var(--hairline); background:var(--paper); color:var(--slate);
+}
+.letter-switch button[aria-selected="true"]{ background:var(--navy); color:#fff; border-color:var(--navy); }
+.gen-preview{ position:sticky; top:86px; }
+.letter-sheet{ background:#fff; border:1px solid var(--hairline); border-radius:var(--radius); box-shadow:var(--shadow-lg); padding:40px 44px; min-height:640px; }
+.letter-sheet__lr{ font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; color:var(--slate-2); border-bottom:1px solid var(--hairline); padding-bottom:12px; margin-bottom:22px; }
+.letter-sheet__lr-label{ display:block; }
+.letter-addr{ display:flex; justify-content:space-between; gap:16px; margin-bottom:26px; font-size:14px; line-height:1.5; }
+.letter-addr__box{ max-width:46%; }
+.letter-addr__box strong{ font-weight:600; }
+.letter-meta{ text-align:right; font-size:13.5px; color:var(--slate); margin-bottom:20px; }
+.letter-subject{ font-weight:700; font-size:16px; margin-bottom:8px; }
+.letter-body{ font-size:15px; line-height:1.65; }
+.letter-body p{ margin:0 0 12px; }
+.letter-sign{ margin-top:28px; }
+.gen-actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
+.gen-send-note{ font-size:13px; color:var(--slate); margin:16px 0 0; }
+.legal-warning{ font-size:12.5px; color:var(--slate); border-left:3px solid var(--red); padding-left:12px; margin:18px 0 0; line-height:1.55; }
+
+/* Pied de page */
+.site-foot{ background:var(--ink); color:var(--slate-2); padding:64px 0 40px; font-size:14px; }
+.site-foot .wrap{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+.site-foot h4{ color:#fff; font-size:17px; margin-bottom:12px; }
+.site-foot p{ margin:0 0 10px; line-height:1.6; }
+.site-foot a{ color:#C6CEE0; }
+.site-foot__legal{ grid-column:1 / -1; border-top:1px solid rgba(255,255,255,.1); padding-top:24px; margin-top:8px; font-size:12.5px; line-height:1.7; color:var(--slate-2); }
+.site-foot__legal b{ color:#C6CEE0; }
+@media (max-width:700px){
+  .site-foot .wrap{ grid-template-columns:1fr; }
+  .hero__inner{ grid-template-columns:1fr; gap:28px; }
+  .aiguillage__grid{ grid-template-columns:1fr; }
+  .gen-grid{ grid-template-columns:1fr; }
+  .gen-preview{ position:static; }
+  .sheet{ transform:none; }
+}
+
+/* Impression : uniquement la lettre */
+@media print{
+  body > *:not(#rediger){ display:none !important; }
+  #rediger{ padding:0; }
+  #rediger > .wrap > .sec-head, #rediger .gen-form, #rediger .gen-actions, #rediger .gen-send-note, #rediger .legal-warning{ display:none !important; }
+  #rediger .gen-grid{ display:block; }
+  #rediger .letter-sheet{ box-shadow:none; border:none; padding:0; min-height:0; }
+}
+</style>
+
+<!-- Statistiques (visites + envois) sans cookie : GoatCounter -->
+<script data-goatcounter="https://proindemni.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap site-head__inner">
+    <a class="brand" href="index.html" aria-label="ProIndemni — accueil">
+      <span class="brand__name"><span class="accent">Pro</span>Indemni</span>
+    </a>
+    <a class="brand__back" href="index.html">← Retour à l'outil</a>
+    <a class="btn btn--red btn--sm" href="cgv.html">Lire des CGV</a>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero__inner">
+      <div>
+        <span class="eyebrow"><span class="dot"></span>Relation fournisseur</span>
+        <h1>Fournisseur <span class="accent">en retard</span>&nbsp;?</h1>
+        <p class="hero__lead">Commandez passé, livraison promise, marchandises toujours absentes. Rédigez la relance ou la mise en demeure qui convient, et constituez votre dossier de pièces en quelques minutes.</p>
+      </div>
+      <div class="hero__letter" aria-hidden="true">
+        <div class="sheet">
+          <div class="sheet__lr">LETTRE RECOMMANDÉE AVEC ACCUSÉ DE RÉCEPTION</div>
+          <div class="sheet__addr">
+            <div><strong>Votre entreprise</strong><br>Votre adresse<br>Votre ville</div>
+            <div style="text-align:right"><strong>Votre fournisseur</strong><br>Service client<br>Son adresse</div>
+          </div>
+          <div style="font-weight:600; font-size:14px; margin-bottom:8px">Objet : Mise en demeure de livrer — commande n° 2026-0147</div>
+          <div style="font-size:13px; color:var(--slate); line-height:1.7">
+            La livraison, initialement prévue pour le …, n'est toujours pas intervenue à ce jour.
+            Nous vous mettons en demeure de livrer la commande dans un délai de quinze jours…
+          </div>
+          <div class="barcode"></div>
+        </div>
+        <div class="stamp">En retard</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aiguillage -->
+  <section class="aiguillage" id="aiguillage">
+    <div class="wrap">
+      <div class="aiguillage__head">
+        <h2>Quel courrier vous correspond&nbsp;?</h2>
+        <p>Choisissez le ton adapté à votre situation. Vous pourrez le modifier à tout moment.</p>
+      </div>
+      <div class="aiguillage__grid">
+        <button type="button" class="aiguillage-card" data-pick="relance">
+          <span class="aiguillage-card__q">Premier signal</span>
+          <span class="aiguillage-card__a">Relancer mon fournisseur</span>
+          <p class="aiguillage-card__hint">La livraison prend du retard et vous attendez une nouvelle date ferme. Un rappel courtois qui réserve vos droits.</p>
+        </button>
+        <button type="button" class="aiguillage-card" data-pick="demeure">
+          <span class="aiguillage-card__q">Ça suffit</span>
+          <span class="aiguillage-card__a">Mise en demeure</span>
+          <p class="aiguillage-card__hint">Malgré vos relances, rien n'est livré. Vous exigez la livraison sous 15 jours, à défaut annulation et réparation.</p>
+        </button>
+      </div>
+      <p class="aiguillage__note">Les deux courriers s'adressent au fournisseur et reposent sur votre bon de commande et ses conditions générales de vente — sans citer d'articles de loi.</p>
+    </div>
+  </section>
+
+  <!-- Votre dossier -->
+  <section class="section" id="dossier">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow"><span class="dot"></span>Votre dossier</span>
+        <h2>Réunissez vos pièces</h2>
+        <p>Comme pour un dossier d'assurance, l'essentiel est de prouver la commande, le retard et son impact. Les pièces cochées alimentent le bordereau de votre dossier PDF.</p>
+      </div>
+
+      <!-- Étape 1 · Justificatifs -->
+      <div class="dossier-sub" id="documents">
+        <div class="dossier-sub__head">
+          <span class="dossier-sub__num">Étape 1</span>
+          <h3>Les justificatifs</h3>
+        </div>
+        <p class="dossier-sub__lead">Cochez les pièces dont vous disposez, complétez les notes et joignez vos fichiers (photos, PDF).</p>
+        <p class="check-panel__hint" id="checkHint"></p>
+        <div id="checkList"></div>
+        <div class="check-progress" id="checkProgress"></div>
+        <div class="check-actions">
+          <button type="button" class="btn btn--red" id="btnDossier">Télécharger le dossier complet</button>
+          <label class="dossier-include">
+            <input type="checkbox" id="chkIncludeLetter" checked>
+            Inclure le courrier dans le dossier
+          </label>
+          <p class="check-actions__hint">Le dossier PDF regroupe le bordereau, vos notes, les photos et les pages de vos PDF joints — rien ne part vers un serveur.</p>
+        </div>
+        <div class="rubriques" id="rubriquesGrid"></div>
+      </div>
+
+      <!-- Étape 2 · Votre commande -->
+      <div class="dossier-sub" id="commande">
+        <div class="dossier-sub__head">
+          <span class="dossier-sub__num">Étape 2</span>
+          <h3>Votre commande</h3>
+        </div>
+        <p class="dossier-sub__lead">Renseignez le fournisseur et les références de la commande en retard. Ces éléments alimentent automatiquement le courrier.</p>
+        <form id="commandeForm" novalidate>
+          <div class="grid-2">
+            <div class="field">
+              <label for="fFournisseur">Fournisseur (raison sociale)</label>
+              <input id="fFournisseur" placeholder="Dupont Matériaux SAS">
+            </div>
+            <div class="field">
+              <label for="fFourAdresse">Adresse du fournisseur</label>
+              <input id="fFourAdresse" placeholder="12 rue des Ateliers, 75011 Paris">
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="fCmdNum">N° de commande / devis</label>
+              <input id="fCmdNum" placeholder="2026-0147">
+            </div>
+            <div class="field">
+              <label for="fMontant">Montant versé <span class="hint">(acompte ou total, €)</span></label>
+              <input id="fMontant" inputmode="decimal" placeholder="1 250,00">
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="fDateCmd">Date de commande</label>
+              <input id="fDateCmd" type="date">
+            </div>
+            <div class="field">
+              <label for="fDateLivraison">Date de livraison prévue</label>
+              <input id="fDateLivraison" type="date">
+            </div>
+          </div>
+          <div class="field">
+            <label for="fProduits">Description des produits commandés</label>
+            <textarea id="fProduits" placeholder="Ex. : 20 panneaux OSB 18 mm, 6 bastaings 6 m, 1 porte de service…"></textarea>
+          </div>
+        </form>
+      </div>
+
+      <!-- Sauvegarde / restauration -->
+      <div class="data-io">
+        <div class="data-io__title">Sauvegarde / restauration</div>
+        <p>Votre dossier est enregistré dans ce navigateur uniquement. Exportez-le pour le conserver ou le reprendre sur un autre poste.</p>
+        <div class="data-io__actions">
+          <button type="button" class="btn btn--ghost btn--sm" id="btnExport">Exporter le dossier (.json)</button>
+          <button type="button" class="btn btn--ghost btn--sm" id="btnImport">Importer un dossier</button>
+          <input type="file" id="importFile" accept="application/json" hidden>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Générateur -->
+  <section class="section section--alt" id="rediger">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow"><span class="dot"></span>Votre courrier</span>
+        <h2>Rédigez la lettre</h2>
+        <p>Le courrier se met à jour à mesure que vous remplissez vos coordonnées. Téléchargez-le en PDF prêt à envoyer en recommandé.</p>
+      </div>
+      <div class="gen-grid">
+        <form class="gen-form" id="genForm" novalidate>
+          <div class="letter-switch" role="tablist" aria-label="Type de courrier">
+            <button type="button" data-letter="relance" aria-selected="true">Relance</button>
+            <button type="button" data-letter="demeure" aria-selected="false">Mise en demeure</button>
+          </div>
+
+          <h3 style="font-size:17px; margin-bottom:16px;">Vos coordonnées (l'expéditeur)</h3>
+          <div class="grid-2">
+            <div class="field">
+              <label for="fRaison">Raison sociale / nom</label>
+              <input id="fRaison" autocomplete="organization" placeholder="Menuiserie Martin">
+            </div>
+            <div class="field">
+              <label for="fForme">Forme juridique <span class="hint">(facultatif)</span></label>
+              <input id="fForme" placeholder="SARL, SAS, EI…">
+            </div>
+          </div>
+          <div class="field">
+            <label for="fGerant">Gérant / dirigeant <span class="hint">(facultatif)</span></label>
+            <input id="fGerant" autocomplete="name" placeholder="Claire Martin">
+          </div>
+          <div class="field">
+            <label for="fAdresse">Adresse</label>
+            <input id="fAdresse" autocomplete="street-address" placeholder="8 rue de l'Atelier">
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="fCp">Code postal</label>
+              <input id="fCp" autocomplete="postal-code" placeholder="69003">
+            </div>
+            <div class="field">
+              <label for="fVille">Ville</label>
+              <input id="fVille" autocomplete="address-level2" placeholder="Lyon">
+            </div>
+          </div>
+        </form>
+
+        <div class="gen-preview">
+          <div class="letter-sheet" id="letterSheet">
+            <div class="letter-sheet__lr">
+              <span class="letter-sheet__lr-label">LETTRE RECOMMANDÉE AVEC ACCUSÉ DE RÉCEPTION</span>
+            </div>
+            <div class="letter-addr" id="letterAddr"></div>
+            <div class="letter-meta" id="letterMeta"></div>
+            <div class="letter-subject" id="letterSubject"></div>
+            <div class="letter-body" id="letterBody"></div>
+            <div class="letter-sign" id="letterSign"></div>
+          </div>
+          <div class="gen-actions">
+            <button type="button" class="btn btn--navy" id="btnCopy">Copier le texte</button>
+            <button type="button" class="btn btn--red" id="btnPdf">Télécharger le PDF</button>
+            <button type="button" class="btn btn--ghost" id="btnDownload">Version Word (.doc)</button>
+          </div>
+          <p class="gen-send-note">Le courrier s'adresse à votre fournisseur. Adaptez-le à votre situation, puis envoyez-le de préférence en lettre recommandée avec accusé de réception.</p>
+          <p class="legal-warning">Modèle indicatif, sans valeur de conseil juridique. Les pénalités de retard et la faculté d'annulation dépendent des conditions générales de vente de votre fournisseur — vérifiez-les avant tout envoi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <h4>ProIndemni</h4>
+      <p>Un outil d'aide à la rédaction de vos courriers, pensé pour les TPE et PME françaises — sinistres d'assurance et relations fournisseurs.</p>
+      <p><a href="https://www.instagram.com/p/DfSwaw0oyzm/" rel="noopener" target="_blank">Instagram</a></p>
+      <p>Site conçu par <a href="https://neo-website.fr" rel="noopener" target="_blank">neo-website.fr</a></p>
+    </div>
+    <div>
+      <h4>Sources officielles</h4>
+      <p><a href="https://www.legifrance.gouv.fr" rel="noopener" target="_blank">Code des assurances — Légifrance</a></p>
+      <p><a href="https://www.mediation-assurance.org/" rel="noopener" target="_blank">La Médiation de l'assurance</a></p>
+      <p><a href="https://www.service-public.gouv.fr" rel="noopener" target="_blank">Service-Public.fr</a></p>
+    </div>
+    <div class="site-foot__legal">
+      <b>Mentions légales</b> — ProIndemni est un service d'information et d'aide à la rédaction.
+      Il <b>n'est pas un intermédiaire en assurance</b> au sens de l'article L. 511-1 du Code des assurances et
+      n'est pas immatriculé à l'ORIAS. Il ne fournit <b>ni conseil juridique ni conseil en assurance</b>.
+      Les courriers générés sont des modèles : adaptez-les à votre situation et vérifiez les conditions
+      générales de vente de votre fournisseur avant toute démarche.
+    </div>
+  </div>
+</footer>
+
+<script src="pdf-lib.min.js"></script>
+<script>
+"use strict";
+
+/* -------------------------------------------
+   Données — catégories de dépôt et checklist fournisseur
+   ------------------------------------------- */
+const CATEGORIES = {
+  commande:        { label: "La commande",        icon: "🧾" },
+  contrat:         { label: "Le contrat / CGV",   icon: "📄" },
+  correspondance:  { label: "Les échanges",       icon: "✉️" },
+  factures:        { label: "Factures & avoirs",  icon: "💰" },
+  photos:          { label: "Preuves & photos",   icon: "📸" },
+  prejudice:       { label: "Le préjudice",       icon: "📉" }
+};
+
+const CHECKLISTS = {
+  "retard-livraison": {
+    title: "Retard de livraison",
+    hint: "Réunissez les pièces qui prouvent la commande, le retard et son impact sur votre activité.",
+    docs: [
+      { category: "commande", label: "Bon de commande ou devis accepté", where: "Votre dossier achats / la confirmation reçue du fournisseur", template: "Référence commande, date, articles et quantités, montant HT/TTC, conditions convenues." },
+      { category: "contrat", label: "CGV ou conditions commerciales du fournisseur", where: "Le site du fournisseur ou le devis (délais et pénalités)", template: "Délai de livraison annoncé, pénalités de retard, réserve de propriété." },
+      { category: "correspondance", label: "Échanges et relances avec le fournisseur", where: "E-mails, SMS, courriers, notes d'appels", template: "Dates des échanges, promesses de livraison, réponses du fournisseur." },
+      { category: "factures", label: "Facture ou acompte versé", where: "Votre comptabilité / relevé bancaire", template: "Montant payé, date, moyen de paiement, références de la facture." },
+      { category: "photos", label: "Preuve de non-livraison ou d'état", where: "Photos du chantier/local, captures d'écran de suivi", template: "État du site, zone vide, suivi de transport affichant le retard." },
+      { category: "prejudice", label: "Justificatifs du préjudice subi", where: "Surcoûts, perte d'exploitation, commandes clients annulées", template: "Devis de remplacement, chiffre d'affaires perdu, surcoûts engagés." }
+    ]
+  }
+};
+
+const typeKeys = Object.keys(CHECKLISTS);
+const activeType = typeKeys[0];
+
+/* -------------------------------------------
+   État
+   ------------------------------------------- */
+const state = { letterType: "relance" };
+let checkedDocs = {};
+let docNotes = {};  // { [index]: string }
+let docFiles = {};  // { [index]: [{ name, size, type, dataUrl? }] }
+
+/* -------------------------------------------
+   Helpers génériques
+   ------------------------------------------- */
+function parseDate(s){
+  const [y, m, d] = s.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+function fmtFull(d){ return new Intl.DateTimeFormat("fr-FR", { day:"2-digit", month:"long", year:"numeric" }).format(d); }
+function todayFR(){ return fmtFull(new Date()); }
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+}
+function val(id){ return document.getElementById(id).value.trim(); }
+function frList(items){
+  if(items.length === 0) return "";
+  if(items.length === 1) return items[0];
+  return items.slice(0, -1).join(", ") + " et " + items[items.length - 1];
+}
+function decodeEntities(s){
+  const el = document.createElement("textarea");
+  el.innerHTML = s;
+  return el.value;
+}
+function stripTags(s){
+  const parts = String(s).split(/(<br\s*\/?>|<\/p>|<[^>]+>)/gi);
+  let out = "";
+  for(const part of parts){
+    if(!part) continue;
+    if(/^<br\s*\/?>$/i.test(part)) out += "\n";
+    else if(/^<\/p>$/i.test(part)) out += "\n\n";
+    else if(/^<[^>]+>$/.test(part)) { /* balise ignorée */ }
+    else out += part.replace(/\s+/g, " ").trim();
+  }
+  return out
+    .replace(/[ \t]*\n[ \t]*/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+/* Ligne « Pièces jointes » dynamique */
+function pjLine(fallback){
+  const data = CHECKLISTS[activeType];
+  const checked = checkedDocs[activeType] || [];
+  const items = [];
+  checked.forEach(i => { if(data && data.docs[i]) items.push(data.docs[i].label); });
+  checked.forEach(i => getDocFiles(activeType, i).forEach(f => items.push(f.name)));
+  return items.length ? ("PJ : " + frList(items)) : fallback;
+}
+
+/* -------------------------------------------
+   Générateur de courrier
+   ------------------------------------------- */
+function buildLetter(){
+  const raison = val("fRaison") || "Votre entreprise";
+  const forme = val("fForme");
+  const gerant = val("fGerant");
+  const adresse = val("fAdresse") || "Votre adresse";
+  const cp = val("fCp");
+  const ville = val("fVille") || "Votre ville";
+
+  const fournisseur = val("fFournisseur") || "Votre fournisseur";
+  const fourAdresse = val("fFourAdresse") || "Service client";
+
+  const cmdNum = val("fCmdNum") || "—";
+  const dCmd = val("fDateCmd");
+  const dLiv = val("fDateLivraison");
+  const produits = val("fProduits");
+  const montantRaw = val("fMontant").replace(/\s/g, "").replace(",", ".");
+  const montant = montantRaw && !isNaN(parseFloat(montantRaw)) && parseFloat(montantRaw) > 0
+    ? parseFloat(montantRaw).toLocaleString("fr-FR", { maximumFractionDigits: 2 })
+    : "";
+
+  const raisonComplete = forme ? `${raison} — ${forme}` : raison;
+
+  const sender = [
+    `<strong>${escapeHtml(raisonComplete)}</strong>`,
+    gerant ? escapeHtml(gerant) : "",
+    escapeHtml(adresse),
+    (cp || ville) ? escapeHtml([cp, ville].filter(Boolean).join(" ")) : ""
+  ].filter(Boolean).join("<br>");
+
+  const recipient = [
+    `<strong>${escapeHtml(fournisseur)}</strong>`,
+    escapeHtml(fourAdresse)
+  ].filter(Boolean).join("<br>");
+
+  const lieu = ville;
+  const meta = lieu ? `Fait à ${escapeHtml(lieu)}, le ${todayFR()}` : `Le ${todayFR()}`;
+
+  const cmdFR = dCmd ? fmtFull(parseDate(dCmd)) : "[date de commande]";
+  const livFR = dLiv ? fmtFull(parseDate(dLiv)) : "[date de livraison prévue]";
+  const produitsFR = produits ? produits : "les marchandises commandées";
+
+  let subject = "", pj = "", body = "", sign = "";
+
+  if(state.letterType === "relance"){
+    subject = `Objet : Relance — livraison de la commande n° ${cmdNum}`;
+    pj = pjLine("PJ : bon de commande et échanges");
+    body = `
+      <p>Madame, Monsieur,</p>
+      <p>Nous vous avons passé commande le ${cmdFR} (commande n° ${cmdNum}) portant sur : ${escapeHtml(produitsFR)}.</p>
+      <p>La livraison était prévue pour le ${livFR}. À ce jour, nous n'avons toujours pas reçu les marchandises.</p>
+      <p>Nous vous remercions de bien vouloir nous indiquer, sous huit jours, la nouvelle date ferme à laquelle vous vous engagez à livrer.</p>
+      <p>Nous vous rappelons que ce retard nous cause un préjudice, dont nous nous réservons le droit de demander réparation.</p>`;
+    sign = "Nous vous prions d'agréer, Madame, Monsieur, l'expression de nos salutations distinguées.";
+  }
+  else { // demeure
+    subject = `Objet : Mise en demeure de livrer — commande n° ${cmdNum}`;
+    pj = pjLine("PJ : bon de commande, échanges et CGV");
+    const montantFR = montant ? `, ainsi que le remboursement des sommes déjà versées, soit <strong>${escapeHtml(montant)} €</strong>` : "";
+    body = `
+      <p>Madame, Monsieur,</p>
+      <p>Nous vous avons passé commande le ${cmdFR} (commande n° ${cmdNum}) portant sur : ${escapeHtml(produitsFR)}.</p>
+      <p>La livraison, initialement prévue pour le ${livFR}, n'est toujours pas intervenue à ce jour, malgré notre relance.</p>
+      <p>Nous vous mettons en demeure de livrer la commande dans un délai de quinze jours à compter de la réception de la présente.</p>
+      <p>À défaut, nous nous réservons le droit d'annuler la commande${montantFR}, sans préjudice des pénalités de retard prévues à vos conditions générales de vente et de la réparation du préjudice subi.</p>`;
+    sign = "Nous vous prions d'agréer, Madame, Monsieur, l'expression de nos salutations distinguées.";
+  }
+
+  return { subject, pj, meta, sender, recipient, body, sign };
+}
+
+function renderLetter(){
+  const L = buildLetter();
+  document.getElementById("letterAddr").innerHTML =
+    `<div class="letter-addr__box">${L.sender}</div>
+     <div class="letter-addr__box" style="text-align:right">${L.recipient}</div>`;
+  document.getElementById("letterMeta").innerHTML = `${L.meta}<br>${L.pj}`;
+  document.getElementById("letterSubject").textContent = L.subject;
+  document.getElementById("letterBody").innerHTML = L.body;
+  document.getElementById("letterSign").textContent = L.sign;
+}
+
+function letterPlainText(){
+  const L = buildLetter();
+  const sender = stripTags(L.sender).trim();
+  const recipient = stripTags(L.recipient).trim();
+  const body = stripTags(L.body).trim();
+  return decodeEntities([
+    "LETTRE RECOMMANDÉE AVEC ACCUSÉ DE RÉCEPTION",
+    "",
+    sender,
+    "",
+    recipient,
+    "",
+    L.meta,
+    "",
+    L.subject,
+    "",
+    body,
+    "",
+    L.sign,
+    ""
+  ].join("\n")).replace(/\n{3,}/g, "\n\n").trim();
+}
+
+function letterDocHtml(){
+  const L = buildLetter();
+  const sender = L.sender.replace(/<br>/g, "<br/>");
+  const recipient = L.recipient.replace(/<br>/g, "<br/>");
+  const body = L.body;
+  return `<!DOCTYPE html>
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word">
+<head><meta charset="utf-8"><title>${escapeHtml(L.subject)}</title></head>
+<body style="font-family:'Times New Roman',serif;font-size:12pt;color:#000;">
+  <p style="font-family:Arial,sans-serif;font-size:9pt;color:#666;letter-spacing:.1em;">LETTRE RECOMMANDÉE AVEC ACCUSÉ DE RÉCEPTION</p>
+  <table width="100%"><tr>
+    <td style="vertical-align:top;">${sender}</td>
+    <td style="vertical-align:top;text-align:right;">${recipient}</td>
+  </tr></table>
+  <br/>
+  <p style="text-align:right;">${L.meta}</p>
+  <p><b>${escapeHtml(L.subject)}</b></p>
+  <p style="color:#444;">${L.pj}</p>
+  <br/>
+  ${body.replace(/<p>/g, '<p style="text-align:justify;">')}
+  <p style="text-align:justify;">${L.sign}</p>
+</body></html>`;
+}
+
+/* -------------------------------------------
+   Checklist de documents
+   ------------------------------------------- */
+function renderDocs(){
+  const data = CHECKLISTS[activeType];
+  const saved = checkedDocs[activeType] || [];
+  document.getElementById("checkHint").textContent = data.hint;
+  const list = document.getElementById("checkList");
+  list.innerHTML = "";
+  let currentCat = null;
+  data.docs.forEach((doc, i) => {
+    if(doc.category !== currentCat){
+      currentCat = doc.category;
+      const cat = CATEGORIES[doc.category] || { label: doc.category, icon: "📁" };
+      const head = document.createElement("div");
+      head.className = "doc-cat";
+      const icon = document.createElement("span");
+      icon.className = "doc-cat__icon";
+      icon.textContent = cat.icon;
+      const label = document.createElement("span");
+      label.className = "doc-cat__label";
+      label.textContent = cat.label;
+      head.appendChild(icon);
+      head.appendChild(label);
+      list.appendChild(head);
+    }
+
+    const wrap = document.createElement("div");
+    wrap.className = "doc-wrap" + (saved.includes(i) ? " open" : "");
+
+    const row = document.createElement("div");
+    row.className = "doc";
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.id = "doc-" + i;
+    cb.checked = saved.includes(i);
+    const main = document.createElement("div");
+    main.className = "doc__main";
+    const label = document.createElement("label");
+    label.htmlFor = cb.id;
+    label.textContent = doc.label;
+    main.appendChild(label);
+    if(doc.where){
+      const where = document.createElement("span");
+      where.className = "doc__where";
+      where.textContent = doc.where;
+      main.appendChild(where);
+    }
+    row.appendChild(cb);
+    row.appendChild(main);
+
+    const panel = document.createElement("div");
+    panel.className = "doc__panel";
+
+    const ta = document.createElement("textarea");
+    ta.placeholder = doc.template || "Décrivez, indiquez les références, dates, montants…";
+    ta.value = getDocNote(activeType, i) || doc.template;
+    ta.addEventListener("input", () => setDocNote(activeType, i, ta.value));
+    panel.appendChild(ta);
+
+    const fileWrap = document.createElement("div");
+    fileWrap.className = "doc__files-wrap";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn btn--ghost btn--sm doc-file-btn";
+    btn.textContent = "+ Joindre des fichiers";
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.multiple = true;
+    fileInput.hidden = true;
+    const fileList = document.createElement("ul");
+    fileList.className = "doc__files";
+    btn.addEventListener("click", () => fileInput.click());
+    fileInput.addEventListener("change", (e) => {
+      const files = Array.from(e.target.files || []);
+      if(files.length){
+        addDocFiles(activeType, i, files);
+        renderDocFiles(activeType, i, fileList);
+      }
+      e.target.value = "";
+    });
+    renderDocFiles(activeType, i, fileList);
+    fileWrap.appendChild(btn);
+    fileWrap.appendChild(fileInput);
+    fileWrap.appendChild(fileList);
+    panel.appendChild(fileWrap);
+
+    wrap.appendChild(row);
+    wrap.appendChild(panel);
+
+    cb.addEventListener("change", () => {
+      checkedDocs[activeType] = Array.from(list.querySelectorAll("input[type=checkbox]"))
+        .map((b, idx) => b.checked ? idx : -1).filter(idx => idx >= 0);
+      wrap.classList.toggle("open", cb.checked);
+      updateProgress();
+      saveState();
+    });
+
+    list.appendChild(wrap);
+  });
+  updateProgress();
+  renderRubriques();
+}
+
+function renderDocFiles(t, i, ul){
+  ul.innerHTML = "";
+  const files = getDocFiles(t, i);
+  if(files.length === 0){
+    ul.innerHTML = `<li class="doc__files-empty">Aucun fichier rattaché.</li>`;
+    return;
+  }
+  files.forEach((f, idx) => {
+    const li = document.createElement("li");
+    li.className = "attach-item";
+    const name = document.createElement("span");
+    name.className = "attach-item__name";
+    name.textContent = (f.type && f.type.startsWith("image/") ? "🖼️ " : (f.type === "application/pdf" ? "📄 " : "")) + f.name;
+    name.title = f.name;
+    const size = document.createElement("span");
+    size.className = "attach-item__size";
+    size.textContent = formatSize(f.size);
+    const del = document.createElement("button");
+    del.type = "button";
+    del.className = "attach-item__del";
+    del.textContent = "✕";
+    del.title = "Retirer";
+    del.setAttribute("aria-label", "Retirer " + f.name);
+    del.addEventListener("click", () => {
+      docFiles[t][i].splice(idx, 1);
+      if(docFiles[t][i].length === 0) delete docFiles[t][i];
+      renderDocFiles(t, i, ul);
+      saveState();
+    });
+    li.appendChild(name);
+    li.appendChild(size);
+    li.appendChild(del);
+    ul.appendChild(li);
+  });
+}
+function updateProgress(){
+  const boxes = document.querySelectorAll("#checkList input[type=checkbox]");
+  const done = Array.from(boxes).filter(b => b.checked).length;
+  document.getElementById("checkProgress").innerHTML =
+    `<b>${done}</b> / ${boxes.length} document${boxes.length > 1 ? "s" : ""} réuni${boxes.length > 1 ? "s" : ""}`;
+}
+
+function formatSize(bytes){
+  if(bytes == null) return "";
+  if(bytes < 1024) return bytes + " o";
+  if(bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " Ko";
+  return (bytes / (1024 * 1024)).toFixed(1) + " Mo";
+}
+function getDocNote(t, i){ return (docNotes[t] && docNotes[t][i]) || ""; }
+function getDocFiles(t, i){ return (docFiles[t] && docFiles[t][i]) || []; }
+function setDocNote(t, i, v){
+  if(!docNotes[t]) docNotes[t] = {};
+  docNotes[t][i] = v;
+  saveState();
+}
+function addDocFiles(t, i, files){
+  if(!docFiles[t]) docFiles[t] = {};
+  if(!docFiles[t][i]) docFiles[t][i] = [];
+  files.forEach(f => {
+    const entry = { name: f.name, size: f.size, type: f.type || "" };
+    docFiles[t][i].push(entry);
+    if(f.type && (f.type.startsWith("image/") || f.type === "application/pdf")){
+      const reader = new FileReader();
+      reader.onload = () => { entry.dataUrl = reader.result; };
+      reader.readAsDataURL(f);
+    }
+  });
+  saveState();
+}
+
+/* -------------------------------------------
+   Génération PDF (pdf-lib)
+   ------------------------------------------- */
+const PDF_PAGE_W = 595.28;
+const PDF_PAGE_H = 841.89;
+const PDF_MARGIN = 50;
+
+function pdfLibOk(){ return !!(window.PDFLib && window.PDFLib.PDFDocument); }
+
+function dataUrlToBytes(dataUrl){
+  const b64 = dataUrl.slice(dataUrl.indexOf(",") + 1);
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for(let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+function pdfSafe(str){
+  return String(str)
+    .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, "")
+    .replace(/[​-‏←-⇿■-➿⬀-⯿︀-﻿]/g, "")
+    .replace(/[ -]/g, "");
+}
+function wrapPdfText(text, font, size, maxWidth){
+  const out = [];
+  const words = String(text).split(/\s+/).filter(Boolean);
+  let line = "";
+  for(const w of words){
+    const cand = line ? line + " " + w : w;
+    if(!line || font.widthOfTextAtSize(cand, size) <= maxWidth) line = cand;
+    else { out.push(line); line = w; }
+  }
+  if(line) out.push(line);
+  return out;
+}
+function pdfText(cur, doc, font, str, size, color, opts){
+  opts = opts || {};
+  const x = opts.x != null ? opts.x : PDF_MARGIN;
+  const lineH = size + 3;
+  const maxW = PDF_PAGE_W - 2 * PDF_MARGIN;
+  const paras = String(str).split("\n");
+  paras.forEach((para, pi) => {
+    wrapPdfText(pdfSafe(para), font, size, maxW).forEach(ln => {
+      if(cur.y - lineH < PDF_MARGIN){
+        cur.page = doc.addPage([PDF_PAGE_W, PDF_PAGE_H]);
+        cur.y = PDF_PAGE_H - PDF_MARGIN;
+      }
+      cur.page.drawText(ln, { x, y: cur.y, size, font, color });
+      cur.y -= lineH;
+    });
+    if(pi < paras.length - 1) cur.y -= 5;
+  });
+  cur.y -= opts.after || 0;
+}
+function downloadPdf(bytes, name){
+  const blob = new Blob([bytes], { type: "application/pdf" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+}
+
+function renderRubriques(){
+  const grid = document.getElementById("rubriquesGrid");
+  const data = CHECKLISTS[activeType];
+  const cats = [];
+  data.docs.forEach(d => { if(cats.indexOf(d.category) < 0) cats.push(d.category); });
+  grid.innerHTML = "";
+  cats.forEach(cat => {
+    const info = CATEGORIES[cat] || { label: cat, icon: "📁" };
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "btn btn--ghost btn--sm";
+    b.textContent = info.icon + " " + info.label;
+    b.addEventListener("click", () => generateDossierPdf(cat));
+    grid.appendChild(b);
+  });
+}
+
+function includeLetter(){
+  const el = document.getElementById("chkIncludeLetter");
+  return el ? el.checked : true;
+}
+
+async function generateDossierPdf(scope){
+  if(!pdfLibOk()){
+    alert("La bibliothèque PDF (pdf-lib.min.js) n'est pas chargée.\n\nTéléchargez le fichier pdf-lib.min.js et placez-le dans le même dossier que cette page, puis rechargez-la.");
+    return;
+  }
+  const { PDFDocument, StandardFonts, rgb } = window.PDFLib;
+  const data = CHECKLISTS[activeType];
+  const checked = checkedDocs[activeType] || [];
+  const docsInScope = data.docs
+    .map((d, i) => ({ d, i }))
+    .filter(x => scope === "all" || x.d.category === scope);
+  const scopeLabel = scope === "all" ? "Dossier complet" : ((CATEGORIES[scope] && CATEGORIES[scope].label) || scope);
+  const fileName = "ProIndemni-fournisseur-" + (scope === "all" ? "dossier-complet" : scope) + ".pdf";
+
+  const doc = await PDFDocument.create();
+  const font = await doc.embedFont(StandardFonts.Helvetica);
+  const bold = await doc.embedFont(StandardFonts.HelveticaBold);
+  const NAVY = rgb(0.12, 0.23, 0.53);
+  const INK = rgb(0.10, 0.10, 0.10);
+  const GREY = rgb(0.40, 0.40, 0.40);
+
+  // 1. Bordereau
+  let cur = { page: doc.addPage([PDF_PAGE_W, PDF_PAGE_H]), y: PDF_PAGE_H - PDF_MARGIN };
+  pdfText(cur, doc, bold, "Bordereau de dépôt", 20, NAVY);
+  cur.y -= 6;
+  pdfText(cur, doc, font, scopeLabel + " — " + data.title, 11, GREY);
+  pdfText(cur, doc, font, "Généré le " + fmtFull(new Date()) + " — ProIndemni", 9, GREY);
+  if(cur.y - 8 < PDF_MARGIN){ cur.page = doc.addPage([PDF_PAGE_W, PDF_PAGE_H]); cur.y = PDF_PAGE_H - PDF_MARGIN; }
+  cur.page.drawRectangle({ x: PDF_MARGIN, y: cur.y, width: 90, height: 2, color: NAVY });
+  cur.y -= 24;
+
+  const done = docsInScope.filter(x => checked.includes(x.i)).length;
+  pdfText(cur, doc, bold, done + " / " + docsInScope.length + " document(s) réuni(s)", 10, INK);
+  cur.y -= 10;
+
+  let lastCat = null;
+  docsInScope.forEach(x => {
+    if(scope === "all" && x.d.category !== lastCat){
+      lastCat = x.d.category;
+      const cat = CATEGORIES[x.d.category] || { label: x.d.category, icon: "📁" };
+      cur.y -= 4;
+      pdfText(cur, doc, bold, cat.label.toUpperCase(), 10, NAVY);
+      if(cur.y - 3 < PDF_MARGIN){ cur.page = doc.addPage([PDF_PAGE_W, PDF_PAGE_H]); cur.y = PDF_PAGE_H - PDF_MARGIN; }
+      cur.page.drawRectangle({ x: PDF_MARGIN, y: cur.y, width: PDF_PAGE_W - 2 * PDF_MARGIN, height: 1, color: NAVY });
+      cur.y -= 10;
+    }
+    const ok = checked.includes(x.i);
+    pdfText(cur, doc, font, (ok ? "[x] " : "[ ] ") + x.d.label, 10.5, ok ? NAVY : INK, { x: PDF_MARGIN + 4 });
+    cur.y -= 5;
+  });
+
+  // 2. Détail des documents cochés
+  const detailed = docsInScope.filter(x => checked.includes(x.i) && (getDocNote(activeType, x.i).trim() || getDocFiles(activeType, x.i).length));
+  if(detailed.length){
+    cur.y -= 8;
+    pdfText(cur, doc, bold, "Détail des documents cochés", 12, NAVY);
+    cur.y -= 6;
+    detailed.forEach(x => {
+      pdfText(cur, doc, bold, x.d.label, 10.5, INK);
+      const note = getDocNote(activeType, x.i).trim();
+      if(note) pdfText(cur, doc, font, note, 9.5, INK);
+      getDocFiles(activeType, x.i).forEach(f => pdfText(cur, doc, font, "- " + f.name + " (" + formatSize(f.size) + ")", 9, GREY));
+      cur.y -= 8;
+    });
+  }
+
+  // 3. Courrier (dossier complet uniquement)
+  if(scope === "all" && includeLetter()){
+    cur.page = doc.addPage([PDF_PAGE_W, PDF_PAGE_H]);
+    cur.y = PDF_PAGE_H - PDF_MARGIN;
+    pdfText(cur, doc, bold, "Votre courrier", 15, NAVY);
+    cur.y -= 4;
+    pdfText(cur, doc, font, "Généré depuis la section « Rédigez la lettre » — prêt à envoyer en recommandé.", 9.5, GREY);
+    cur.y -= 12;
+    drawLetterPdf(cur, doc, font, bold, buildLetter());
+  }
+
+  // 4. Photos (une par page)
+  let photosIntroDone = false;
+  for(const x of docsInScope){
+    for(const f of (getDocFiles(activeType, x.i) || [])){
+      if(!(f.dataUrl && f.type && f.type.startsWith("image/"))) continue;
+      let embedded;
+      try {
+        if(f.type === "image/jpeg" || f.type === "image/jpg") embedded = await doc.embedJpg(dataUrlToBytes(f.dataUrl));
+        else if(f.type === "image/png") embedded = await doc.embedPng(dataUrlToBytes(f.dataUrl));
+        else continue;
+      } catch(e){ continue; }
+      if(!photosIntroDone){
+        cur.page = doc.addPage([PDF_PAGE_W, PDF_PAGE_H]);
+        cur.y = PDF_PAGE_H - PDF_MARGIN;
+        pdfText(cur, doc, bold, "Photos", 15, NAVY);
+        cur.y -= 6;
+        photosIntroDone = true;
+      }
+      const caption = pdfSafe(x.d.label + " — " + f.name);
+      const capSize = 10;
+      const capLineH = capSize + 4;
+      const capMargin = PDF_MARGIN;
+      const capLines = wrapPdfText(caption, bold, capSize, PDF_PAGE_W - 2 * capMargin);
+      const capH = capLines.length * capLineH + 18;
+      const maxW = PDF_PAGE_W - 2 * PDF_MARGIN;
+      const maxH = PDF_PAGE_H - PDF_MARGIN - capH;
+      const ratio = Math.min(maxW / embedded.width, maxH / embedded.height, 1);
+      const w = embedded.width * ratio;
+      const h = embedded.height * ratio;
+      const pg = doc.addPage([PDF_PAGE_W, PDF_PAGE_H]);
+      pg.drawRectangle({ x: 0, y: PDF_PAGE_H - capH, width: PDF_PAGE_W, height: capH, color: rgb(1, 1, 1) });
+      capLines.forEach((ln, i) => {
+        pg.drawText(ln, { x: capMargin, y: PDF_PAGE_H - 10 - i * capLineH, size: capSize, font: bold, color: INK });
+      });
+      pg.drawImage(embedded, { x: (PDF_PAGE_W - w) / 2, y: PDF_PAGE_H - capH - h, width: w, height: h });
+    }
+  }
+
+  // 5. PDF joints : pages fusionnées
+  for(const x of docsInScope){
+    for(const f of (getDocFiles(activeType, x.i) || [])){
+      if(!(f.dataUrl && f.type === "application/pdf")) continue;
+      let src;
+      try { src = await PDFDocument.load(dataUrlToBytes(f.dataUrl)); }
+      catch(e){ continue; }
+      const pages = await doc.copyPages(src, src.getPageIndices());
+      const caption = pdfSafe(x.d.label + " — " + f.name);
+      pages.forEach((p, idx) => {
+        doc.addPage(p);
+        const size = 10;
+        const lineH = size + 4;
+        const margin = 10;
+        const tag = pages.length > 1 ? " — page " + (idx + 1) + "/" + pages.length : "";
+        const lines = wrapPdfText(caption + tag, bold, size, p.getWidth() - 2 * margin);
+        const barH = lines.length * lineH + 18;
+        const barY = p.getHeight() - barH;
+        p.drawRectangle({ x: 0, y: barY, width: p.getWidth(), height: barH, color: rgb(1, 1, 1) });
+        lines.forEach((ln, i) => {
+          p.drawText(ln, { x: margin, y: barY + barH - 10 - i * lineH, size, font: bold, color: INK });
+        });
+      });
+    }
+  }
+
+  const bytes = await doc.save();
+  downloadPdf(bytes, fileName);
+}
+
+/* -------------------------------------------
+   Courrier prêt à envoyer — PDF (pdf-lib)
+   ------------------------------------------- */
+function drawLetterPdf(cur, doc, font, bold, L){
+  const { rgb } = window.PDFLib;
+  const NAVY = rgb(0.12, 0.23, 0.53);
+  const INK  = rgb(0.10, 0.10, 0.10);
+  const GREY = rgb(0.40, 0.40, 0.40);
+  const txt = s => decodeEntities(stripTags(s).trim());
+
+  pdfText(cur, doc, bold, "LETTRE RECOMMANDÉE AVEC ACCUSÉ DE RÉCEPTION", 9, GREY);
+  cur.y -= 12;
+
+  pdfText(cur, doc, font, txt(L.sender), 10, INK);
+  cur.y -= 10;
+
+  txt(L.recipient).split("\n").forEach(ln => {
+    cur.page.drawText(ln, { x: PDF_PAGE_W - PDF_MARGIN - font.widthOfTextAtSize(ln, 10), y: cur.y, size: 10, font, color: INK });
+    cur.y -= 13;
+  });
+  cur.y -= 8;
+
+  const meta = txt(L.meta);
+  cur.page.drawText(meta, { x: PDF_PAGE_W - PDF_MARGIN - font.widthOfTextAtSize(meta, 10), y: cur.y, size: 10, font, color: INK });
+  cur.y -= 24;
+
+  pdfText(cur, doc, bold, txt(L.subject), 11, NAVY);
+  cur.y -= 4;
+  pdfText(cur, doc, font, txt(L.pj), 9.5, GREY);
+  cur.y -= 6;
+  pdfText(cur, doc, font, txt(L.body), 10.5, INK);
+  cur.y -= 8;
+  pdfText(cur, doc, font, txt(L.sign), 10.5, INK);
+}
+
+async function generateLetterPdf(){
+  if(!pdfLibOk()){
+    alert("La bibliothèque PDF (pdf-lib.min.js) n'est pas chargée.\n\nTéléchargez le fichier pdf-lib.min.js et placez-le dans le même dossier que cette page, puis rechargez-la.");
+    return;
+  }
+  const { PDFDocument, StandardFonts } = window.PDFLib;
+  const L = buildLetter();
+  const doc = await PDFDocument.create();
+  const font = await doc.embedFont(StandardFonts.Helvetica);
+  const bold = await doc.embedFont(StandardFonts.HelveticaBold);
+  const cur = { page: doc.addPage([PDF_PAGE_W, PDF_PAGE_H]), y: PDF_PAGE_H - PDF_MARGIN };
+
+  drawLetterPdf(cur, doc, font, bold, L);
+
+  const bytes = await doc.save();
+  downloadPdf(bytes, "ProIndemni-fournisseur-courrier.pdf");
+}
+
+/* -------------------------------------------
+   Actions (copier / PDF / Word)
+   ------------------------------------------- */
+function setupActions(){
+  document.getElementById("btnCopy").addEventListener("click", () => {
+    const text = letterPlainText();
+    navigator.clipboard.writeText(text).then(() => {
+      const b = document.getElementById("btnCopy");
+      const old = b.textContent;
+      b.textContent = "Copié ✓";
+      setTimeout(() => b.textContent = old, 1600);
+    }).catch(() => alert("Impossible de copier automatiquement. Sélectionnez le texte de la lettre et copiez-le manuellement."));
+  });
+  document.getElementById("btnPdf").addEventListener("click", generateLetterPdf);
+  document.getElementById("btnDownload").addEventListener("click", () => {
+    const html = letterDocHtml();
+    const blob = new Blob(["﻿" + html], { type: "application/msword" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "courrier-fournisseur.doc";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  });
+}
+
+/* -------------------------------------------
+   Persistance locale
+   ------------------------------------------- */
+const STORAGE_KEY = "indemnipro-fournisseur-v1";
+const GEN_FIELDS = ["fRaison","fForme","fGerant","fAdresse","fCp","fVille"];
+const CMD_FIELDS = ["fFournisseur","fFourAdresse","fCmdNum","fMontant","fDateCmd","fDateLivraison","fProduits"];
+
+function collectState(){
+  const gen = {};
+  GEN_FIELDS.forEach(id => gen[id] = val(id));
+  const cmd = {};
+  CMD_FIELDS.forEach(id => cmd[id] = val(id));
+  const filesMeta = {};
+  Object.keys(docFiles).forEach(t => {
+    filesMeta[t] = {};
+    Object.keys(docFiles[t]).forEach(i => {
+      filesMeta[t][i] = docFiles[t][i].map(f => ({ name: f.name, size: f.size, type: f.type }));
+    });
+  });
+  return { gen, cmd, letterType: state.letterType, checkedDocs, docNotes, docFiles: filesMeta };
+}
+
+function saveState(){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(collectState())); } catch(e) {}
+}
+
+function applyState(data){
+  if(!data) return;
+  if(data.gen){ GEN_FIELDS.forEach(id => { const el = document.getElementById(id); if(el) el.value = data.gen[id] || ""; }); }
+  if(data.cmd){ CMD_FIELDS.forEach(id => { const el = document.getElementById(id); if(el) el.value = data.cmd[id] || ""; }); }
+  if(data.letterType === "relance" || data.letterType === "demeure") state.letterType = data.letterType;
+  checkedDocs = data.checkedDocs || {};
+  docNotes = data.docNotes || {};
+  docFiles = data.docFiles || {};
+}
+
+function loadState(){
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) applyState(JSON.parse(raw));
+  } catch(e) {}
+}
+
+function setupDataIO(){
+  document.getElementById("btnExport").addEventListener("click", () => {
+    const json = JSON.stringify(collectState(), null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const a = document.createElement("a");
+    const d = new Date();
+    const stamp = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    a.href = URL.createObjectURL(blob);
+    a.download = "proindemni-fournisseur-" + stamp + ".json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  });
+  document.getElementById("btnImport").addEventListener("click", () => document.getElementById("importFile").click());
+  document.getElementById("importFile").addEventListener("change", (e) => {
+    const file = e.target.files && e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        applyState(JSON.parse(reader.result));
+        renderDocs();
+        renderLetter();
+        syncLetterButtons();
+        saveState();
+        alert("Données importées avec succès.");
+      } catch(err) {
+        alert("Le fichier importé n'est pas un dossier ProIndemni valide.");
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  });
+}
+
+function syncLetterButtons(){
+  document.querySelectorAll(".letter-switch button").forEach(b => {
+    b.setAttribute("aria-selected", b.getAttribute("data-letter") === state.letterType ? "true" : "false");
+  });
+}
+function setLetter(type){
+  state.letterType = type;
+  syncLetterButtons();
+  renderLetter();
+  saveState();
+}
+
+/* -------------------------------------------
+   Initialisation
+   ------------------------------------------- */
+function init(){
+  loadState();
+  renderDocs();
+  syncLetterButtons();
+  renderLetter();
+
+  // Checklist
+  document.getElementById("btnDossier").addEventListener("click", () => generateDossierPdf("all"));
+
+  // Aiguillage
+  document.querySelectorAll(".aiguillage-card[data-pick]").forEach(card => {
+    card.addEventListener("click", () => {
+      setLetter(card.getAttribute("data-pick"));
+      document.getElementById("rediger").scrollIntoView({ behavior: "smooth" });
+    });
+  });
+
+  // Sélecteur de type de courrier
+  document.querySelectorAll(".letter-switch button").forEach(b => {
+    b.addEventListener("click", () => setLetter(b.getAttribute("data-letter")));
+  });
+
+  // Re-rendu du courrier à chaque saisie + persistance
+  document.addEventListener("input", () => { renderLetter(); saveState(); });
+  document.addEventListener("change", () => { renderLetter(); saveState(); });
+
+  ["genForm", "commandeForm"].forEach(id => {
+    const form = document.getElementById(id);
+    if(form) form.addEventListener("submit", e => e.preventDefault());
+  });
+
+  setupActions();
+  setupDataIO();
+}
+
+document.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>
