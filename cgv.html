@@ -295,6 +295,63 @@ img{ max-width:100%; display:block; }
 }
 
 /* ------------------------------------------------------------
+   Vigilance fournisseur (SIREN)
+   ------------------------------------------------------------ */
+.vigilance-search{ display:flex; gap:12px; flex-wrap:wrap; }
+.vigilance-search input{
+  flex:1 1 260px; min-width:0;
+  padding:13px 16px; font-family:var(--font-body); font-size:16px;
+  border:1px solid var(--hairline); border-radius:999px; background:#fff; color:var(--ink);
+}
+.vigilance-search input:focus{ outline:none; border-color:var(--navy); }
+.vigilance-search input::placeholder{ color:var(--slate-2); }
+
+.company{
+  margin-top:24px; background:#fff; border:1px solid var(--hairline);
+  border-radius:var(--radius); padding:24px 26px;
+}
+.company__head{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.company__name{ font-family:var(--font-display); font-weight:600; font-size:22px; line-height:1.2; }
+.company__siren{ font-family:var(--font-mono); font-size:13px; color:var(--slate); margin-top:4px; }
+.company__badge{
+  font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+  padding:6px 12px; border-radius:999px; white-space:nowrap;
+}
+.company__badge--ok{ background:#EAF4EA; color:#1E6B34; border:1px solid #CBE4CE; }
+.company__badge--fermee{ background:#FFF5F5; color:var(--red-ink); border:1px solid #F1C7CD; }
+
+.company__alerte{
+  margin-top:16px; padding:14px 18px; border-radius:var(--radius-sm);
+  border:1px solid #F1C7CD; border-left:4px solid var(--red); background:#FFF5F5;
+  color:var(--red-ink); font-size:14.5px; line-height:1.55;
+}
+
+.company__grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:20px; }
+.company__item{
+  background:var(--paper); border:1px solid var(--hairline); border-radius:var(--radius-sm);
+  padding:12px 14px;
+}
+.company__label{ display:block; font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--slate); margin-bottom:4px; }
+.company__value{ font-size:15px; line-height:1.4; }
+.company__value.is-missing{ color:var(--slate-2); font-style:italic; }
+
+.company__block{ margin-top:22px; }
+.company__block h4{ font-size:16px; margin-bottom:10px; }
+.company__block .points{ margin-top:0; }
+.company__note{ font-size:13px; color:var(--slate); margin:10px 0 0; line-height:1.5; }
+
+.fin-table{ width:100%; border-collapse:collapse; font-size:14.5px; }
+.fin-table th, .fin-table td{ text-align:left; padding:10px 12px; border-bottom:1px solid var(--hairline); }
+.fin-table th{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--slate); font-weight:500; }
+.fin-table td{ font-family:var(--font-mono); font-size:14px; }
+.fin-table tr:last-child td{ border-bottom:0; }
+.fin-table .num{ text-align:right; }
+
+@media (max-width:760px){
+  .company__grid{ grid-template-columns:1fr; }
+}
+
+/* ------------------------------------------------------------
    Pied de page
    ------------------------------------------------------------ */
 .site-foot{ background:var(--ink); color:var(--slate-2); padding:64px 0 40px; font-size:14px; }
@@ -321,6 +378,7 @@ img{ max-width:100%; display:block; }
     <nav class="site-nav" aria-label="Navigation principale">
       <a href="index.html">Le générateur de courriers</a>
       <a href="cgv.html" class="is-active" aria-current="page">Lire des CGV</a>
+      <a href="#vigilance">Connaître un fournisseur</a>
     </nav>
     <div class="site-head__actions">
       <a class="btn btn--ghost btn--sm" href="contact.html">Contact</a>
@@ -431,6 +489,37 @@ img{ max-width:100%; display:block; }
           <span class="synthese__label">3 · Checklist</span>
           <span class="synthese__value">Une liste de points à vérifier ou négocier avant de signer.</span>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ VIGILANCE FOURNISSEUR ============================ -->
+  <section class="section section--alt" id="vigilance">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Vigilance fournisseur</span>
+        <h2>Connaître votre fournisseur en 2 secondes</h2>
+        <p>Tapez son <b>SIREN</b> (9 chiffres) ou son <b>SIRET</b> (14 chiffres) :
+        identité, dirigeants, chiffre d'affaires et résultat net des derniers bilans
+        simplifiés, et surtout son état — actif ou <b>cessé</b>.</p>
+      </div>
+
+      <div class="panel">
+        <div class="vigilance-search">
+          <input type="text" id="sirenInput" inputmode="numeric" autocomplete="off"
+                 placeholder="SIREN ou SIRET — 9 ou 14 chiffres" aria-label="SIREN ou SIRET du fournisseur">
+          <button type="button" class="btn btn--red" id="btnLookup">Vérifier</button>
+        </div>
+        <div id="sirenResult" aria-live="polite"></div>
+      </div>
+
+      <div class="disclaimer" style="margin-top:16px">
+        <b>Données publiques, à titre indicatif.</b> Les informations proviennent de
+        l'API ouverte <b>recherche-entreprises.api.gouv.fr</b> (INSEE / DGFiP). Les
+        procédures collectives (redressement, liquidation) ne sont pas exposées par cette
+        API : elles figurent sur la fiche officielle
+        <b>annuaire-entreprises.data.gouv.fr</b>, vers laquelle renvoie le bouton
+        « Voir la fiche complète ».
       </div>
     </div>
   </section>
@@ -721,6 +810,177 @@ function syntheseItem(label, value) {
     "</span></div>"
   );
 }
+
+/* ============================================================
+   Vigilance fournisseur — recherche SIREN/SIRET
+   API ouverte : recherche-entreprises.api.gouv.fr (INSEE/DGFiP)
+   ============================================================ */
+const sirenInput = document.getElementById("sirenInput");
+const btnLookup = document.getElementById("btnLookup");
+const sirenResult = document.getElementById("sirenResult");
+
+function normalizeSiren(raw) {
+  const digits = String(raw ?? "").replace(/\D/g, "");
+  if (digits.length === 14) return digits.slice(0, 9); // SIRET → SIREN
+  if (digits.length === 9) return digits;
+  return null;
+}
+
+function fmtDateFr(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+}
+
+function fmtMoneyFr(n) {
+  if (n === null || n === undefined || isNaN(Number(n))) return "";
+  return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(Number(n));
+}
+
+function formatSiege(siege) {
+  if (!siege) return "";
+  const ville = [siege.code_postal, siege.libelle_commune].filter(Boolean).join(" ");
+  return [siege.adresse, ville].filter(Boolean).join(", ");
+}
+
+function nafLabel(e) {
+  const lib = e.libelle_naf || e.activite_principale_libelle || "";
+  const code = e.activite_principale || "";
+  if (lib && code) return lib + " (" + code + ")";
+  return lib || code || "";
+}
+
+function companyItem(label, value) {
+  const missing = !value;
+  return (
+    '<div class="company__item">' +
+    '<span class="company__label">' + esc(label) + "</span>" +
+    '<span class="company__value' + (missing ? " is-missing" : "") + '">' +
+    (missing ? "Non renseigné" : esc(value)) + "</span></div>"
+  );
+}
+
+function renderEntreprise(e, siren) {
+  const html = [];
+  const ferme = e.etat_administratif === "C";
+  const dateFermeture = fmtDateFr(e.date_fermeture || (e.siege && e.siege.date_fermeture));
+
+  html.push('<div class="company">');
+
+  /* En-tête : nom + SIREN + badge état */
+  html.push('<div class="company__head"><div>');
+  html.push('<div class="company__name">' + esc(e.nom_complet || "Société") + "</div>");
+  html.push('<div class="company__siren">SIREN ' + esc(siren) + "</div>");
+  html.push("</div>");
+  html.push(ferme
+    ? '<span class="company__badge company__badge--fermee">Cessée</span>'
+    : '<span class="company__badge company__badge--ok">En activité</span>');
+  html.push("</div>");
+
+  if (ferme) {
+    html.push('<div class="company__alerte"><b>Entreprise cessée' +
+      (dateFermeture ? " le " + esc(dateFermeture) : "") +
+      ".</b> Vérifiez les éventuelles procédures collectives (redressement, liquidation, sauvegarde) sur la fiche officielle.</div>");
+  }
+
+  /* Grille d'identité */
+  html.push('<div class="company__grid">');
+  html.push(companyItem("Activité (NAF)", nafLabel(e)));
+  html.push(companyItem("Forme juridique", e.nature_juridique));
+  html.push(companyItem("Adresse du siège", formatSiege(e.siege)));
+  html.push(companyItem("Créée le", fmtDateFr(e.date_creation)));
+  html.push(companyItem("Effectif", e.tranche_effectif_salarie));
+  html.push(companyItem("Catégorie", e.categorie_entreprise));
+  html.push("</div>");
+
+  /* Dirigeants */
+  const dirigeants = e.dirigeants || [];
+  html.push('<div class="company__block"><h4>Dirigeants</h4>');
+  if (dirigeants.length) {
+    html.push('<ul class="points">');
+    for (const d of dirigeants) {
+      const nom = [d.prenoms, d.nom].filter(Boolean).join(" ");
+      const qualite = d.qualite ? " — " + d.qualite : "";
+      html.push("<li>" + esc(nom || "Dirigeant") + esc(qualite) + "</li>");
+    }
+    html.push("</ul>");
+  } else {
+    html.push('<p class="points__empty">Dirigeants non publiés pour cette structure.</p>');
+  }
+  html.push("</div>");
+
+  /* Bilans simplifiés (DGFiP) */
+  const finances = e.finances || {};
+  const years = Object.keys(finances).sort().reverse();
+  html.push('<div class="company__block"><h4>Bilans simplifiés (DGFiP)</h4>');
+  if (years.length) {
+    html.push('<div style="overflow-x:auto"><table class="fin-table"><thead><tr>' +
+      "<th>Exercice</th><th class=\"num\">Chiffre d'affaires</th><th class=\"num\">Résultat net</th>" +
+      "</tr></thead><tbody>");
+    for (const y of years) {
+      const f = finances[y] || {};
+      const ca = fmtMoneyFr(f.ca);
+      const rn = fmtMoneyFr(f.resultat_net);
+      const rnNegatif = f.resultat_net != null && Number(f.resultat_net) < 0;
+      html.push("<tr><td>" + esc(y) + "</td>" +
+        '<td class="num">' + (ca || "—") + "</td>" +
+        '<td class="num"' + (rnNegatif ? ' style="color:var(--red-ink)"' : "") + ">" + (rn || "—") + "</td></tr>");
+    }
+    html.push("</tbody></table></div>");
+  } else {
+    html.push('<p class="points__empty">Bilans non publiés pour cette structure (elle ne dépose peut-être pas de comptes).</p>');
+  }
+  html.push("</div>");
+
+  /* Lien fiche officielle */
+  html.push('<div class="company__block">');
+  html.push('<a class="btn btn--navy btn--sm" href="https://annuaire-entreprises.data.gouv.fr/entreprise/' +
+    esc(siren) + '" target="_blank" rel="noopener">Voir la fiche complète ↗</a>');
+  html.push('<p class="company__note">La fiche officielle indique les procédures collectives en cours : redressement, liquidation, sauvegarde.</p>');
+  html.push("</div>");
+
+  html.push("</div>");
+  return html.join("");
+}
+
+async function lookupEntreprise() {
+  const siren = normalizeSiren(sirenInput.value);
+
+  if (!siren) {
+    sirenResult.innerHTML =
+      '<div class="error" style="margin-top:0"><p class="error__title">Numéro invalide.</p>' +
+      "<p>Entrez un SIREN (9 chiffres) ou un SIRET (14 chiffres) — lettres et espaces sont ignorés.</p></div>";
+    return;
+  }
+
+  sirenResult.innerHTML =
+    '<div class="loading" style="margin-top:0"><span class="spinner"></span>' +
+    '<div class="loading__text">Recherche en cours…</div></div>';
+
+  try {
+    const res = await fetch("https://recherche-entreprises.api.gouv.fr/search?q=" + encodeURIComponent(siren));
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    const results = (data && data.results) || [];
+    if (!results.length) {
+      sirenResult.innerHTML =
+        '<p class="points__empty">Aucune entreprise trouvée pour le SIREN ' + esc(siren) + ". Vérifiez le numéro.</p>";
+      return;
+    }
+    sirenResult.innerHTML = renderEntreprise(results[0], siren);
+  } catch (err) {
+    sirenResult.innerHTML =
+      '<div class="error" style="margin-top:0"><p class="error__title">Impossible de joindre le service de recherche.</p>' +
+      '<p>Vérifiez votre connexion, ou consultez directement la fiche sur ' +
+      '<a href="https://annuaire-entreprises.data.gouv.fr/entreprise/' + esc(siren) + '" target="_blank" rel="noopener">annuaire-entreprises.data.gouv.fr</a>.</p></div>';
+  }
+}
+
+btnLookup.addEventListener("click", lookupEntreprise);
+sirenInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") { e.preventDefault(); lookupEntreprise(); }
+});
 </script>
 </body>
 </html>
