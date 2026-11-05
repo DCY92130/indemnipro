@@ -135,6 +135,32 @@ img{ max-width:100%; display:block; }
 .btn--sm{ padding:10px 18px; font-size:14.5px; }
 
 /* ------------------------------------------------------------
+   Aiguillage d'entrée — deux voies (assurance / fournisseur)
+   ------------------------------------------------------------ */
+.split{ background:var(--paper); border-bottom:1px solid var(--hairline); padding:24px 0; }
+.split__inner{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.split__card{
+  display:flex; flex-direction:column; gap:6px; align-items:flex-start;
+  background:#fff; border:1px solid var(--hairline); border-radius:var(--radius);
+  padding:20px 22px; text-decoration:none; color:var(--ink);
+  transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+.split__card:hover{ border-color:var(--navy); box-shadow:0 8px 24px rgba(19,26,46,.10); transform:translateY(-2px); }
+.split__card .tag{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--slate); margin-bottom:4px;
+}
+.split__card h2{ font-size:22px; letter-spacing:-.01em; }
+.split__card p{ font-size:14.5px; color:var(--slate); margin:0; line-height:1.55; }
+.split__card .go{
+  margin-top:8px; font-weight:700; font-size:14px; color:var(--red);
+  display:inline-flex; align-items:center; gap:6px;
+}
+.split__card .go .arr{ transition:transform .12s ease; }
+.split__card:hover .go .arr{ transform:translateX(4px); }
+@media (max-width:640px){ .split__inner{ grid-template-columns:1fr; } }
+
+/* ------------------------------------------------------------
    Hero — la lettre est le produit
    ------------------------------------------------------------ */
 .hero{
@@ -727,6 +753,24 @@ img{ max-width:100%; display:block; }
 </header>
 
 <main id="top">
+
+  <!-- ============================ AIGUILLAGE D'ENTRÉE ============================ -->
+  <section class="split" aria-label="Choisir votre parcours">
+    <div class="wrap split__inner">
+      <a class="split__card" href="#dossier">
+        <span class="tag">Sinistres & indemnisation</span>
+        <h2>Relation assurance</h2>
+        <p>Un sinistre, un refus, une indemnisation qui traîne&nbsp;? Déclarez, chiffrez, relancez, contestez&nbsp;: cinq courriers et un dossier complet.</p>
+        <span class="go">Constituer mon dossier <span class="arr" aria-hidden="true">→</span></span>
+      </a>
+      <a class="split__card" href="fournisseur.html">
+        <span class="tag">CGV & livraisons</span>
+        <h2>Relation fournisseur</h2>
+        <p>Un fournisseur en retard ou des CGV à décrypter&nbsp;? Relancez, mettez en demeure, vérifiez un SIREN, lisez les clauses qui comptent.</p>
+        <span class="go">Gérer un fournisseur <span class="arr" aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </section>
 
   <!-- ============================ HERO ============================ -->
   <section class="hero">
