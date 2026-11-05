@@ -378,7 +378,8 @@ img{ max-width:100%; display:block; }
     <nav class="site-nav" aria-label="Navigation principale">
       <a href="index.html">Le générateur de courriers</a>
       <a href="cgv.html" class="is-active" aria-current="page">Lire des CGV</a>
-      <a href="#vigilance">Connaître un fournisseur</a>
+      <a href="#vigilance">Vérifier un fournisseur</a>
+      <a href="fournisseur.html">Fournisseur en retard</a>
     </nav>
     <div class="site-head__actions">
       <a class="btn btn--ghost btn--sm" href="contact.html">Contact</a>
@@ -498,10 +499,12 @@ img{ max-width:100%; display:block; }
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">Vigilance fournisseur</span>
-        <h2>Connaître votre fournisseur en 2 secondes</h2>
+        <h2>Vérifier l'identité et la situation administrative d'un fournisseur</h2>
         <p>Tapez son <b>SIREN</b> (9 chiffres) ou son <b>SIRET</b> (14 chiffres) :
-        identité, dirigeants, chiffre d'affaires et résultat net des derniers bilans
-        simplifiés, et surtout son état — actif ou <b>cessé</b>.</p>
+        vous vérifiez sa raison sociale, son activité (NAF), sa forme juridique, ses
+        dirigeants, et son état déclaré — <b>en activité</b> ou <b>cessé</b>. Les
+        derniers bilans simplifiés (chiffre d'affaires, résultat net) sont affichés
+        lorsqu'ils sont publiés.</p>
       </div>
 
       <div class="panel">
@@ -515,11 +518,12 @@ img{ max-width:100%; display:block; }
 
       <div class="disclaimer" style="margin-top:16px">
         <b>Données publiques, à titre indicatif.</b> Les informations proviennent de
-        l'API ouverte <b>recherche-entreprises.api.gouv.fr</b> (INSEE / DGFiP). Les
-        procédures collectives (redressement, liquidation) ne sont pas exposées par cette
-        API : elles figurent sur la fiche officielle
-        <b>annuaire-entreprises.data.gouv.fr</b>, vers laquelle renvoie le bouton
-        « Voir la fiche complète ».
+        l'API ouverte <b>recherche-entreprises.api.gouv.fr</b> (INSEE / DGFiP). Cette
+        recherche vérifie l'<b>identité</b> et la <b>situation administrative</b> d'une
+        entreprise ; elle <b>ne détecte pas</b> les procédures collectives
+        (redressement, liquidation, sauvegarde). Celles-ci figurent uniquement sur la
+        fiche officielle <b>annuaire-entreprises.data.gouv.fr</b>, vers laquelle renvoie
+        le bouton « Voir la fiche complète ».
       </div>
     </div>
   </section>
